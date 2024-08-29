@@ -7,6 +7,6 @@
 我也會盡快的把這系列建置完成分享給大家～
 
 可以先參考我其他的系列教學：
-- [全民瘋AI系列 [經典機器學習]](https://github.com/andy6804tw/2021-13th-ironman)
-- [全民瘋AI系列 [探索可解釋人工智慧]](https://github.com/andy6804tw/2023-15th-ironman)
+- [全民瘋AI系列 [經典機器學習]](https://andy6804tw.github.io/2021-13th-ironman/)
+- [全民瘋AI系列 [探索可解釋人工智慧]](https://andy6804tw.github.io/2023-15th-ironman/)
 

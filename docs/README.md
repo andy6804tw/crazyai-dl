@@ -7,3 +7,15 @@
 
 此外，隨著計算資源的進步和開源工具的普及，深度學習的門檻逐漸降低，越來越多的研究者和工程師能夠參與到這個領域，推動了技術的迅速發展和應用的擴展。因此，學習和掌握深度學習技術，將使你能夠在這個AI時代中把握機遇，無論是在科研、工程還是創新應用中，都能夠脫穎而出。
 
+
+
+- [NUTN Book Deep Learning](https://hackmd.io/zR6mfQpSTCCpcJSjBXisrQ)
+
+- [Lecture 6 - 深度學習簡介](https://andy6804tw.github.io/2021/11/14/ntu-intro-deep-learning/)
+- [Lecture 1: Regression - Case Study](https://andy6804tw.github.io/2021/08/24/ntu-ml-lecture1-regression/)
+- [ML Lecture 3: Gradient Descent](https://andy6804tw.github.io/2021/08/28/ntu-gradient-descent/)
+- [Lecture 4-Classification](https://github.com/andy6804tw/NTU-ML-Lecture/blob/main/Lecture%204-Classification.md)
+- [Lecture 5-Logistic Regression](https://github.com/andy6804tw/NTU-ML-Lecture/blob/main/Lecture%205-Logistic%20Regression.md)
+
+# UC-berkeley Lecture
+- [1.Deep Learning Overview.md]()
