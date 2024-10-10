@@ -1,6 +1,6 @@
 site_name: 全民瘋AI系列 [深度學習與神經網路]
 site_author: 10程式中
-# site_url: 
+site_url: https://andy6804tw.github.io/crazyai-dl/
 extra_css:
   - 'stylesheets/extra.css'
 extra_javascript:
