@@ -14,7 +14,7 @@ theme:
   palette:
     primary: 'red'
     accent: 'red'
-repo_url: https://github.com/andy6804tw/2023-15th-ironman
+repo_url: https://github.com/andy6804tw/crazyai-dl
 # use_directory_urls: false
 edit_uri: ""
 # Copyright
@@ -54,4 +54,4 @@ markdown_extensions:
 #       author: Tsai Yi Lin
 #       # company: "10程式中"
 #       toc_title: Table of contents
-#       output_path: pdf/全民瘋AI系列_深度學習與神經網路_v1.1.pdf
+#       output_path: pdf/全民瘋AI系列_深度學習與神經網路_v1.0.pdf
