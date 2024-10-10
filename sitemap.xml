@@ -1,57 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-     <loc>None</loc>
+     <loc>https://andy6804tw.github.io/crazyai-dl/1.1迴歸分析/</loc>
      <lastmod>2024-10-10</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>None</loc>
+     <loc>https://andy6804tw.github.io/crazyai-dl/1.2探索誤差的來源/</loc>
      <lastmod>2024-10-10</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>None</loc>
+     <loc>https://andy6804tw.github.io/crazyai-dl/1.3梯度下降的原理/</loc>
      <lastmod>2024-10-10</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>None</loc>
+     <loc>https://andy6804tw.github.io/crazyai-dl/1.4分類問題/</loc>
      <lastmod>2024-10-10</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>None</loc>
+     <loc>https://andy6804tw.github.io/crazyai-dl/1.5邏輯迴歸/</loc>
      <lastmod>2024-10-10</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>None</loc>
+     <loc>https://andy6804tw.github.io/crazyai-dl/2.1深度學習簡介/</loc>
      <lastmod>2024-10-10</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>None</loc>
+     <loc>https://andy6804tw.github.io/crazyai-dl/3.卷積神經網路/3.1CNN/</loc>
      <lastmod>2024-10-10</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>None</loc>
+     <loc>https://andy6804tw.github.io/crazyai-dl/3.卷積神經網路/3.2ResNet/</loc>
      <lastmod>2024-10-10</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>None</loc>
+     <loc>https://andy6804tw.github.io/crazyai-dl/5.Transformer架構/5.1Attention Is All You Need/</loc>
      <lastmod>2024-10-10</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>None</loc>
+     <loc>https://andy6804tw.github.io/crazyai-dl/5.Transformer架構/5.2Transformer/</loc>
      <lastmod>2024-10-10</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>None</loc>
+     <loc>https://andy6804tw.github.io/crazyai-dl/5.Transformer架構/5.3Transformer/</loc>
      <lastmod>2024-10-10</lastmod>
      <changefreq>daily</changefreq>
     </url>
