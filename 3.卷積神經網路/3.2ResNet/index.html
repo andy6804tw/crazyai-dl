@@ -1,0 +1,956 @@
+
+
+
+
+<!doctype html>
+<html lang="zh-Hant" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+      
+      
+        <meta name="author" content="10程式中">
+      
+      
+        <meta name="lang:clipboard.copy" content="複製">
+      
+        <meta name="lang:clipboard.copied" content="已複製">
+      
+        <meta name="lang:search.language" content="ja">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="沒有符合的項目">
+      
+        <meta name="lang:search.result.one" content="找到 1 個符合的項目">
+      
+        <meta name="lang:search.result.other" content="找到 # 個符合的項目">
+      
+        <meta name="lang:search.tokenizer" content="[\uff0c\u3002]+">
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.0">
+    
+    
+      
+        <title>3.2 ResNet 殘差神經網路</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/application.0284f74d.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.01803549.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#ef5350">
+      
+    
+    
+      <script src="../../assets/javascripts/modernizr.74668098.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    
+      
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="red" data-md-color-accent="red">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="__github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#_1" tabindex="1" class="md-skip">
+        跳轉到
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="../.." title="全民瘋AI系列 [深度學習與神經網路]" class="md-header-nav__button md-logo">
+          
+            <i class="md-icon"></i>
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            <span class="md-header-nav__topic">
+              全民瘋AI系列 [深度學習與神經網路]
+            </span>
+            <span class="md-header-nav__topic">
+              
+                3.2 ResNet 殘差神經網路
+              
+            </span>
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="搜尋" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            打字進行搜尋
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+<a href="https://github.com/andy6804tw/crazyai-dl" title="前往倉庫" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="../.." title="全民瘋AI系列 [深度學習與神經網路]" class="md-nav__button md-logo">
+      
+        <i class="md-icon"></i>
+      
+    </a>
+    全民瘋AI系列 [深度學習與神經網路]
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+<a href="https://github.com/andy6804tw/crazyai-dl" title="前往倉庫" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-1" type="checkbox" id="nav-1">
+    
+    <label class="md-nav__link" for="nav-1">
+      1.基礎概念
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-1">
+        1.基礎概念
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../1.1迴歸分析/" title="1.1 迴歸分析" class="md-nav__link">
+      1.1 迴歸分析
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../1.2探索誤差的來源/" title="1.2 探索誤差的來源" class="md-nav__link">
+      1.2 探索誤差的來源
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../1.3梯度下降的原理/" title="1.3 梯度下降法：優化的核心" class="md-nav__link">
+      1.3 梯度下降法：優化的核心
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../1.4分類問題/" title="1.4 分類問題" class="md-nav__link">
+      1.4 分類問題
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../1.5邏輯迴歸/" title="1.5 邏輯迴歸" class="md-nav__link">
+      1.5 邏輯迴歸
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+    
+    <label class="md-nav__link" for="nav-2">
+      2.深度神經網路
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        2.深度神經網路
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../2.1深度學習簡介/" title="2.1 深度學習簡介" class="md-nav__link">
+      2.1 深度學習簡介
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" checked>
+    
+    <label class="md-nav__link" for="nav-3">
+      3. 卷積神經網路
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        3. 卷積神經網路
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../3.1CNN/" title="3.1CNN" class="md-nav__link">
+      3.1CNN
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        3.2 ResNet 殘差神經網路
+      </label>
+    
+    <a href="./" title="3.2 ResNet 殘差神經網路" class="md-nav__link md-nav__link--active">
+      3.2 ResNet 殘差神經網路
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">本頁目錄</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" title="前言" class="md-nav__link">
+    前言
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#resnet" title="ResNet 簡介" class="md-nav__link">
+    ResNet 簡介
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#residual-learning" title="Residual Learning 主要解決什麼問題？" class="md-nav__link">
+    Residual Learning 主要解決什麼問題？
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#resnet_1" title="ResNet 解決網路退化的原理" class="md-nav__link">
+    ResNet 解決網路退化的原理
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#residual-block" title="Residual Block 結構" class="md-nav__link">
+    Residual Block 結構
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#resnet_2" title="ResNet 神經網路可解釋分析" class="md-nav__link">
+    ResNet 神經網路可解釋分析
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#resnet_3" title="ResNet 反向傳播回傳的梯度相關性較好" class="md-nav__link">
+    ResNet 反向傳播回傳的梯度相關性較好
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resnet_4" title="ResNet 相當於幾個淺層網路的集成" class="md-nav__link">
+    ResNet 相當於幾個淺層網路的集成
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" title="總結" class="md-nav__link">
+    總結
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" title="論文筆記" class="md-nav__link">
+    論文筆記
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#3" title="3 網路架構" class="md-nav__link">
+    3 網路架構
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4" title="4 實驗" class="md-nav__link">
+    4 實驗
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reference" title="Reference" class="md-nav__link">
+    Reference
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      5.Transformer架構
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        5.Transformer架構
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../5.Transformer架構/5.1Attention Is All You Need/" title="5.1 Transformer — Attention Is All You Need" class="md-nav__link">
+      5.1 Transformer — Attention Is All You Need
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../5.Transformer架構/5.2Transformer/" title="5.2 Transformer 機制解說 (上)" class="md-nav__link">
+      5.2 Transformer 機制解說 (上)
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../5.Transformer架構/5.3Transformer/" title="5.3 Transformer 機制解說 (下)" class="md-nav__link">
+      5.3 Transformer 機制解說 (下)
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">本頁目錄</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" title="前言" class="md-nav__link">
+    前言
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#resnet" title="ResNet 簡介" class="md-nav__link">
+    ResNet 簡介
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#residual-learning" title="Residual Learning 主要解決什麼問題？" class="md-nav__link">
+    Residual Learning 主要解決什麼問題？
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#resnet_1" title="ResNet 解決網路退化的原理" class="md-nav__link">
+    ResNet 解決網路退化的原理
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#residual-block" title="Residual Block 結構" class="md-nav__link">
+    Residual Block 結構
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#resnet_2" title="ResNet 神經網路可解釋分析" class="md-nav__link">
+    ResNet 神經網路可解釋分析
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#resnet_3" title="ResNet 反向傳播回傳的梯度相關性較好" class="md-nav__link">
+    ResNet 反向傳播回傳的梯度相關性較好
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resnet_4" title="ResNet 相當於幾個淺層網路的集成" class="md-nav__link">
+    ResNet 相當於幾個淺層網路的集成
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" title="總結" class="md-nav__link">
+    總結
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" title="論文筆記" class="md-nav__link">
+    論文筆記
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#3" title="3 網路架構" class="md-nav__link">
+    3 網路架構
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4" title="4 實驗" class="md-nav__link">
+    4 實驗
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reference" title="Reference" class="md-nav__link">
+    Reference
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                  <h1>3.2 ResNet 殘差神經網路</h1>
+                
+                <h2 id="_1">前言</h2>
+<p>本文將要介紹的是2015年 ILSVR 競賽冠軍的 ResNet(Residual Neural Network, 殘差網路)。ILSVR 是由 ImageNet 所舉辦的年度大規模視覺識別挑戰賽，自從2010年開辦以來全世界的人都想訓練一個影像分類器打敗人類的 5% 錯誤率的極限。值得一提的是2012年 AlexNet 問世後，開啟了卷積神蹟網路在深度學習的時代。之後的競賽大家都已深度學習網路為主，不斷地挑戰人類的 5% baseline。ResNet 是由微軟研究團隊所開發，它的特點是神經網路的輸入是可以跳耀式的傳遞到深層網路，這也間接的允許我們可以建立更深的神經網路使得模型能學習到更多特徵。當年冠軍的 ResNet 錯誤率為 3.57% 其深度是152層，約莫是 GoogLeNet 22層的七倍，但Top-5 error rate卻大幅降低了47%。</p>
+<p><img alt="" src="https://i.imgur.com/vOOGMhR.png" /></p>
+<ul>
+<li>論文： <a href="https://arxiv.org/abs/1512.03385">Deep Residual Learning for Image Recognition</a> (CVPR 2016 best paper)</li>
+<li>程式碼： <a href="https://github.com/KaimingHe/deep-residual-networks">GitHub</a></li>
+</ul>
+<blockquote>
+<p>2015年的 ILSVRC 比賽變得異常激烈！2015 年 2 月 6 日，Microsoft 提出了 PReLU-Net [2]，其錯誤率為 4.94%，超越了 5.1% 的人為錯誤率。五天後，即 2015 年 2 月 11 日，Google 在 arXiv（未提交給 ILSVRC）中提出了 BN-Inception / Inception-v2，其錯誤率為 4.8%。</p>
+</blockquote>
+<h2 id="resnet">ResNet 簡介</h2>
+<p>ResNet 主要是解決當神經網路疊的越深直到層數增加到某種程度時，模型的準確率不升反降的問題。這也間接說明了深度模型所造成的模型退化(degradation)情況。因此在不做任何技巧下模型準確率會先上升然後達到飽和，再持續增加深度時則會導致準確率下降。其原因不是過度擬合，而是增加訓練的網路層反而帶來的訓練誤差。如下圖 CIFAR-10 資料集訓練，在 train 或 test 情況下，56層會比20層產生更多的 error。</p>
+<p><img alt="" src="https://i.imgur.com/8eie43U.png" /></p>
+<h2 id="residual-learning">Residual Learning 主要解決什麼問題？</h2>
+<p>從上面那張實驗圖可以得知擁有56層網路錯誤率遠遠比20層還來得大。這很明顯不是過度擬合所造成的。另外梯度的爆炸/消失的問題通常都使用 Bacth Normalization 來解決。因此這個結果並不是過度擬和所和梯度消失所造成的，而這是一個退化問題。至於模型退化的主因，是非線性的激發函數 Relu 的存在，使得每次輸入到輸出的過程都幾乎是不可逆的造成資訊損失。因此殘差學習的初衷，其實是讓模型的內部結構至少有恆等對映(identity mapping)的能力。以保證在堆疊網路的過程中，網路至少不會因為繼續堆疊而產生退化。由下圖可以看到左邊是一般的神經網路，而右邊則是 ResNet。從中可以發現左邊是一直線，而 ResNet 具有跳躍連線把先前的輸入接到輸出做相加。</p>
+<p><img alt="" src="https://i.imgur.com/24ibrmd.png" /></p>
+<h3 id="resnet_1">ResNet 解決網路退化的原理</h3>
+<p>殘差網路的分支就是在修正上一層的誤差。假設上一層輸出足夠好那殘差就為0，如果不夠好就該修正這個誤差。在 MobileNet v2 使用此技巧彌補高度非線性造成不可逆的訊息損失。另外再現今許多主流模型中也會使用到殘差學習這個技巧。</p>
+<ul>
+<li>深層梯度回傳順暢：恆等映射的一段的梯度為1，因此把深層梯度注入淺層防止梯度消失。</li>
+<li>類比其他機器學習模型(殘差學習)：<ul>
+<li>整體學習中的 boosting 方法，每個弱分類器都是在擬合前面模型輸出與真實答案之差。</li>
+<li>長短記憶神經網路(LSTM)的遺忘門</li>
+<li>relu 激發函數</li>
+</ul>
+</li>
+<li>傳統線性結構網路難以擬合恆等映射<ul>
+<li>恆等映射即代表讓輸出和輸入一樣(什麼都不做)</li>
+<li>skip connection 可以讓模型自行選擇要不要更新</li>
+</ul>
+</li>
+<li>skip connection 可以實現不同尺度特徵的組合<ul>
+<li>造就了 FPN、DenseNet</li>
+</ul>
+</li>
+<li>ResNet 數學本質是用微分方程式的積分曲線去擬合系統的目標函數</li>
+<li>殘差網路相當於不同長度的神經網路組成的組合函數 (ensemble)</li>
+<li>殘差網路相當於一個差分放大器</li>
+</ul>
+<h2 id="residual-block">Residual Block 結構</h2>
+<p>Residual block 透過 shortcut connection 實現，如下圖所示使用 shortcut 將這個 block 的輸入和輸出進行一個 element-wise 的相加，這個簡單的加法並不會給網路增加額外的參數。當模型的層數加深時，這個簡單的結構能夠很好的解決退化問題。如果把網路設計為 H(x) = F(x) + x，即直接把恆等對映作為網路的一部分 。就可以把問題轉化為學習一個殘差函式F(x) = H(x) - x.</p>
+<p><img alt="" src="https://i.imgur.com/XbmFMhL.png" /></p>
+<p>假設 Residual Block 的輸入為 x，則輸出 y 等於以下公式(左)。其中 F 是學習的目標，即輸出輸入的殘差。殘差部分是中間有一個 Relu 雙層權重(w1, w2)，即公式(右)。</p>
+<p><img alt="" src="https://i.imgur.com/YTwItvt.png" /></p>
+<p>下圖為殘差網絡的結構，以 ResNet18 為例：
+- ResNet18、34 都是由 BasicBlock 組成的，並且從表中也可以得知，50層(包括50層)以上的 ResNet 才由 Bottleneck 組成。
+- 所有類型的 ResNet 卷積操作的通道數(無論是輸入通道還是輸出通道)都是64的倍數。
+- 所有類型的 ResNet 的卷積核只有 3x3 和 1x1 兩種。
+- 除了公共部分(conv1)外，都是由4大塊組成(con2_x,con3_x,con4_x,con5_x)</p>
+<p><img alt="" src="https://i.imgur.com/fOVxW2n.png" />
+<img alt="" src="https://i.imgur.com/UOR4lCx.png" /></p>
+<p>眼尖的你可能會發現這些殘差網路有實線與虛線。這些虛線的代表這些 Block 前後的維度不一致，因為 ResNet18 參照了 VGG 經典的設計，每隔 x 層，空間上 <code>/2</code> 減半（downsample）但深度翻倍。為了解決深度不一致問題，論文中採用 1x1 的卷積層進行升維。</p>
+<p>殘差網絡一般就是由下圖這兩個結構組成的。ResNet18、34 都是由 BasicBlock 組成的。50層以上的 ResNet 才由 Bottleneck 組成。兩者差別在於當有 1x1 卷積核的時候，我們稱 bottleneck，輸入和輸出都是高維度的但中間有降為過程。通常用於更深的如 101 這樣的網路中，目的是減少計算和引數量。</p>
+<p><img alt="" src="https://i.imgur.com/rw9OHd5.png" /></p>
+<h2 id="resnet_2">ResNet 神經網路可解釋分析</h2>
+<h3 id="resnet_3">ResNet 反向傳播回傳的梯度相關性較好</h3>
+<p>在這篇論文 <a href="https://arxiv.org/abs/1702.08591">The Shattered Gradients Problem: If resnets are the answer, then what is the question?</a>。就我們理解來說隨著網路加深因為激發函數導致相鄰像素回傳的梯度相關性會越來越低，最後接近白噪導致訓練時只會隨機擾動並無擬合作用。因此既然相鄰像素之間有局部相關性，我們會希望相鄰像素的梯度也應該局部相關。所以在這篇論文解釋 ResNet 梯度相關性衰減從 1/2<sup>L</sup> 增加為 1/√L，同時保持了梯度相關性。</p>
+<p><img alt="" src="https://i.imgur.com/R6w3pN9.png" /></p>
+<h3 id="resnet_4">ResNet 相當於幾個淺層網路的集成</h3>
+<p>這篇論文 <a href="https://arxiv.org/abs/1605.06431">Residual Networks Behave Like Ensembles of Relatively Shallow Networks</a> 提到三個殘差網路堆疊起來相當於下圖中(b) 每個模塊都有兩條路，因此三個模塊將有2的三次方共八種路徑。因此這三個殘差網路可以視為這八條路徑的集成(彼此間獨立訓練)。除此之外訓練好模型後他們在測試階段棄掉幾個殘差模塊(Dropout)發現幾乎不影響結果。</p>
+<p><img alt="" src="https://i.imgur.com/Hijb2iL.png" /></p>
+<h2 id="_2">總結</h2>
+<ul>
+<li>深度殘差網路 ResNet 由微軟亞洲研究院發表</li>
+<li>2015 年 ImageNet 和 coco 競賽五項冠軍</li>
+<li>CVPR 2016 最佳論文</li>
+</ul>
+<h2 id="_3">論文筆記</h2>
+<ul>
+<li>特徵提取的深度是解決電腦視覺眾多問題的核心。</li>
+<li>深度卷積神經網路已經在圖像分類領域有了顯著的進展與突破。</li>
+<li>在 ZFNet 中提到在深層的神經網路整合了低、中、高層不同尺度的特徵，最後在接上一個分類器完成端到端的分類。在低層的網路中提取圖像的邊緣、形狀、顏色。中層提取提取紋理。高層取得小物體上的特徵例如眼睛、輪子。</li>
+<li>特徵的層次可以透過將模型堆深，提供不同尺度特徵提升模型的豐富。</li>
+<li>在 VGG 和 GoogleNet 論文中指出網路深度的深度是非常重要的。
+<img alt="" src="https://i.imgur.com/HvlsmhF.png" /></li>
+<li>何愷明： ResNet、PRelu、Mask R CNN、Faster R CNN、SPPNet、Group Normalization。</li>
+<li>梯度爆炸/消失可以使用適當初始化與 Batch Normalization 加快網路收斂。</li>
+<li>過去直接擬合 H(x) 現在擬合殘差 F(x)=H(x)-x。</li>
+<li>多層非線性網路層很難去擬合橫等映射。但殘差學習是可以。</li>
+<li>後面的網路只需要擬合前面網路的輸出與真實答案之間的殘差。</li>
+<li>shortcut connection 並無額外的參數和計算複雜度。</li>
+</ul>
+<h4 id="3">3 網路架構</h4>
+<ul>
+<li>/2 表示使用 stride=2 的卷積進行下採樣，取代 VGG 的池化，feature map 尺寸減半，通道數翻倍。</li>
+<li>最後一層採 GAP 進行一千分類。取代原本 VGG 的全連接層。</li>
+<li>實線表示相同維度直接加，虛線表示出現下採樣，必須小技巧讓 feature map 維度一致(論文提出三種實驗方法)。</li>
+<li>殘差分支出現下採樣(stride=2)時維度增加的(虛線)殘差補救方法，(A)padding 補 0，對於多出來的通道用 0 填充。(B) 使用 1*1 卷積。</li>
+<li>訓練時圖像增強：放大至 <code>256*480</code> 尺度接著透過 <code>224*224</code> 隨機裁切。或是隨機翻轉。</li>
+<li>影像前處理：減去所有圖片的均值。</li>
+<li>在每個卷基層後面以及激發函數前都添加 batch normalization。batch normalization 於 BN-Inception 被提出。</li>
+<li>訓練設定： SGD 優化器、mini-batch 256、learning rate 0.1 遇到瓶頸時/10、60萬 epoch、 decay 0.0001、momentum 0.9、不採用 dropout。</li>
+<li>在打比賽的時候採用遵循 AlexNet 10-crop testing，以及多尺度裁減與融合(fully-convolutional form) {224, 256, 384, 640} 最終結果為多此度的圖像預測結果求平均。</li>
+</ul>
+<h4 id="4">4 實驗</h4>
+<ul>
+<li>ImageNet 2012 classification dataset 1000 classes 總共有大約 128 萬張訓練圖像、50,000 張驗證圖像和 100,000 張測試圖像。</li>
+<li>使用再多迭代並不能解決網路退化問題：“數據本身決定了該類問題的上限，而模型只是逼近這個上限”、“模型結構本身決定了模型上限，而訓練條參只是在逼近這個上限”。</li>
+<li>論文中 RestNet 18 與 34 採用 (A) 方案：zero padding 進行下採樣 stride=2。沒有額外的參數量。</li>
+<li>34層的殘差網路比18層好，且深度越深性能越好。帶殘差的網路比不帶殘差的效果好。證明殘差可以搭建非常深的網路。
+<img alt="" src="https://i.imgur.com/h7iOw1m.png" /></li>
+<li>在論文中比較 shortcut connection 用恆等映射 identity mapping(實線) 與 projection shortcut(虛線)。
+<img alt="" src="https://i.imgur.com/4BOhhwr.png" /></li>
+<li>提出三種實驗 (A) 所有 shortcut 都是恆等映射，升維用 padding 補 0。(B) 實線用恆等映射，虛線遇到需要升維時用 1<em>1 卷積。(C) 所有 shortcut 都用 1</em>1 卷積。</li>
+<li>B 比 A 好，但 A 在升維時用 padding 補 0，相當於丟失了 shortcut 分支的訊息。</li>
+<li>C 又比 B 好，因為多了很多訓練參數。使得模型表示能力更好。
+<img alt="" src="https://i.imgur.com/gEM9jZ4.png" /></li>
+<li>Bottleneck 網路先用 1<em>1 卷積降維，最後再用 1</em>1 卷積升維質原來深度。目的減少餐數量與計算量。在 Inception 結構也用相同方法。</li>
+<li>RestNet 50、101、152 採用 B 方案 1*1 卷積投影增加維度。</li>
+<li>在 ILSVRC 競賽中提交的版本是 6 個不同深度的集成模型(18、34、50、101、152、152)。並得到 3.57%。</li>
+<li>CIFAR-10 實驗每張圖像 32x32x3。五萬張訓練一萬測試共十種類別。實驗結果也是帶有殘差網路較好。</li>
+<li>做了每層殘差響應分佈分析，BN 層輸出的標準差相當於輸出信號大小。前幾層大後面越來越小。而且殘差網路比一般網路有更小的響應。因此可以得正越後層恆等映射足夠好的話他是會逐漸擬合成0。</li>
+<li>建構 1202層的殘差網路，雖然能收斂也沒有優化困難問題，但是測試集也沒有 110 層好。模型太深參數過多，表示空間過於大對小數據而言沒有必要。因此過擬合。</li>
+<li>殘差網路在目標檢測 PASCAL voc 和微軟 coco 資料集都有不錯成績</li>
+<li>Dropout 在 AlexNet 被提出</li>
+</ul>
+<h2 id="reference">Reference</h2>
+<ul>
+<li>[1] Kaiming He et all.,"<a href="https://arxiv.org/abs/1512.03385">Deep Residual Learning for Image Recognition</a>", CVPR 2016.</li>
+<li><a href="https://meetonfriday.com/posts/7c0020de/">[白話介紹]Deep Residual Learning for Image Recognition</a></li>
+<li><a href="https://www.bilibili.com/video/BV1vb4y1k7BV?p=4&amp;spm_id_from=333.788.b_636f6d6d656e74.54">論文精闢解說</a></li>
+<li><a href="https://www.bilibili.com/video/BV1PQ4y167hu?spm_id_from=333.999.0.0">ResNet 變體</a></li>
+</ul>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../3.1CNN/" title="3.1CNN" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  上一頁
+                </span>
+                3.1CNN
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../../5.Transformer架構/5.1Attention Is All You Need/" title="5.1 Transformer — Attention Is All You Need" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  下一頁
+                </span>
+                5.1 Transformer — Attention Is All You Need
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright © 2023 - 2024 10程式中
+          </div>
+        
+        powered by
+        <a href="https://www.mkdocs.org">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/">
+          Material for MkDocs</a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/application.245445c6.js"></script>
+      
+        
+        
+          
+          <script src="../../assets/javascripts/lunr/lunr.stemmer.support.js"></script>
+          
+            
+              
+                <script src="../../assets/javascripts/lunr/tinyseg.js"></script>
+              
+              
+                <script src="../../assets/javascripts/lunr/lunr.ja.js"></script>
+              
+            
+          
+          
+        
+      
+      <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
+      
+        <script src="../../javascripts/extra.js"></script>
+      
+    
+  </body>
+</html>

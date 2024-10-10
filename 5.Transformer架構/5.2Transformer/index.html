@@ -1,0 +1,741 @@
+
+
+
+
+<!doctype html>
+<html lang="zh-Hant" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+      
+      
+        <meta name="author" content="10程式中">
+      
+      
+        <meta name="lang:clipboard.copy" content="複製">
+      
+        <meta name="lang:clipboard.copied" content="已複製">
+      
+        <meta name="lang:search.language" content="ja">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="沒有符合的項目">
+      
+        <meta name="lang:search.result.one" content="找到 1 個符合的項目">
+      
+        <meta name="lang:search.result.other" content="找到 # 個符合的項目">
+      
+        <meta name="lang:search.tokenizer" content="[\uff0c\u3002]+">
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.0">
+    
+    
+      
+        <title>5.2 Transformer 機制解說 (上)</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/application.0284f74d.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.01803549.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#ef5350">
+      
+    
+    
+      <script src="../../assets/javascripts/modernizr.74668098.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    
+      
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="red" data-md-color-accent="red">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="__github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#_1" tabindex="1" class="md-skip">
+        跳轉到
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="../.." title="全民瘋AI系列 [深度學習與神經網路]" class="md-header-nav__button md-logo">
+          
+            <i class="md-icon"></i>
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            <span class="md-header-nav__topic">
+              全民瘋AI系列 [深度學習與神經網路]
+            </span>
+            <span class="md-header-nav__topic">
+              
+                5.2 Transformer 機制解說 (上)
+              
+            </span>
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="搜尋" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            打字進行搜尋
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+<a href="https://github.com/andy6804tw/crazyai-dl" title="前往倉庫" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="../.." title="全民瘋AI系列 [深度學習與神經網路]" class="md-nav__button md-logo">
+      
+        <i class="md-icon"></i>
+      
+    </a>
+    全民瘋AI系列 [深度學習與神經網路]
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+<a href="https://github.com/andy6804tw/crazyai-dl" title="前往倉庫" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-1" type="checkbox" id="nav-1">
+    
+    <label class="md-nav__link" for="nav-1">
+      1.基礎概念
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-1">
+        1.基礎概念
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../1.1迴歸分析/" title="1.1 迴歸分析" class="md-nav__link">
+      1.1 迴歸分析
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../1.2探索誤差的來源/" title="1.2 探索誤差的來源" class="md-nav__link">
+      1.2 探索誤差的來源
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../1.3梯度下降的原理/" title="1.3 梯度下降法：優化的核心" class="md-nav__link">
+      1.3 梯度下降法：優化的核心
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../1.4分類問題/" title="1.4 分類問題" class="md-nav__link">
+      1.4 分類問題
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../1.5邏輯迴歸/" title="1.5 邏輯迴歸" class="md-nav__link">
+      1.5 邏輯迴歸
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+    
+    <label class="md-nav__link" for="nav-2">
+      2.深度神經網路
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        2.深度神經網路
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../2.1深度學習簡介/" title="2.1 深度學習簡介" class="md-nav__link">
+      2.1 深度學習簡介
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      3. 卷積神經網路
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        3. 卷積神經網路
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../3.卷積神經網路/3.1CNN/" title="3.1CNN" class="md-nav__link">
+      3.1CNN
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../3.卷積神經網路/3.2ResNet/" title="3.2 ResNet 殘差神經網路" class="md-nav__link">
+      3.2 ResNet 殘差神經網路
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4" checked>
+    
+    <label class="md-nav__link" for="nav-4">
+      5.Transformer架構
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        5.Transformer架構
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../5.1Attention Is All You Need/" title="5.1 Transformer — Attention Is All You Need" class="md-nav__link">
+      5.1 Transformer — Attention Is All You Need
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        5.2 Transformer 機制解說 (上)
+      </label>
+    
+    <a href="./" title="5.2 Transformer 機制解說 (上)" class="md-nav__link md-nav__link--active">
+      5.2 Transformer 機制解說 (上)
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">本頁目錄</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" title="前言" class="md-nav__link">
+    前言
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#seq2seq" title="Seq2seq 應用舉例" class="md-nav__link">
+    Seq2seq 應用舉例
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#seq2seq_1" title="Seq2seq 架構介紹" class="md-nav__link">
+    Seq2seq 架構介紹
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#encoder" title="Encoder" class="md-nav__link">
+    Encoder
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reference" title="Reference" class="md-nav__link">
+    Reference
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../5.3Transformer/" title="5.3 Transformer 機制解說 (下)" class="md-nav__link">
+      5.3 Transformer 機制解說 (下)
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">本頁目錄</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" title="前言" class="md-nav__link">
+    前言
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#seq2seq" title="Seq2seq 應用舉例" class="md-nav__link">
+    Seq2seq 應用舉例
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#seq2seq_1" title="Seq2seq 架構介紹" class="md-nav__link">
+    Seq2seq 架構介紹
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#encoder" title="Encoder" class="md-nav__link">
+    Encoder
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reference" title="Reference" class="md-nav__link">
+    Reference
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                  <h1>5.2 Transformer 機制解說 (上)</h1>
+                
+                <h2 id="_1">前言</h2>
+<p>Transformer 跟 Bert 很有關係，他是用來處理自然語言的模型。簡單來說 Transformer 就是一個 Seq2seq 的模型。輸入是一個 sequence，輸出是一個未知的長度 sequence 由機器自行判斷。常見的例子有:</p>
+<ul>
+<li>語音辨識<ul>
+<li>一串語音訊號 ➞ 辨識的文字</li>
+</ul>
+</li>
+<li>機器翻譯<ul>
+<li>中文句子 ➞ 英文句子</li>
+</ul>
+</li>
+<li>語音翻譯<ul>
+<li>英文語音訊號 ➞ 中文句子</li>
+</ul>
+</li>
+</ul>
+<p><img alt="" src="https://i.imgur.com/5QxI3eg.png" /></p>
+<p>最常見例子閩南語、台語語音辨識，輸出中文字:</p>
+<p><img alt="" src="https://i.imgur.com/Tb2Vx21.png" /></p>
+<h2 id="seq2seq">Seq2seq 應用舉例</h2>
+<p>台語語音合成，是輸入一串中文句子輸出一串語音訊號(TTS)。以下實驗將中文文字轉成台羅拼音，再將拼音轉成聲音訊號。</p>
+<p><img alt="" src="https://i.imgur.com/HgGvhHr.png" /></p>
+<p>在文字上也有廣泛使用 Seq2seq 模型，例如對話機器人。輸入一句話，經過模型判斷吐出回應的句子。</p>
+<p><img alt="" src="https://i.imgur.com/va2TCD5.png" /></p>
+<p>Seq2seq 在自然語言處理的領域使用的非常廣泛。我們可以將所有自然語言的問題想像成 QA 問答系統，例如句子翻譯、摘要重點、情意分析...等。然而 QA 的問題往往都以 Seq2seq 形式來解。至於該如何解呢？以下舉個範例，輸入有一個問題以及一串文字，輸出就是問題的答案。</p>
+<p><img alt="" src="https://i.imgur.com/Oh9tINh.png" /></p>
+<blockquote>
+<p><a href="https://speech.ee.ntu.edu.tw/~hylee/dlhlp/2020-spring.html">深度學習與人類語言處理 NTU 2020 Spring</a></p>
+</blockquote>
+<p>其實有很多的應用你不覺得他是 Seq2seq 的問題，但你可以硬用 Seq2seq 來解。舉例來說文法頗析，例如給機器一段文字，機器要產生文法的頗析樹。輸出是一個樹狀結構可以把它看成是 Seq2seq，如下圖所示：</p>
+<p><img alt="" src="https://i.imgur.com/2GTag7P.png" /></p>
+<p>我們可以把文法頗析，當作是一個翻譯問題。參考以下論文。</p>
+<p><a href="https://arxiv.org/abs/1412.7449">[論文] Oriol Vinyals, "grammar as a foreign language", arxiv, Dec 2014.</a></p>
+<p>還有一些任務也可以用 Seq2seq，舉例來說 Multi-label Classfication 這問題會與 Multi-class Classfication 搞混。Multi-class Classfication 是指機器要從數個 x 類別當中去找出一個適合的種類作為輸出。但是 Multi-label Classfication 意思是指同一個東西他可以屬於多個類別種類。最常見的問題就是文章分類，輸入一篇文章輸出機器自己判斷有幾個類別。</p>
+<p><img alt="" src="https://i.imgur.com/5FZpsG6.png" /></p>
+<p>再者就是物件辨識透過 Seq2seq 硬解。</p>
+<p><img alt="" src="https://i.imgur.com/W6MiVna.png" /></p>
+<h2 id="seq2seq_1">Seq2seq 架構介紹</h2>
+<p>一般的 sequence to sequence 他裡面會分成兩塊，一塊是 Encoder 另一塊是 Decoder 所組成的。Seq2seq 模型起源於 2014 年 9 月，用在翻譯文章被放到 <a href="https://arxiv.org/abs/1409.3215">Arxiv</a> 上，當時的架構是透過 RNN 的 LSTM 實作。但是現今所提到的 Seq2seq 模型通常是在說含有 self-attention 的 Transformer 架構。</p>
+<p><img alt="" src="https://i.imgur.com/1haQ3V0.png" /></p>
+<h2 id="encoder">Encoder</h2>
+<p>Seq2seq 模型 Encoder 要做的事情，就是給一排向量輸出另外一排向量。然而在 Transformer 的 Encoder 用的就是 self-attention。</p>
+<p><img alt="" src="https://i.imgur.com/sZCko0m.png" /></p>
+<p>Encoder 裡面會分成很多的 block，每一個 block 都是輸入一排向量輸出一排向量給另一個 block，直到最後一個 block 輸出最終的 vector sequence。至於每一個 block 其實並不是神經網路的一層。這邊之所以不稱說每一個 block 是一個 layer，是因為每一個 block 裡面的的事情是好幾個 layer 在做的事情。在 Transformer 的 Encoder 裡面，每一個 block 做的事情大約如下。輸入一排向量以後先做一個 self-attention 考慮整個 sequence 的資訊，輸出另一排向量。接下來這一排向量會丟到全連接層的網路，再輸出另外一排向量。此時的向量就是 block 的輸出。</p>
+<p><img alt="" src="https://i.imgur.com/xlZJYjf.png" /></p>
+<p>事實上在原來的 transformer 裡面他做的事情是更複雜的。輸入一排向量經過 self-attention 後輸出的向量它是考慮所有的輸入以後所得到得結果。在 Transformer 裡面他加入了一個設計，我們不只輸出這個向量，我們同時還要把這個向量加上他原來的輸入當作是新的輸出。這樣的網路架構稱作 residual connection，他會把輸入和輸出加起來得到新的輸出。得到 residual 結果以後，再做 layer normalization。layer normalization 做的事情是輸入一個向量後輸出另外一個向量，這裡不需要考慮 batch 資訊只考慮當前的向量。他會去計算這組輸入向量的 mean 跟 standard deviation。計算出來後就可以做一個 normalize，得到 layer normalization 的輸出。此時的輸出才是全連接網路的輸入，而全連階層網路這邊也有 residual 的架構。所以我們會把全連接網路的輸入跟它的輸出加起來做一下 residual。得到新的輸出這個才是 Transformer Encoder 裡面一個 block 的輸出。</p>
+<p><img alt="" src="https://i.imgur.com/YBDYxf0.png" /></p>
+<p>所以左邊的圖就是上述所做的事情，一個 Encoder 有很多個 Block。然而右邊的圖就是一個 Block 中所做的事情，裡面有多個網路層(multi-head self attention+FCN)。另外值得注意是 transformer 在輸入還加上 Positional Encoding 位置資訊，經過 multi-head self attention 後加上 Residual connection 接下來還要過 Layer norm。最後再進到全連階層，這裡一樣要再做 Residual connection 與 Layer norm 才是最後的一個 Block 輸出。</p>
+<p><img alt="" src="https://i.imgur.com/4GrIjMj.png" /></p>
+<p>這個複雜的 Block 其實就是 Bert 模型裡面中的 transformer encoder。你要自行設計 Encoder 架構也行，例如在 <a href="https://arxiv.org/abs/2002.04745">On Layer Normalization in the Transformer Architecture</a> 中討論 Layer norm 的位置應該放哪比較好。下圖 (a) 是原始的 Transformer，右圖 (B) 是更換 Layer norm 順序的 Transformer 結果是較好的。</p>
+<p><img alt="" src="https://i.imgur.com/uR7ZBGQ.png" /></p>
+<p>另外你可能會想為何要 Layer norm？有更好的方法嗎？這篇 <a href="https://arxiv.org/abs/2003.07845">PowerNorm: Rethinking Batch Normalization in Transformers</a> 5翁會先討論為何 Batch norm 不如 Layer norm。接下來他提出 Power norm 效果能更好。</p>
+<h2 id="reference">Reference</h2>
+<p><a href="https://www.youtube.com/watch?v=n9TlOhRjYoc">【機器學習2021】Transformer (上)</a></p>
+<p><a href="https://www.youtube.com/watch?v=N6aRv06iv2g">【機器學習2021】Transformer (下)</a></p>
+<p><a href="https://speech.ee.ntu.edu.tw/~hylee/ml/ml2021-course-data/seq2seq_v9.pdf">簡報</a></p>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../5.1Attention Is All You Need/" title="5.1 Transformer — Attention Is All You Need" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  上一頁
+                </span>
+                5.1 Transformer — Attention Is All You Need
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../5.3Transformer/" title="5.3 Transformer 機制解說 (下)" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  下一頁
+                </span>
+                5.3 Transformer 機制解說 (下)
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright © 2023 - 2024 10程式中
+          </div>
+        
+        powered by
+        <a href="https://www.mkdocs.org">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/">
+          Material for MkDocs</a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/application.245445c6.js"></script>
+      
+        
+        
+          
+          <script src="../../assets/javascripts/lunr/lunr.stemmer.support.js"></script>
+          
+            
+              
+                <script src="../../assets/javascripts/lunr/tinyseg.js"></script>
+              
+              
+                <script src="../../assets/javascripts/lunr/lunr.ja.js"></script>
+              
+            
+          
+          
+        
+      
+      <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
+      
+        <script src="../../javascripts/extra.js"></script>
+      
+    
+  </body>
+</html>
