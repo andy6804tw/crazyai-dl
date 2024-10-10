@@ -9,13 +9,8 @@
 
 
 
-- [NUTN Book Deep Learning](https://hackmd.io/zR6mfQpSTCCpcJSjBXisrQ)
 
-- [Lecture 6 - 深度學習簡介](https://andy6804tw.github.io/2021/11/14/ntu-intro-deep-learning/)
-- [Lecture 1: Regression - Case Study](https://andy6804tw.github.io/2021/08/24/ntu-ml-lecture1-regression/)
-- [ML Lecture 3: Gradient Descent](https://andy6804tw.github.io/2021/08/28/ntu-gradient-descent/)
-- [Lecture 4-Classification](https://github.com/andy6804tw/NTU-ML-Lecture/blob/main/Lecture%204-Classification.md)
-- [Lecture 5-Logistic Regression](https://github.com/andy6804tw/NTU-ML-Lecture/blob/main/Lecture%205-Logistic%20Regression.md)
+
 
 # UC-berkeley Lecture
 - [1.Deep Learning Overview.md]()
