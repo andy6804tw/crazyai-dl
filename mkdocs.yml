@@ -30,10 +30,14 @@ nav:
   - '2.深度神經網路':
     - '2.1深度學習簡介.md'
     
-  # - '3. 卷積神經網路':
+  - '3. 卷積神經網路':
+    - '3.卷積神經網路/3.1CNN.md'
+    - '3.卷積神經網路/3.2ResNet.md'
   # - '4. 循環神經網路':
   - '5.Transformer架構':
     - '5.Transformer架構/5.1Attention Is All You Need.md'
+    - '5.Transformer架構/5.2Transformer.md'
+    - '5.Transformer架構/5.3Transformer.md'
 
 
 markdown_extensions:
