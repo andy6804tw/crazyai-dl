@@ -3,8 +3,12 @@ site_author: 10程式中
 site_url: https://andy6804tw.github.io/crazyai-dl/
 extra_css:
   - 'stylesheets/extra.css'
+  - https://unpkg.com/katex@0/dist/katex.min.css
 extra_javascript:
   - javascripts/extra.js
+  - javascripts/katex.js
+  - https://unpkg.com/katex@0/dist/katex.min.js
+  - https://unpkg.com/katex@0/dist/contrib/auto-render.min.js
 theme:
   name: material
   language: 'zh-TW'
@@ -38,7 +42,8 @@ nav:
     - '5.Transformer架構/5.1Attention Is All You Need.md'
     - '5.Transformer架構/5.2Transformer.md'
     - '5.Transformer架構/5.3Transformer.md'
-
+  - 'TensoeFlow 101':
+    - 'TensoeFlow 101/1.TensorFlow 基礎介紹.md'
 
 markdown_extensions:
   - admonition
@@ -47,6 +52,10 @@ markdown_extensions:
       guess_lang: false
   - toc:
       permalink: false
+  - pymdownx.arithmatex:
+      generic: true
+  - admonition
+  - pymdownx.details
 # plugins:
 #   - search
 #   - mkpdfs:
