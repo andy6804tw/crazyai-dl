@@ -96,7 +96,7 @@ model.save('dnn_regression_model.h5')
 print('模型已成功保存至 dnn_regression_model.h5')
 ```
 
-!!! note
+!!! info
 
     TensorFlow 提供多種方法來儲存模型，以下是幾種常見的模型儲存方式：
 
@@ -119,7 +119,7 @@ y_new_pred = loaded_model.predict(x_new)
 print(f'當 x = 5.0 時，模型預測的 y 值為：{y_new_pred[0][0]}')
 ```
 
-!!! info
+!!! note
 
         除了使用 TensorFlow 內建的格式保存模型外，當模型訓練完成並準備正式部署於產品中時，也可以使用 ONNX（Open Neural Network Exchange）格式。ONNX 是一種開放格式，支持在不同深度學習框架之間進行模型轉換，使得模型可以通過 ONNX Runtime 在多種平台上執行，提高部署的靈活性。
 

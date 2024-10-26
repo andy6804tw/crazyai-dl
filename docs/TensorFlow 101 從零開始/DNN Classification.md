@@ -20,7 +20,6 @@ import matplotlib.pyplot as plt
 ```
 
 ## 2. 資料準備
-
 在分類任務中，我們需要一組帶標籤的數據集。在這裡，我們將使用經典鳶尾花數據集（Iris Dataset），這是一個包含三個類別的數據集，用於預測鳶尾花的種類。
 
 ```py
@@ -64,7 +63,6 @@ model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=
 在這裡，我們使用了 `tf.keras.Sequential` 來建立模型，包含兩層隱藏層，每層有 16 個神經元，並使用 ReLU 作激發函數。最後一層是輸出層，有三個神經元，使用 Softmax 激發函數來進行分類。損失函數選擇了 `sparse_categorical_crossentropy`，適合用於多類別分類問題。
 
 ## 4. 模型訓練
-
 我們已經建構了模型，接下來我們將模型與數據進行訓練。這段程式將模型訓練 100 個 epoch，每次使用 10 個數據進行更新。
 
 ```py
@@ -72,10 +70,9 @@ model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=
 model.fit(x_train, y_train, epochs=100, batch_size=10, verbose=1)
 ```
 
-通過調整 epoch 和 batch_size 的值，我們可以控制模型訓練的速度和效果。
+透過調整 epoch 和 batch_size 的值，我們可以控制模型訓練的速度和效果。
 
 ## 5. 模型評估與預測
-
 訓練完模型後，我們可以使用它來進行預測，並評估模型的效果。這段程式碼首先評估了模型在測試數據上的表現，並使用訓練好的模型對新數據進行預測。
 
 ```py
@@ -92,7 +89,6 @@ print(f'預測的類別：{np.argmax(predicted_class)}')
 這段程式碼使用模型對測試數據進行評估，並計算損失和準確率，最後使用模型對新的數據樣本進行分類預測。
 
 ## 6. 模型保存與輸出
-
 最後，我們可以將訓練好的模型保存起來，以便日後使用或部署。這段程式將模型保存為 SavedModel 格式，以便在生產環境中使用。
 
 ```py
@@ -101,7 +97,7 @@ model.save('dnn_classification_model')
 print('模型已成功保存至 dnn_classification_model')
 ```
 
-!!! note
+!!! info
 
     TensorFlow 提供多種方法來儲存模型，以下是幾種常見的模型儲存方式：
 
@@ -122,10 +118,9 @@ predicted_class = loaded_model.predict(sample)
 print(f'當輸入樣本為 {sample} 時，預測的類別為：{np.argmax(predicted_class)}')
 ```
 
-!!! info
+!!! note
 
     除了使用 TensorFlow 內建的格式保存模型外，當模型訓練完成並準備正式部署於產品中時，也可以使用 ONNX（Open Neural Network Exchange）格式。ONNX 是一種開放格式，支持在不同深度學習框架之間進行模型轉換，使得模型可以通過 ONNX Runtime 在多種平台上執行，提高部署的靈活性。
 
 ## 結論
-
 在本教學中，我們學會了如何使用 TensorFlow 構建一個簡單的深度神經網路來進行分類任務。我們從資料準備開始，一直到模型建構、訓練和評估，完整地了解了整個過程。接下來，你可以嘗試使用其他不同的資料集或改變模型結構，來進一步提高模型的準確度和效果。
