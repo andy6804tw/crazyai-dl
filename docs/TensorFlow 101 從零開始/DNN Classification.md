@@ -6,6 +6,8 @@ keywords:
 
 # 深度神經網路（DNN）分類基礎教學
 
+範例程式：[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/andy6804tw/crazyai-dl/blob/main/code/tensorflow/DNN%20Classification.ipynb)
+
 在這份教學中，我們將介紹如何使用 TensorFlow 來建構一個基礎的深度神經網路（DNN）進行分類任務。分類問題是機器學習中的一種重要任務，主要用於預測樣本屬於哪一個類別，例如圖片分類、垃圾郵件過濾等。在這裡，我們將一步步地帶領你學習如何從資料處理、模型構建到模型訓練，逐步掌握 DNN 分類的核心概念。
 
 ## 1. 載入套件

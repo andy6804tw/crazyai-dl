@@ -5,6 +5,9 @@ keywords:
 ---
 
 # 深度神經網路（DNN）迴歸基礎教學
+
+範例程式：[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/andy6804tw/crazyai-dl/blob/main/code/tensorflow/DNN%20Regression.ipynb)
+
 在這份教學中，我們將介紹如何使用 TensorFlow 來建構一個基礎的深度神經網路（DNN）進行迴歸分析。迴歸問題是機器學習中的一種重要任務，主要用於預測連續數值，例如房價預測、汽車油耗等。在這裡，我們將一步步地帶領你學習如何從資料處理、模型構建到模型訓練，逐步掌握 DNN 迴歸的核心概念。
 
 ## 1. 載入套件

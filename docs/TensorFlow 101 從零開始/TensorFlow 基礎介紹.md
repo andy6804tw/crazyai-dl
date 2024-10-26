@@ -5,6 +5,9 @@ keywords:
 ---
 
 # TensorFlow 基礎介紹
+
+範例程式：[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/andy6804tw/crazyai-dl/blob/main/code/tensorflow/TensorFlow%20基礎介紹.ipynb)
+
 TensorFlow 是一個由 Google 開發的機器學習平台，主要用於深度學習應用的開發和部署。它提供了豐富的工具集，從基礎層級的數學運算（如矩陣運算）到高層次的神經網絡構建，無論你是剛入門的初學者還是有經驗的研究者，TensorFlow 都是一個強大且靈活的工具。
 
 TensorFlow 能夠讓開發者方便地構建、訓練和部署深度學習模型。它被廣泛應用於影像分類、語音辨識、自然語言處理等領域，並支持多種計算平台，包括 CPU、GPU、以及 TPU，讓運算的效能能夠靈活擴展。
