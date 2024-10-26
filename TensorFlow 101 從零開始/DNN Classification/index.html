@@ -11,7 +11,7 @@
       <meta http-equiv="x-ua-compatible" content="ie=edge">
       
       
-        <link rel="canonical" href="https://andy6804tw.github.io/crazyai-dl/3.卷積神經網路/3.1CNN/">
+        <link rel="canonical" href="https://andy6804tw.github.io/crazyai-dl/TensorFlow 101 從零開始/DNN Classification/">
       
       
         <meta name="author" content="10程式中">
@@ -40,7 +40,7 @@
     
     
       
-        <title>3.1CNN - 全民瘋AI系列 [深度學習與神經網路]</title>
+        <title>DNN Classification</title>
       
     
     
@@ -93,7 +93,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="#_1" tabindex="1" class="md-skip">
+      <a href="#dnn" tabindex="1" class="md-skip">
         跳轉到
       </a>
     
@@ -119,7 +119,7 @@
             </span>
             <span class="md-header-nav__topic">
               
-                3.1CNN
+                DNN Classification
               
             </span>
           
@@ -348,12 +348,10 @@
       
       
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+  <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" checked>
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
     
     <label class="md-nav__link" for="nav-3">
       3. 卷積神經網路
@@ -369,107 +367,11 @@
           
           
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-    
-    
-      <label class="md-nav__link md-nav__link--active" for="__toc">
-        3.1CNN
-      </label>
-    
-    <a href="./" title="3.1CNN" class="md-nav__link md-nav__link--active">
+  <li class="md-nav__item">
+    <a href="../../3.卷積神經網路/3.1CNN/" title="3.1CNN" class="md-nav__link">
       3.1CNN
     </a>
-    
-      
-<nav class="md-nav md-nav--secondary">
-  
-  
-  
-    <label class="md-nav__title" for="__toc">本頁目錄</label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#_1" title="名詞" class="md-nav__link">
-    名詞
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_2" title="影像的上取樣" class="md-nav__link">
-    影像的上取樣
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#11" title="1*1 卷積" class="md-nav__link">
-    1*1 卷積
-  </a>
-  
-    <nav class="md-nav">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#1-x-1" title="1 x 1 卷積計算舉例" class="md-nav__link">
-    1 x 1 卷積計算舉例
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#feature-map" title="計算 Feature map" class="md-nav__link">
-    計算 Feature map
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#cnn" title="CNN 架構" class="md-nav__link">
-    CNN 架構
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_3" title="結論" class="md-nav__link">
-    結論
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_4" title="筆記" class="md-nav__link">
-    筆記
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#reference" title="Reference" class="md-nav__link">
-    Reference
-  </a>
-  
-</li>
-      
-      
-      
-      
-      
-    </ul>
-  
-</nav>
-    
   </li>
 
         
@@ -479,7 +381,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../3.2ResNet/" title="3.2 ResNet 殘差神經網路" class="md-nav__link">
+    <a href="../../3.卷積神經網路/3.2ResNet/" title="3.2 ResNet 殘差神經網路" class="md-nav__link">
       3.2 ResNet 殘差神經網路
     </a>
   </li>
@@ -554,10 +456,12 @@
       
       
 
+  
 
-  <li class="md-nav__item md-nav__item--nested">
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" checked>
     
     <label class="md-nav__link" for="nav-5">
       TensorFlow 101 從零開始
@@ -575,7 +479,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../TensorFlow 101 從零開始/" title="系列介紹" class="md-nav__link">
+    <a href="../" title="系列介紹" class="md-nav__link">
       系列介紹
     </a>
   </li>
@@ -587,7 +491,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../TensorFlow 101 從零開始/TensorFlow 基礎介紹/" title="TensorFlow 基礎介紹" class="md-nav__link">
+    <a href="../TensorFlow 基礎介紹/" title="TensorFlow 基礎介紹" class="md-nav__link">
       TensorFlow 基礎介紹
     </a>
   </li>
@@ -599,7 +503,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../TensorFlow 101 從零開始/DNN Regression/" title="DNN Regression" class="md-nav__link">
+    <a href="../DNN Regression/" title="DNN Regression" class="md-nav__link">
       DNN Regression
     </a>
   </li>
@@ -609,11 +513,91 @@
           
           
 
+  
 
-  <li class="md-nav__item">
-    <a href="../../TensorFlow 101 從零開始/DNN Classification/" title="DNN Classification" class="md-nav__link">
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        DNN Classification
+      </label>
+    
+    <a href="./" title="DNN Classification" class="md-nav__link md-nav__link--active">
       DNN Classification
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">本頁目錄</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" title="1. 載入套件" class="md-nav__link">
+    1. 載入套件
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" title="2. 資料準備" class="md-nav__link">
+    2. 資料準備
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-dnn" title="3. 建構 DNN 模型" class="md-nav__link">
+    3. 建構 DNN 模型
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" title="4. 模型訓練" class="md-nav__link">
+    4. 模型訓練
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" title="5. 模型評估與預測" class="md-nav__link">
+    5. 模型評估與預測
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6" title="6. 模型保存與輸出" class="md-nav__link">
+    6. 模型保存與輸出
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" title="結論" class="md-nav__link">
+    結論
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
   </li>
 
         
@@ -672,75 +656,57 @@
 <nav class="md-nav md-nav--secondary">
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">本頁目錄</label>
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#_1" title="名詞" class="md-nav__link">
-    名詞
+  <a href="#1" title="1. 載入套件" class="md-nav__link">
+    1. 載入套件
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#_2" title="影像的上取樣" class="md-nav__link">
-    影像的上取樣
+  <a href="#2" title="2. 資料準備" class="md-nav__link">
+    2. 資料準備
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#11" title="1*1 卷積" class="md-nav__link">
-    1*1 卷積
-  </a>
-  
-    <nav class="md-nav">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#1-x-1" title="1 x 1 卷積計算舉例" class="md-nav__link">
-    1 x 1 卷積計算舉例
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#feature-map" title="計算 Feature map" class="md-nav__link">
-    計算 Feature map
+  <a href="#3-dnn" title="3. 建構 DNN 模型" class="md-nav__link">
+    3. 建構 DNN 模型
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#cnn" title="CNN 架構" class="md-nav__link">
-    CNN 架構
+  <a href="#4" title="4. 模型訓練" class="md-nav__link">
+    4. 模型訓練
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#_3" title="結論" class="md-nav__link">
+  <a href="#5" title="5. 模型評估與預測" class="md-nav__link">
+    5. 模型評估與預測
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6" title="6. 模型保存與輸出" class="md-nav__link">
+    6. 模型保存與輸出
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" title="結論" class="md-nav__link">
     結論
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_4" title="筆記" class="md-nav__link">
-    筆記
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#reference" title="Reference" class="md-nav__link">
-    Reference
   </a>
   
 </li>
@@ -762,95 +728,113 @@
               
                 
                 
-                  <h1>3.1CNN</h1>
-                
-                <p>CNN 的強大之處在於它的多層結構能自動學習特徵，並且可以學習到多個層次的特徵：較淺的卷積層感知域較小，學習到一些區域性區域的特徵。較深的卷積層具有較大的感知域，能夠學習到更加抽象一些的特徵。這些抽象特徵對物體的大小、位置和方向等敏感性更低，從而有助於識別效能的提高。</p>
-<h2 id="_1">名詞</h2>
+                <h1 id="dnn">深度神經網路（DNN）分類基礎教學</h1>
+<p>範例程式：<a href="https://colab.research.google.com/github/andy6804tw/crazyai-dl/blob/main/code/tensorflow/DNN%20Classification.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p>
+<p>在這份教學中，我們將介紹如何使用 TensorFlow 來建構一個基礎的深度神經網路（DNN）進行分類任務。分類問題是機器學習中的一種重要任務，主要用於預測樣本屬於哪一個類別，例如圖片分類、垃圾郵件過濾等。在這裡，我們將一步步地帶領你學習如何從資料處理、模型構建到模型訓練，逐步掌握 DNN 分類的核心概念。</p>
+<h2 id="1">1. 載入套件</h2>
+<p>首先，我們匯入必要的套件：</p>
+<div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+</pre></div>
+
+
+<h2 id="2">2. 資料準備</h2>
+<p>在分類任務中，我們需要一組帶標籤的數據集。在這裡，我們將使用經典鳶尾花數據集（Iris Dataset），這是一個包含三個類別的數據集，用於預測鳶尾花的種類。</p>
+<div class="codehilite"><pre><span></span><span class="c1"># 載入鳶尾花數據集</span>
+<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_iris</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+
+<span class="c1"># 取得資料</span>
+<span class="n">iris</span> <span class="o">=</span> <span class="n">load_iris</span><span class="p">()</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">data</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">target</span>
+
+<span class="c1"># 將數據分為訓練集和測試集</span>
+<span class="n">x_train</span><span class="p">,</span> <span class="n">x_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="c1"># 標準化數據</span>
+<span class="n">scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
+<span class="n">x_train</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">x_train</span><span class="p">)</span>
+<span class="n">x_test</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">x_test</span><span class="p">)</span>
+</pre></div>
+
+
+<p>這段程式使用 scikit-learn 來載入鳶尾花數據集，並將其分為訓練集和測試集，最後使用 <code>StandardScaler</code> 進行標準化處理，讓數據在訓練時能更快收斂。</p>
+<h2 id="3-dnn">3. 建構 DNN 模型</h2>
+<p>接下來，我們來建構一個簡單的深度神經網路模型。這個模型將包含兩層全連接層，用於分類三個鳶尾花的類別。</p>
+<div class="codehilite"><pre><span></span><span class="c1"># 建構 DNN 模型</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Sequential</span><span class="p">([</span>
+    <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">InputLayer</span><span class="p">(</span><span class="n">input_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,)),</span>
+    <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">),</span>
+    <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">),</span>
+    <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;softmax&#39;</span><span class="p">)</span>
+<span class="p">])</span>
+
+<span class="c1"># 編譯模型</span>
+<span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">optimizer</span><span class="o">=</span><span class="s1">&#39;adam&#39;</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="s1">&#39;sparse_categorical_crossentropy&#39;</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;accuracy&#39;</span><span class="p">])</span>
+</pre></div>
+
+
+<p>在這裡，我們使用了 <code>tf.keras.Sequential</code> 來建立模型，包含兩層隱藏層，每層有 16 個神經元，並使用 ReLU 作激發函數。最後一層是輸出層，有三個神經元，使用 Softmax 激發函數來進行分類。損失函數選擇了 <code>sparse_categorical_crossentropy</code>，適合用於多類別分類問題。</p>
+<h2 id="4">4. 模型訓練</h2>
+<p>我們已經建構了模型，接下來我們將模型與數據進行訓練。這段程式將模型訓練 100 個 epoch，每次使用 10 個數據進行更新。</p>
+<div class="codehilite"><pre><span></span><span class="c1"># 訓練模型</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+
+
+<p>透過調整 epoch 和 batch_size 的值，我們可以控制模型訓練的速度和效果。</p>
+<h2 id="5">5. 模型評估與預測</h2>
+<p>訓練完模型後，我們可以使用它來進行預測，並評估模型的效果。這段程式碼首先評估了模型在測試數據上的表現，並使用訓練好的模型對新數據進行預測。</p>
+<div class="codehilite"><pre><span></span><span class="c1"># 評估模型效果</span>
+<span class="n">loss</span><span class="p">,</span> <span class="n">accuracy</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;模型損失（Loss）：</span><span class="si">{</span><span class="n">loss</span><span class="si">}</span><span class="s1">, 準確率（Accuracy）：</span><span class="si">{</span><span class="n">accuracy</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="c1"># 進行預測</span>
+<span class="n">sample</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">5.0</span><span class="p">,</span> <span class="mf">3.6</span><span class="p">,</span> <span class="mf">1.4</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">]])</span>  <span class="c1"># 一筆測試數據</span>
+<span class="n">predicted_class</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;預測的類別：</span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">predicted_class</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+
+
+<p>這段程式碼使用模型對測試數據進行評估，並計算損失和準確率，最後使用模型對新的數據樣本進行分類預測。</p>
+<h2 id="6">6. 模型保存與輸出</h2>
+<p>最後，我們可以將訓練好的模型保存起來，以便日後使用或部署。這段程式將模型保存為 SavedModel 格式，以便在生產環境中使用。</p>
+<div class="codehilite"><pre><span></span><span class="c1"># 保存模型</span>
+<span class="n">model</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;dnn_classification_model&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;模型已成功保存至 dnn_classification_model&#39;</span><span class="p">)</span>
+</pre></div>
+
+
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>TensorFlow 提供多種方法來儲存模型，以下是幾種常見的模型儲存方式：</p>
 <ul>
-<li>卷積核(Kernel)又稱為Filters<ul>
-<li>我們可以藉由選擇Kernel的張數控制 Feature maps</li>
+<li><strong>HDF5 格式（.h5 文件）</strong>：適合在開發過程中使用，尤其是在多次迭代、快速測試模型或需要保存和重新載入模型進行訓練時。</li>
+<li><strong>SavedModel 格式</strong>：適合於模型部署與生產環境中使用。</li>
 </ul>
-</li>
-</ul>
-<h2 id="_2">影像的上取樣</h2>
-<p>影像的上取樣正好和卷積的方式相反，我們可以通過正常的卷積讓影像越來越小，而上取樣則可以同樣通過卷積將影像變得越來越大，最後縮放成和原影像同樣大小的圖片。上取樣有3種常見的方法：雙線性插值(bilinear)，反摺積(Transposed Convolution)，反池化(Unpooling)。</p>
-<p>我們先來回顧一下正向卷積，也稱為下采樣，正向的卷積如下所示，首先我們擁有一個這樣的 3*3 的卷積核：</p>
-<p><img alt="" src="https://i.imgur.com/sppZpw2.png" /></p>
-<p>然後對一個<code>5*5</code>的特徵圖利用滑動視窗法進行卷積操作，padding=0,stride=1,kernel size=3,所以最後得到一個<code>3*3</code>的特徵圖：</p>
-<p><img alt="" src="https://i.imgur.com/CXNiU0A.png" /></p>
-<p>那麼上取樣呢？則是這樣的，我們假定輸入只是一個<code>2*2</code>的特徵圖，輸出則是一個<code>4*4</code>的特徵圖，我們首先將原始<code>2*2</code>的map進行周圍填充pading=2的操作，筆者查閱了很多資料才知道，這裡周圍都填充了數字0，周圍的padding並不是通過神經網路訓練得出來的數字。然後用一個kernel size=3，stride=1的感受野掃描這個區域，這樣就可以得到一個<code>4*4</code>的特徵圖了！：</p>
-<p><img alt="" src="https://i.imgur.com/72Va4Sz.png" /></p>
-<p>我們甚至可以把這個<code>2*2</code>的 feature map，每一個畫素點隔開一個空格，空格里的數字填充為0，周圍的padding填充的數字也全都為零，然後再繼續上取樣，得到一個<code>5*5</code>的特徵圖，如下所示：</p>
-<p><img alt="" src="https://i.imgur.com/DFDBNyq.png" /></p>
-<h2 id="11">1*1 卷積</h2>
-<p>吳恩達教授在講解卷積神經網路的時候，用到了一張十分經典的影像來表示1*1卷積：</p>
-<p><img alt="" src="https://i.imgur.com/zkmaieZ.png" /></p>
-<p>原本的特徵圖長寬為28，channel為192，我們可以通過這種卷積，使用32個卷積核將<code>28*28*192</code>變成一個<code>28*28*32</code>的特徵圖。在使用<code>1*1</code>卷積時，得到的輸出長款保持不變，channel數量和卷積核的數量相同。可以用抽象的3d立體圖來表示這個過程：</p>
-<p><img alt="" src="https://i.imgur.com/PAGjrVu.png" /></p>
-<p>因此我們可以通過控制卷積核的數量，將資料進行降維或者升維。增加或者減少channel，但是feature map的長和寬是不會改變的。</p>
-<h3 id="1-x-1">1 x 1 卷積計算舉例</h3>
-<p>後期GoogLeNet、ResNet 等經典模型中普遍使用一個像素大小的捲積核作為降低參數複雜度的手段。
-從下面的運算可以看到，其實1 x 1 卷積沒有什麼神秘的，其作用就是將輸入矩陣的通道數量縮減後輸出（512 降為32），並保持它在寬度和高度維度上的尺寸（227 x 227）。</p>
-<p><img alt="" src="https://i.imgur.com/VFiOYKD.png" /></p>
-<h2 id="feature-map">計算 Feature map</h2>
-<p>Feature map 的輸出大小與 Kernel size、Padding、Strides 有關。通常Padding 又可以分為兩類，分別為：</p>
-<ul>
-<li>Same Padding<ul>
-<li>在 Stride 為 1  時，會讓輸出Feature map 與輸入圖像維持一樣的尺寸。</li>
-</ul>
-</li>
-<li>Valid Padding<ul>
-<li>不會特別去補邊，因此會讓輸出的Feature map尺寸下降，而當遇到卷積無法完整卷積的狀況則會直接捨棄多出來的像素。</li>
-</ul>
-</li>
-</ul>
-<p>卷積過後Feature map尺寸可藉由下方公式計算。如果我們使用 <code>3*3</code> filter size， Padding =1, Stride=1，經過計算後就會發現Output=Input。
-<img alt="" src="https://i.imgur.com/LdyFBZJ.png" /></p>
-<blockquote>
-<p>Output = (Input-kernel+2*padding)/stride+1</p>
-<p>最基本就是 image size、kernel size 兩相減再加 1 (padding=0, stride=1 情況下)</p>
-</blockquote>
-<ul>
-<li><code>8*8</code> image 使用 <code>3*3</code> kernel, padding=0, stride=1 =&gt; <code>6*6</code> feature map</li>
-<li><code>5*5</code> image 使用 <code>3*3</code> kernel, padding=0, stride=1 =&gt; <code>3*3</code> feature map</li>
-<li><code>10*10</code> image 使用 <code>3*3</code> kernel, padding=0, stride=1 =&gt; <code>8*8</code> feature map</li>
-</ul>
-<p><img alt="" src="https://i.imgur.com/cWe6wT6.jpg" />
-<img alt="" src="https://i.imgur.com/54Wb2Sw.png" /></p>
-<h2 id="cnn">CNN 架構</h2>
-<p>基礎CNN圖像辨識模型架構如下圖所示。主要可以拆解為：</p>
-<blockquote>
-<p>輸入圖像→[卷積組合→最大池化(Max Pooling)]*n→攤平(Flatten)→全連接層(Fully Connected layers)→分類</p>
-</blockquote>
-<p>其中卷積組合又可以拆分：</p>
-<blockquote>
-<p>[卷積層→激勵函數(activation function)→Batch Normalization]=卷積組合</p>
-</blockquote>
-<p><img alt="" src="https://i.imgur.com/6i7ddKs.png" /> </p>
-<h2 id="_3">結論</h2>
-<ul>
-<li>1*1 卷積是拿來控制 channel 維度。</li>
-<li>上取樣是用來擴增 feature map。</li>
-<li>做卷積時也可以用 zero padding 讓圖片保持原來大小。</li>
-<li>2x2 的 Pooling 會讓圖小一半。</li>
-<li>使用 Relu 函數去掉負值，更能淬煉出物體的形狀</li>
-</ul>
-<h2 id="_4">筆記</h2>
-<ul>
-<li>理想中影像是一個二維的連續函數</li>
-<li>一張數位影像是一個 8bit</li>
-<li>卷積核就像對影像做加權運算</li>
-<li>透過卷積從低階輸入的能量萃取高階語意的資訊</li>
-</ul>
-<h2 id="reference">Reference</h2>
-<ul>
-<li><a href="https://chih-sheng-huang821.medium.com/卷積神經網路-convolutional-neural-network-cnn-卷積運算-池化運算-856330c2b703">卷積神經網路(Convolutional neural network, CNN) </a></li>
-<li><a href="https://cinnamonaitaiwan.medium.com/深度學習-cnn原理-keras實現-432fd9ea4935">深度學習：CNN原理</a></li>
-<li><a href="https://towardsdatascience.com/intuitively-understanding-convolutions-for-deep-learning-1f6f42faee1">Intuitively Understanding Convolutions for Deep Learning</a></li>
-<li><a href="https://docs.google.com/presentation/d/1AlZkqPa2FylxKsYs2mcz0tpJdgP0Lbno6bYM_fA4UzM/edit#slide=id.p1">著名CNN模型</a></li>
-</ul>
-<p>strides=2, pool=2 map 大小減半</p>
-<p>rmsle 會將大誤差放小</p>
+<p>延伸閱讀： <a href="https://andy6804tw.github.io/2021/03/29/tensorflow-save-model/">Tensorflow Keras 模型儲存</a></p>
+</div>
+<p>在保存模型之後，我們可以重新載入它並進行推論。</p>
+<div class="codehilite"><pre><span></span><span class="c1"># 載入模型並進行推論</span>
+<span class="n">loaded_model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="s1">&#39;dnn_classification_model&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;模型已成功載入&#39;</span><span class="p">)</span>
+
+<span class="c1"># 使用載入的模型進行推論</span>
+<span class="n">predicted_class</span> <span class="o">=</span> <span class="n">loaded_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;當輸入樣本為 </span><span class="si">{</span><span class="n">sample</span><span class="si">}</span><span class="s1"> 時，預測的類別為：</span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">predicted_class</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>除了使用 TensorFlow 內建的格式保存模型外，當模型訓練完成並準備正式部署於產品中時，也可以使用 ONNX（Open Neural Network Exchange）格式。ONNX 是一種開放格式，支持在不同深度學習框架之間進行模型轉換，使得模型可以通過 ONNX Runtime 在多種平台上執行，提高部署的靈活性。</p>
+</div>
+<h2 id="_1">結論</h2>
+<p>在本教學中，我們學會了如何使用 TensorFlow 構建一個簡單的深度神經網路來進行分類任務。我們從資料準備開始，一直到模型建構、訓練和評估，完整地了解了整個過程。接下來，你可以嘗試使用其他不同的資料集或改變模型結構，來進一步提高模型的準確度和效果。</p>
                 
                   
                 
@@ -871,7 +855,7 @@
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../../2.1深度學習簡介/" title="2.1 深度學習簡介" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../DNN Regression/" title="DNN Regression" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -880,19 +864,19 @@
                 <span class="md-footer-nav__direction">
                   上一頁
                 </span>
-                2.1 深度學習簡介
+                DNN Regression
               </span>
             </div>
           </a>
         
         
-          <a href="../3.2ResNet/" title="3.2 ResNet 殘差神經網路" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../../PyTorch 101/1. PyTorch 基礎介紹/" title="1. PyTorch 基礎介紹" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   下一頁
                 </span>
-                3.2 ResNet 殘差神經網路
+                1. PyTorch 基礎介紹
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">

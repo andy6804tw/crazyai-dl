@@ -11,7 +11,7 @@
       <meta http-equiv="x-ua-compatible" content="ie=edge">
       
       
-        <link rel="canonical" href="https://andy6804tw.github.io/crazyai-dl/TensoeFlow 101/1.TensorFlow 基礎介紹/">
+        <link rel="canonical" href="https://andy6804tw.github.io/crazyai-dl/TensorFlow 101 從零開始/TensorFlow 基礎介紹/">
       
       
         <meta name="author" content="10程式中">
@@ -40,7 +40,7 @@
     
     
       
-        <title>1. TensorFlow 基礎介紹</title>
+        <title>TensorFlow 基礎介紹</title>
       
     
     
@@ -119,7 +119,7 @@
             </span>
             <span class="md-header-nav__topic">
               
-                1. TensorFlow 基礎介紹
+                TensorFlow 基礎介紹
               
             </span>
           
@@ -464,14 +464,26 @@
       <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" checked>
     
     <label class="md-nav__link" for="nav-5">
-      TensoeFlow 101
+      TensorFlow 101 從零開始
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
       <label class="md-nav__title" for="nav-5">
-        TensoeFlow 101
+        TensorFlow 101 從零開始
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
         
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../" title="系列介紹" class="md-nav__link">
+      系列介紹
+    </a>
+  </li>
+
         
           
           
@@ -488,11 +500,11 @@
     
     
       <label class="md-nav__link md-nav__link--active" for="__toc">
-        1. TensorFlow 基礎介紹
+        TensorFlow 基礎介紹
       </label>
     
-    <a href="./" title="1. TensorFlow 基礎介紹" class="md-nav__link md-nav__link--active">
-      1. TensorFlow 基礎介紹
+    <a href="./" title="TensorFlow 基礎介紹" class="md-nav__link md-nav__link--active">
+      TensorFlow 基礎介紹
     </a>
     
       
@@ -641,6 +653,66 @@
   
 </nav>
     
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../DNN Regression/" title="DNN Regression" class="md-nav__link">
+      DNN Regression
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../DNN Classification/" title="DNN Classification" class="md-nav__link">
+      DNN Classification
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
+    
+    <label class="md-nav__link" for="nav-6">
+      PyTorch 101
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
+        PyTorch 101
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../PyTorch 101/1. PyTorch 基礎介紹/" title="1. PyTorch 基礎介紹" class="md-nav__link">
+      1. PyTorch 基礎介紹
+    </a>
   </li>
 
         
@@ -815,8 +887,14 @@
                 
                 
                 <h1 id="tensorflow">TensorFlow 基礎介紹</h1>
+<p>範例程式：<a href="https://colab.research.google.com/github/andy6804tw/crazyai-dl/blob/main/code/tensorflow/TensorFlow%20基礎介紹.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p>
 <p>TensorFlow 是一個由 Google 開發的機器學習平台，主要用於深度學習應用的開發和部署。它提供了豐富的工具集，從基礎層級的數學運算（如矩陣運算）到高層次的神經網絡構建，無論你是剛入門的初學者還是有經驗的研究者，TensorFlow 都是一個強大且靈活的工具。</p>
 <p>TensorFlow 能夠讓開發者方便地構建、訓練和部署深度學習模型。它被廣泛應用於影像分類、語音辨識、自然語言處理等領域，並支持多種計算平台，包括 CPU、GPU、以及 TPU，讓運算的效能能夠靈活擴展。</p>
+<p>首先，我們需要安裝並匯入相關套件。如果你還沒有安裝 TensorFlow，可以使用以下指令來安裝：</p>
+<div class="codehilite"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>tensorflow
+</pre></div>
+
+
 <h2 id="1-tensor">1. 張量（Tensor）</h2>
 <p>在 TensorFlow 中，張量（Tensor）是進行所有運算的基本單位。張量的概念與 NumPy 陣列類似，但張量具備更強的擴展性，特別適合 GPU 加速的運算需求。</p>
 <h3 id="11">1.1 張量的基本操作</h3>
@@ -1033,7 +1111,7 @@ TensorFlow 提供了一個強大的工具來進行自動微分，即 <code>tf.Gr
 
 
 <div class="admonition note">
-<p class="admonition-title">Note<p>在這裡，call 方法定義了前向傳播的邏輯，因此能夠完全掌控如何處理輸入和輸出，適合需要對模型進行特別處理的場合，例如自定義的訓練循環。</p>
+<p class="admonition-title">Note<p>在這裡，call 方法定義了前向傳播的邏輯，因此能夠完全掌控如何處理輸入和輸出，適合需要對模型進行特別處理的場合，例如自定義的訓練。</p>
 </p>
 </div>
 <h4 id="_1">綜合比較</h4>
@@ -1063,7 +1141,7 @@ TensorFlow 提供了一個強大的工具來進行自動微分，即 <code>tf.Gr
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../../5.Transformer架構/5.3Transformer/" title="5.3 Transformer 機制解說 (下)" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../" title="系列介紹" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -1072,11 +1150,25 @@ TensorFlow 提供了一個強大的工具來進行自動微分，即 <code>tf.Gr
                 <span class="md-footer-nav__direction">
                   上一頁
                 </span>
-                5.3 Transformer 機制解說 (下)
+                系列介紹
               </span>
             </div>
           </a>
         
+        
+          <a href="../DNN Regression/" title="DNN Regression" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  下一頁
+                </span>
+                DNN Regression
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
         
       </nav>
     </div>
