@@ -5,3 +5,5 @@ TaipeiSansTCBeta-Regular.ttf
 site
 material.md
 old
+*.pb
+*.h5
