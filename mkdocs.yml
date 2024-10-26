@@ -43,7 +43,10 @@ nav:
     - '5.Transformer架構/5.2Transformer.md'
     - '5.Transformer架構/5.3Transformer.md'
   - 'TensoeFlow 101':
-    - 'TensoeFlow 101/1.TensorFlow 基礎介紹.md'
+    - 'TensoeFlow 101/TensorFlow 基礎介紹.md'
+    - 'TensoeFlow 101/DNN Regression.md'
+  - 'PyTorch 101':
+    - 'PyTorch 101/1. PyTorch 基礎介紹.md'  
 
 markdown_extensions:
   - admonition
