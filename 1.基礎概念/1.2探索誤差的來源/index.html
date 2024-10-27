@@ -1,0 +1,1586 @@
+
+<!doctype html>
+<html lang="zh-TW" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="ML Lecture 2: Where does the error come from?">
+      
+      
+        <meta name="author" content="10程式中">
+      
+      
+        <link rel="canonical" href="https://andy6804tw.github.io/crazyai-dl/1.%E5%9F%BA%E7%A4%8E%E6%A6%82%E5%BF%B5/1.2%E6%8E%A2%E7%B4%A2%E8%AA%A4%E5%B7%AE%E7%9A%84%E4%BE%86%E6%BA%90/">
+      
+      
+        <link rel="prev" href="../1.1%E8%BF%B4%E6%AD%B8%E5%88%86%E6%9E%90/">
+      
+      
+        <link rel="next" href="../1.3%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E7%9A%84%E5%8E%9F%E7%90%86/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.42">
+    
+    
+      
+        <title>1.2 探索誤差的來源 - 全民瘋AI系列 [深度學習與神經網路]</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.0253249f.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+      <link rel="stylesheet" href="https://unpkg.com/katex@0/dist/katex.min.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="red" data-md-color-accent="red">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#ml-lecture-2-where-does-the-error-come-from" class="md-skip">
+          跳轉到
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="頁首">
+    <a href="../.." title="全民瘋AI系列 [深度學習與神經網路]" class="md-header__button md-logo" aria-label="全民瘋AI系列 [深度學習與神經網路]" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            全民瘋AI系列 [深度學習與神經網路]
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              1.2 探索誤差的來源
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜尋" placeholder="搜尋" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="搜尋">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清除" aria-label="清除" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜尋引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/andy6804tw/crazyai-dl" title="前往倉庫" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="導覽列" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="全民瘋AI系列 [深度學習與神經網路]" class="md-nav__button md-logo" aria-label="全民瘋AI系列 [深度學習與神經網路]" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    全民瘋AI系列 [深度學習與神經網路]
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/andy6804tw/crazyai-dl" title="前往倉庫" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    1.基礎概念
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            1.基礎概念
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1.1%E8%BF%B4%E6%AD%B8%E5%88%86%E6%9E%90/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1.1 迴歸分析
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    1.2 探索誤差的來源
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    1.2 探索誤差的來源
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目錄">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目錄
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      誤差的主要來源
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      機器學習模型
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      估測隨機變數的平均值與變異數
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="估測隨機變數的平均值與變異數">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      估測平均值
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      估測變異數
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      以射標靶為例，說明誤差產生的原因
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      比較簡單和複雜模型的差別
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="比較簡單和複雜模型的差別">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#variance" class="md-nav__link">
+    <span class="md-ellipsis">
+      觀察Variance
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bias" class="md-nav__link">
+    <span class="md-ellipsis">
+      觀察Bias
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#overfitting-underfitting" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overfitting 與 Underfitting
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#biasvariance" class="md-nav__link">
+    <span class="md-ellipsis">
+      如何判斷bias大還是variance大？
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="如何判斷bias大還是variance大？">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bias_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bias 過大
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#variance_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Variance 過大
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      如何挑選合適模型？
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="如何挑選合適模型？">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#testing-set" class="md-nav__link">
+    <span class="md-ellipsis">
+      錯誤示範：僅依賴手上的 Testing Set
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#public-set" class="md-nav__link">
+    <span class="md-ellipsis">
+      為什麼 Public Set 的結果不可靠？
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      正確做法：如何可靠地選擇模型？
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="正確做法：如何可靠地選擇模型？">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cross-validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      交叉驗證（Cross-Validation）
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#k-k-fold-cross-validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      K 折交叉驗證（K-fold Cross Validation）
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1.3%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E7%9A%84%E5%8E%9F%E7%90%86/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1.3 梯度下降的原理
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1.4%E5%88%86%E9%A1%9E%E5%95%8F%E9%A1%8C/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1.4 分類問題
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1.5%E9%82%8F%E8%BC%AF%E8%BF%B4%E6%AD%B8/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1.5 邏輯迴歸
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    2.深度神經網路
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            2.深度神經網路
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../2.%E6%B7%B1%E5%BA%A6%E7%A5%9E%E7%B6%93%E7%B6%B2%E8%B7%AF/2.1%E6%B7%B1%E5%BA%A6%E5%AD%B8%E7%BF%92%E7%B0%A1%E4%BB%8B/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2.1 深度學習簡介
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    3. 卷積神經網路
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            3. 卷積神經網路
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../3.%E5%8D%B7%E7%A9%8D%E7%A5%9E%E7%B6%93%E7%B6%B2%E8%B7%AF/3.1CNN/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3.1CNN
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../3.%E5%8D%B7%E7%A9%8D%E7%A5%9E%E7%B6%93%E7%B6%B2%E8%B7%AF/3.2ResNet/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3.2 ResNet 殘差神經網路
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    5.Transformer架構
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            5.Transformer架構
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../5.Transformer%E6%9E%B6%E6%A7%8B/5.1Attention%20Is%20All%20You%20Need/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5.1 Transformer — Attention Is All You Need
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../5.Transformer%E6%9E%B6%E6%A7%8B/5.2Transformer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5.2 Transformer 機制解說 (上)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../5.Transformer%E6%9E%B6%E6%A7%8B/5.3Transformer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5.3 Transformer 機制解說 (下)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    TensorFlow 101 從零開始
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            TensorFlow 101 從零開始
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../TensorFlow%20101%20%E5%BE%9E%E9%9B%B6%E9%96%8B%E5%A7%8B/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    系列介紹
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../TensorFlow%20101%20%E5%BE%9E%E9%9B%B6%E9%96%8B%E5%A7%8B/TensorFlow%20%E5%9F%BA%E7%A4%8E%E4%BB%8B%E7%B4%B9/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    TensorFlow 基礎介紹
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../TensorFlow%20101%20%E5%BE%9E%E9%9B%B6%E9%96%8B%E5%A7%8B/DNN%20Regression/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DNN Regression
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../TensorFlow%20101%20%E5%BE%9E%E9%9B%B6%E9%96%8B%E5%A7%8B/DNN%20Classification/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DNN Classification
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    PyTorch 101
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            PyTorch 101
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../PyTorch%20101/1.%20PyTorch%20%E5%9F%BA%E7%A4%8E%E4%BB%8B%E7%B4%B9/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. PyTorch 基礎介紹
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目錄">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目錄
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      誤差的主要來源
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      機器學習模型
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      估測隨機變數的平均值與變異數
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="估測隨機變數的平均值與變異數">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      估測平均值
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      估測變異數
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      以射標靶為例，說明誤差產生的原因
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      比較簡單和複雜模型的差別
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="比較簡單和複雜模型的差別">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#variance" class="md-nav__link">
+    <span class="md-ellipsis">
+      觀察Variance
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bias" class="md-nav__link">
+    <span class="md-ellipsis">
+      觀察Bias
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#overfitting-underfitting" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overfitting 與 Underfitting
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#biasvariance" class="md-nav__link">
+    <span class="md-ellipsis">
+      如何判斷bias大還是variance大？
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="如何判斷bias大還是variance大？">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bias_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bias 過大
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#variance_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Variance 過大
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      如何挑選合適模型？
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="如何挑選合適模型？">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#testing-set" class="md-nav__link">
+    <span class="md-ellipsis">
+      錯誤示範：僅依賴手上的 Testing Set
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#public-set" class="md-nav__link">
+    <span class="md-ellipsis">
+      為什麼 Public Set 的結果不可靠？
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      正確做法：如何可靠地選擇模型？
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="正確做法：如何可靠地選擇模型？">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cross-validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      交叉驗證（Cross-Validation）
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#k-k-fold-cross-validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      K 折交叉驗證（K-fold Cross Validation）
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+  
+<nav class="md-tags" >
+  
+    
+    
+    
+      <a href="../../tags/#" class="md-tag">基礎概念</a>
+    
+  
+    
+    
+    
+      <a href="../../tags/#" class="md-tag">李宏毅</a>
+    
+  
+</nav>
+
+
+
+<h1 id="ml-lecture-2-where-does-the-error-come-from">ML Lecture 2: Where does the error come from?</h1>
+<h2 id="_1">誤差的主要來源</h2>
+<p>在機器學習中，誤差（Error）主要來自兩個來源：</p>
+<ol>
+<li><strong>Variance（變異）</strong></li>
+<li><strong>Bias（偏差）</strong></li>
+</ol>
+<p>了解這兩種誤差的來源有助於我們釐清模型預測不佳的原因，並有助於設計更精準的機器學習模型。接下來，我們將從統計的角度深入探討這兩種誤差來源。</p>
+<h2 id="_2">機器學習模型</h2>
+<p>假設我們有一個真實的環境，其真實函數為 <span class="arithmatex">\(\hat{f}\)</span>。我們可以透過從這個環境中收集資料，並訓練一個模型，得到對 <span class="arithmatex">\(\hat{f}\)</span> 的估計函數 <span class="arithmatex">\(f^{*}\)</span>。<span class="arithmatex">\(f^{*}\)</span> 與 <span class="arithmatex">\(\hat{f}\)</span> 之間的差異，主要來源於<strong>偏差（Bias）</strong>和<strong>變異（Variance）</strong>。</p>
+<p><img alt="" src="../image/img1.2.1.png" /></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><span class="arithmatex">\(\hat{f}\)</span> 代表真實的函數(即標準答案，例如真實系統)，而 <span class="arithmatex">\(f^{*}\)</span> 是模型學習後所得到的最佳估計函數。<span class="arithmatex">\(f^{*}\)</span> 與 <span class="arithmatex">\(\hat{f}\)</span> 之間的誤差可能來自偏差（Bias）或變異（Variance）。</p>
+</div>
+<h2 id="_3">估測隨機變數的平均值與變異數</h2>
+<p>舉個機率統計的例子，假設我們有一個隨機變數 <span class="arithmatex">\(x\)</span>，其真實平均值為 <span class="arithmatex">\(\mu\)</span>。為了估計這個平均值，我們從母體中隨機抽取 <span class="arithmatex">\(N\)</span> 個樣本點，並計算這些樣本的平均值 <span class="arithmatex">\(\bar{m}\)</span>。由於我們進行的是抽樣，因此樣本平均值 <span class="arithmatex">\(\bar{m}\)</span> 並不一定等於真實平均值 <span class="arithmatex">\(\mu\)</span>。</p>
+<h3 id="_4">估測平均值</h3>
+<p>如果我們多次重複這個抽樣過程，每次抽取 <span class="arithmatex">\(N\)</span> 個樣本並計算平均值，可能會得到不同的樣本平均值。例如，進行六次實驗後，得到的樣本平均值分別為 <span class="arithmatex">\(m_1, m_2, m_3, m_4, m_5,\)</span> 和 <span class="arithmatex">\(m_6\)</span>。這些樣本平均值與真實平均值 <span class="arithmatex">\(\mu\)</span> 的接近程度會有所不同，這種變動的原因主要來自於偏差（Bias）和變異（Variance）。</p>
+<p><img alt="" src="../image/img1.2.2.png" /></p>
+<p>如附圖所示，當我們多次進行抽樣並計算樣本平均值後，可以發現樣本平均值的期望 <span class="arithmatex">\(\mathbb{E}[\bar{m}]\)</span> 會趨近於真實平均值 <span class="arithmatex">\(\mu\)</span>。這意味著，雖然單次抽樣結果可能與 <span class="arithmatex">\(\mu\)</span> 有所差距，但透過多次抽樣得到的平均值 <span class="arithmatex">\(\bar{m}\)</span> 是無偏的估計。</p>
+<p>公式上可以表示為：</p>
+<div class="arithmatex">\[
+\mathbb{E}[\bar{m}] = \mathbb{E} \left[ \frac{1}{N} \sum_{n=1}^{N} x^n \right] = \frac{1}{N} \sum_{n=1}^{N} \mathbb{E}[x^n] = \mu
+\]</div>
+<p>因此，透過多次實驗與抽樣計算，我們可以得到一個接近母體真實平均值的估計結果，這也是統計學中所謂的「無偏估計」的概念。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>每個樣本平均值 <span class="arithmatex">\(\bar{m}\)</span> 不一定等於真實平均值 <span class="arithmatex">\(\mu\)</span>，但若我們取多個 <span class="arithmatex">\(\bar{m}\)</span> 的期望值，最終會趨近於 <span class="arithmatex">\(\mu\)</span>。這種情況類似於打靶時，子彈雖然分佈在靶心周圍，但不會全部命中靶心。子彈散佈的範圍取決於變異（Variance），反映了樣本平均值的波動程度。</p>
+</div>
+<p>由於各次採樣得到的平均數是散開的，我們可以透過計算平均數的變異數，觀察出採樣次數與平均值分散程度的關係。</p>
+<div class="arithmatex">\[
+\text{Var}[\bar{m}] = \frac{\sigma^2}{N}
+\]</div>
+<p>其中 <span class="arithmatex">\(\sigma^2\)</span> 是隨機變數 <span class="arithmatex">\(x\)</span> 的真實變異數，而 <span class="arithmatex">\(N\)</span> 是抽樣的樣本數。當我們取較多樣本數 <span class="arithmatex">\(N\)</span> 時，變異會隨之減少，因此樣本平均值的分佈會更集中在真實平均值 <span class="arithmatex">\(\mu\)</span> 附近；反之，當樣本數 <span class="arithmatex">\(N\)</span> 較少時，變異較大，樣本平均值的分佈範圍也會較為分散。這說明了樣本數量對變異的影響——抽樣越多次，估計結果越穩定，越接近於無偏的真實值 <span class="arithmatex">\(\mu\)</span>。</p>
+<p><img alt="" src="../image/img1.2.3.png" /></p>
+<h3 id="_5">估測變異數</h3>
+<p>首先，我們可以使用前述方法估計出母體的平均值 <span class="arithmatex">\(\mu\)</span>，接著將這個估計值代入下列公式來計算樣本變異數 <span class="arithmatex">\(s^2\)</span>：</p>
+<div class="arithmatex">\[
+s^2 = \frac{1}{N} \sum_{n=1}^{N} (x^n - m)^2
+\]</div>
+<p>我們一樣可以進行六次實驗，得到六組不同的 <span class="arithmatex">\(s^2\)</span>。米嗯可以發現，使用各組樣本計算得到的 <span class="arithmatex">\(s^2\)</span> 並不一定等於真正的母體變異數 <span class="arithmatex">\(\sigma^2\)</span>。即便我們對這些樣本變異數 <span class="arithmatex">\(s^2\)</span> 取期望值，其結果仍然帶有偏差（Bias），無法完全等於 <span class="arithmatex">\(\sigma^2\)</span>。如附圖所示，當取期望值後，<span class="arithmatex">\(s^2\)</span> 的估計結果與真實的 <span class="arithmatex">\(\sigma^2\)</span> 之間存在系統性的偏差。</p>
+<p><img alt="" src="../image/img1.2.4.png" /></p>
+<p>這種偏差使得樣本變異數 <span class="arithmatex">\(s^2\)</span> 往往略小於母體的變異數 <span class="arithmatex">\(\sigma^2\)</span>，雖然有時也可能因樣本的波動而略高於 <span class="arithmatex">\(\sigma^2\)</span>。實際上，這種偏差可透過調整公式來減少，使樣本變異數的估計更加接近 <span class="arithmatex">\(\sigma^2\)</span>。當樣本數 <span class="arithmatex">\(N\)</span> 趨於無限大時，樣本變異數 <span class="arithmatex">\(s^2\)</span> 的期望值將逐漸趨近於真正的 <span class="arithmatex">\(\sigma^2\)</span>，即樣本變異數的估計會隨著樣本數的增加而越趨精確。</p>
+<h2 id="_6">以射標靶為例，說明誤差產生的原因</h2>
+<p>誤差的來源可以分為兩個方面：</p>
+<ol>
+<li><strong>瞄準的準確性（Bias）</strong>：指的是瞄準時的偏移程度，代表模型的平均預測值與目標值之間的距離。如果偏移過大，表示模型的 Bias 很高。</li>
+<li><strong>散佈的範圍（Variance）</strong>：即便瞄準在一個特定位置，但每次射擊的結果仍會有一定的偏移。這些偏移分佈的廣度反映了模型的 Variance。</li>
+</ol>
+<p><img alt="" src="../image/img1.2.5.png" /></p>
+<p>在附圖中可以看到不同組合的 Bias 和 Variance 所導致的效果：</p>
+<ul>
+<li><strong>左上角（低 Bias, 低 Variance）</strong>：這是理想狀況，模型既準確又穩定。每個點都集中在靶心附近，誤差很小。</li>
+<li><strong>右上角（低 Bias, 高 Variance）</strong>：這個情況下，模型的瞄準位置準確（低 Bias），但每次的結果散佈較大（高 Variance）。造成誤差的主因在於 Variance，導致樣本點分佈較分散。</li>
+<li><strong>左下角（高 Bias, 低 Variance）</strong>：在此情況中，模型的瞄準位置出現較大偏移（高 Bias），但結果相對穩定（低 Variance），即所有點集中在同一處，但整體位置偏離靶心，形成較大誤差。</li>
+<li><strong>右下角（高 Bias, 高 Variance）</strong>：這是最不理想的狀況，模型既偏離靶心（高 Bias），又散佈較大（高 Variance），每次的結果都偏離目標，且分佈不穩定。</li>
+</ul>
+<details class="tip">
+<summary>補充說明（稍後會提到）</summary>
+<p>依據每種情況的需求，選擇合適的方法可以更有效地降低模型的誤差並提升預測表現。總結來說，解決不同組合情況的方法如下：</p>
+<ul>
+<li><strong>低 Bias, 高 Variance</strong>：增加訓練數據、簡化模型結構、正則化、交叉驗證。</li>
+<li><strong>高 Bias, 低 Variance</strong>：增加模型複雜度、特徵工程、減少正則化。</li>
+<li><strong>高 Bias, 高 Variance</strong>：重新設計模型、增加訓練數據、特徵工程、調整正則化。</li>
+</ul>
+</details>
+<p>每個點代表一次模型訓練的結果，也可以理解為一條迴歸線的「表現」。若模型的誤差過大，它的預測結果將偏離靶心（真實值）。透過理解 Bias 和 Variance 的組合影響，我們可以更有效地調整模型以降低誤差，使模型表現更接近靶心。</p>
+<h2 id="_7">比較簡單和複雜模型的差別</h2>
+<p>事實上，即使是相同的模型，使用不同的訓練資料所產生的結果也可能有所不同。接下來，我們將以「線條」的方式來觀察，當「對相同模型使用不同的訓練資料」時，所產生結果的特性是如何變化的。</p>
+<h3 id="variance">觀察Variance</h3>
+<p>當使用簡單模型時，即使訓練資料有所變動，模型的預測結果也不會有太大的影響。這是因為簡單模型結構穩定，對訓練數據的依賴程度較低，因此不同樣本集帶來的結果差異較小，變異（Variance）也較小(如下左圖)。</p>
+<p>然而，當使用複雜模型時，不同的訓練資料會對模型結果產生較大影響(如下右圖)。複雜模型因具備更高的靈活性，能夠擬合數據的細微變化，但這也使得其在不同訓練樣本上表現出較大的波動，Variance 更高。</p>
+<p><img alt="" src="../image/img1.2.6.png" /></p>
+<p>因此，簡單模型較不受 Variance 影響，能夠提供穩定的預測；而複雜模型雖然擁有更高的擬合能力，但在不同訓練數據下容易出現不穩定，對 Variance 的敏感度較高。正如附圖所示，簡單模型在多組訓練資料下的預測結果一致性較高，而複雜模型則顯示出明顯的波動。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul>
+<li>當使用簡單模型時，不同訓練資料對模型的影響較小</li>
+<li>當使用複雜模型時，則會因訓練資料的不同產生較大的影響。</li>
+</ul>
+</div>
+<h3 id="bias">觀察Bias</h3>
+<p>接下來我們來探討 Bias。在下圖中，黑線代表真實資料的分佈，所有資料點皆來自這條曲線；紅線表示經過 5000 次取樣後，不同模型的訓練結果；而藍線則為這 5000 個模型結果的平均值。</p>
+<p><img alt="" src="../image/img1.2.7.png" /></p>
+<p>從圖中我們可以觀察到以下現象：</p>
+<ul>
+<li><strong>簡單模型</strong>（左圖）的平均結果離真實資料的黑線較遠，顯示出偏差（Bias）較大，這意味著簡單模型難以捕捉真實資料的特徵。</li>
+<li><strong>複雜模型</strong>（右圖）的預測雖然看起來雜亂，但多個模型的平均結果（藍線）非常接近真實資料的黑線，表示複雜模型對 Bias 的影響較小，能夠更精準地擬合真實資料。</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>結論</strong>：簡單模型因 Bias 產生的誤差較大；而複雜模型對 Bias 的影響較小，因此產生的誤差也較低。</p>
+<p>為什麼會出現這樣的現象呢？從圖中下方的靶可以觀察到：</p>
+<ul>
+<li><strong>簡單模型</strong>的特徵較為有限，因此即便找到誤差最小的結果，模型的平均預測值仍會與靶心（真實值）有一定距離，導致 Bias 較大。</li>
+<li><strong>複雜模型</strong>在設計上包含了靶心的可能性，雖然它的結果較為分散（高 Variance），且難以找到唯一最佳解，但透過多次取樣後的平均值會逐漸靠近靶心，使得 Bias 較小。</li>
+</ul>
+<p>因此，簡單模型偏向於穩定但偏離真實值，而複雜模型則雖有較大的波動性，但在多次取樣下可以更接近真實值。</p>
+</div>
+<h2 id="overfitting-underfitting">Overfitting 與 Underfitting</h2>
+<p>圖中的藍線代表模型複雜度與誤差之間的關係，表示隨著模型複雜度的增加，誤差的變化趨勢。這條線是由紅線和綠線共同作用形成的，其中：</p>
+<ul>
+<li><strong>紅線</strong>表示由 Bias 所產生的誤差，隨著模型複雜度的增加，Bias 逐漸減少。</li>
+<li><strong>綠線</strong>表示由 Variance 所產生的誤差，隨著模型複雜度的增加，Variance 則逐漸增大。</li>
+</ul>
+<p><img alt="" src="../image/img1.2.8.png" /></p>
+<p>在紅線和綠線交叉的區域，可以達到較低的總誤差，這就是模型的最佳平衡點。當模型的複雜度過低時，誤差主要來自於 Bias，此時模型無法充分擬合數據，稱為 <strong>Underfitting</strong>。相反地，當模型的複雜度過高時，誤差主要來自於 Variance，此時模型過度擬合訓練數據，稱為 <strong>Overfitting</strong>。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul>
+<li><strong>欠擬合 Underfitting</strong>: 過於簡單的模型使得預測結果彈性不高，訓練集與測試集表現都不好。(高 Bias, 低 Variance)。</li>
+<li><strong>過擬合 Overfitting</strong>: 過於複雜的模型使得訓練集完整的被擬合，因此訓練集表現極好，但測試集表現不佳。(低 Bias, 高 Variance)。</li>
+</ul>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">延伸閱讀</p>
+<ul>
+<li><a href="https://andy6804tw.github.io/crazyai-ml/24.不能忽視的過擬合與欠擬合/">機器學習 - 不能忽視的過擬合與欠擬合</a></li>
+</ul>
+</div>
+<h2 id="biasvariance">如何判斷bias大還是variance大？</h2>
+<h3 id="bias_1">Bias 過大</h3>
+<p>如果模型的 Bias 過大，表示模型無法擬合訓練資料，即使不斷調整，也難以降低 Training Loss（Error）。這通常意味著模型的結構太簡單，未能包含真實答案，因此即便增加再多的訓練資料，Training Loss 仍然無法降低。</p>
+<ul>
+<li><strong>現象</strong>：訓練資料的誤差（Training Loss）很大。</li>
+<li><strong>原因</strong>：模型的假設過於簡單，無法捕捉資料的真實模式。</li>
+<li><strong>解決方式</strong>：通常需要重新設計模型。可以考慮增加模型的複雜度（例如，從一次式變成二次式），或引入更多特徵，使模型更接近資料的真實分佈。</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>在這種情況下，增加訓練資料無法改善模型表現，因為問題出在模型結構本身不具備包含正確答案的能力。</p>
+</div>
+<h3 id="variance_1">Variance 過大</h3>
+<p>若訓練完模型後，發現 Training Loss 很小但 Testing Error 很大，這表明模型的 Variance 過大。模型可能過度擬合訓練資料，即使在訓練資料上表現良好，但在測試資料上則表現不佳。</p>
+<ul>
+<li><strong>現象</strong>：訓練資料誤差很小，而測試資料誤差很大。</li>
+<li><strong>原因</strong>：模型過度擬合訓練資料，捕捉了許多不必要的細節（例如，雜訊），導致測試資料的預測結果不穩定。</li>
+<li><strong>解決方式</strong>：</li>
+</ul>
+<p>1.<strong>增加更多訓練資料</strong>：增大資料量有助於平衡模型，使其更具泛化能力，從而減少無效區域。舉例來說，如果原先模型只使用少量樣本訓練（如 10 筆），可以將樣本量增加到 100 筆。這樣一來，模型會更穩定，Variance 也會降低。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>現實中，獲取更多資料可能不易，因此可以考慮利用數據增強技術來生成更多資料。例如：</p>
+<ul>
+<li><strong>圖像辨識</strong>：可將圖像稍微傾斜角度或是翻轉，增加樣本量。</li>
+<li><strong>語音辨識</strong>：若女性聲音樣本不足，可將男性聲音的音高調高來模擬女性聲音。</li>
+<li><strong>瑕疵樣本</strong>：透過生成式AI技術模擬產生更多的瑕疵樣本。</li>
+</ul>
+</div>
+<p>2.<strong>簡化模型結構</strong>：考慮減少模型的複雜度，像是降低神經網絡的層數或節點數，這可以減少模型的靈活性，降低 Variance，並使模型更具泛化能力。  </p>
+<p>3.<strong>正則化（Regularization）</strong>：簡單來說就是避免模型太複雜，可以在 Loss Function 中加入正則化項，限制模型的過度擬合。正則化會讓模型變得更平滑，減少無效區域的出現，從而降低 Variance。以下是有無使用正則化的對比圖：</p>
+<p><img alt="Regularization 對比" src="https://i.imgur.com/vUBIug2.png" /></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>雖然正則化可以減少 Variance，但也可能會稍微增加 Bias，因為模型被限制後，可能無法完全擬合某些複雜模式。</p>
+</div>
+<p>4.<strong>交叉驗證（Cross-Validation）</strong>：使用交叉驗證可以更好地評估模型的泛化能力。在交叉驗證中，數據集被分為多個子集，模型輪流在不同的子集上進行訓練和測試。這種方法可以減少模型對單一訓練集的依賴，有助於檢測和防止過度擬合，並確保降低 Variance。</p>
+<h2 id="_8">如何挑選合適模型？</h2>
+<p>在設計模型時，往往可以選擇多種模型架構與參數組合。在選擇模型時，應該考量 <strong>Bias</strong> 與 <strong>Variance</strong>，希望在這兩者之間取得平衡，最終讓模型在 Testing Data 上達到最低的誤差。</p>
+<h3 id="testing-set">錯誤示範：僅依賴手上的 Testing Set</h3>
+<p>如果你也是這麼做的，請看完這篇文章後務必改變做法！錯誤的方式是：假設已訓練了三種模型 Model 1、Model 2、Model 3，僅根據手上 Testing Set（Public Testing Set）上的最小誤差來選擇最終模型。然而，這個 Testing Set 只是我們手上測試資料的一部分，並不代表真正的 Testing Set（Private Testing Set）。</p>
+<p><img alt="" src="../image/img1.2.9.png" /></p>
+<p>僅依賴 Public Testing Set 選擇模型，會產生偏誤，因為我們看不到 Private Testing Set 的結果，無法確保模型的泛化能力。在 Kaggle 競賽中，Public Leaderboard 顯示的結果僅基於部分測試資料，因此即使在 Public Testing Set 上表現良好，也不保證在 Private Testing Set 上有同樣的表現。</p>
+<h3 id="public-set">為什麼 Public Set 的結果不可靠？</h3>
+<p>這裡舉個例子，在 Kaggle 競賽中，Public Testing Set 只是測試資料的一部分，模型可能會過度擬合 Public Testing Set，導致在 Private Testing Set 上的表現不佳。這就是為什麼僅憑 Public Leaderboard 的排名來選擇模型是不可靠的，因為最終 Private Leaderboard 才是最終的評估標準。</p>
+<p><img alt="" src="../image/img1.2.10.png" /></p>
+<h3 id="_9">正確做法：如何可靠地選擇模型？</h3>
+<p>為了提升模型在未知測試資料上的泛化能力，可以採取以下方法：</p>
+<ol>
+<li>
+<p><strong>交叉驗證（Cross-Validation）</strong>：將訓練資料分成多個子集，進行交叉驗證，觀察模型在不同子集上的表現，以便獲得更穩定的評估結果。</p>
+</li>
+<li>
+<p><strong>K 折交叉驗證（K-fold Cross Validation）</strong>：將訓練資料劃分為 K 個子集，每次使用其中一個子集作為驗證集，其餘 K-1 個子集作為訓練集。重複 K 次，以確保每個子集都被用作驗證集一次，最終取所有結果的平均值，獲得更穩定且可靠的評估。</p>
+</li>
+</ol>
+<h4 id="cross-validation">交叉驗證（Cross-Validation）</h4>
+<p>首先，將原本的 Training Set 分成兩部分：Training Set 和 Validation Set。在訓練過程中，只使用分出來的 Training Set 來訓練模型，訓練完後，再用 Validation Set 評估模型的表現。透過 Validation Set 的結果，可以挑選出一個表現較佳的模型。</p>
+<p>接著，將分開的兩個資料集合併回成完整的 Training Set，並用這個完整的 Training Set 在選出的最佳模型上再訓練一次，如此可以充分利用所有的訓練資料，而不必擔心訓練資料量減少會影響模型的表現。</p>
+<p><img alt="" src="../image/img1.2.11.png" /></p>
+<p>這樣做的好處 如附圖所示，我們已經透過 Validation Set 找到最佳模型。然而，這個模型在 Testing Set 上的誤差可能比在 Validation Set 上的誤差更大。這樣的誤差變化正好反映出，模型在使用未見過的資料（如 Testing Set 或實際應用中的新數據）時，可能的真實誤差。這樣的驗證方式可以幫助我們挑選出更具泛化能力的模型，提升模型在未知數據上的表現。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>你可能會擔心，分出來的 Validation Set 也可能帶有偏差（bias），導致模型在這部分資料上出現過擬合的情況。因此，可以考慮進行 K 次交叉驗證來減少這種偏誤的影響。</p>
+</div>
+<h3 id="k-k-fold-cross-validation">K 折交叉驗證（K-fold Cross Validation）</h3>
+<p>如果擔心分出來的 Validation Set 含有偏誤（bias），可以使用 K 折交叉驗證來減少這種情況的影響。以下以 3 折交叉驗證（3-fold Cross Validation）為例說明：</p>
+<p>在訓練前，先將資料集分成三等份，每次選擇其中兩份作為 Training Set，另一份作為 Validation Set。每次訓練後，使用該次的 Validation Set 評估模型的表現，並記錄誤差。完成 3 次驗證後，取各次得到的誤差平均值，選擇平均誤差最低的模型。</p>
+<p><img alt="" src="../image/img1.2.12.png" /></p>
+<p>接著，將所有的 Training Set 資料合併為一個完整的集合，並用這個集合重新訓練選出的最佳模型。最後，使用 Public Testing Set 進行模型評估，得到的誤差應該會較為接近在 Private Set 中的真實誤差。</p>
+<div class="admonition abstract">
+<p class="admonition-title">延伸閱讀</p>
+<ul>
+<li><a href="https://andy6804tw.github.io/crazyai-ml/25.交叉驗證%20Cross-Validation%20簡介/">交叉驗證 Cross-Validation 簡介</a></li>
+<li><a href="https://andy6804tw.github.io/crazyai-ml/26.交叉驗證%20K-Fold%20Cross-Validation/">交叉驗證 K-Fold Cross-Validation</a></li>
+<li><a href="https://www.chioka.in/how-to-select-your-final-models-in-a-kaggle-competitio/">How to Select Your Final Models in a Kaggle Competition</a></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © 2023 - 2024 10程式中
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "\u7f3a\u5c11\u5b57\u8a5e", "select.version": "\u9078\u64c7\u7248\u672c"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+        <script src="../../javascripts/extra.js"></script>
+      
+        <script src="../../javascripts/katex.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/katex.min.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/contrib/auto-render.min.js"></script>
+      
+    
+  </body>
+</html>

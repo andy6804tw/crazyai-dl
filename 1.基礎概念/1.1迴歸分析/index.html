@@ -1,0 +1,1196 @@
+
+<!doctype html>
+<html lang="zh-TW" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="ML Lecture 1: Regression - case study">
+      
+      
+        <meta name="author" content="10程式中">
+      
+      
+        <link rel="canonical" href="https://andy6804tw.github.io/crazyai-dl/1.%E5%9F%BA%E7%A4%8E%E6%A6%82%E5%BF%B5/1.1%E8%BF%B4%E6%AD%B8%E5%88%86%E6%9E%90/">
+      
+      
+      
+        <link rel="next" href="../1.2%E6%8E%A2%E7%B4%A2%E8%AA%A4%E5%B7%AE%E7%9A%84%E4%BE%86%E6%BA%90/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.42">
+    
+    
+      
+        <title>1.1 迴歸分析 - 全民瘋AI系列 [深度學習與神經網路]</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.0253249f.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+      <link rel="stylesheet" href="https://unpkg.com/katex@0/dist/katex.min.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="red" data-md-color-accent="red">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#ml-lecture-1-regression-case-study" class="md-skip">
+          跳轉到
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="頁首">
+    <a href="../.." title="全民瘋AI系列 [深度學習與神經網路]" class="md-header__button md-logo" aria-label="全民瘋AI系列 [深度學習與神經網路]" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            全民瘋AI系列 [深度學習與神經網路]
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              1.1 迴歸分析
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜尋" placeholder="搜尋" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="搜尋">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清除" aria-label="清除" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜尋引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/andy6804tw/crazyai-dl" title="前往倉庫" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="導覽列" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="全民瘋AI系列 [深度學習與神經網路]" class="md-nav__button md-logo" aria-label="全民瘋AI系列 [深度學習與神經網路]" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    全民瘋AI系列 [深度學習與神經網路]
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/andy6804tw/crazyai-dl" title="前往倉庫" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    1.基礎概念
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            1.基礎概念
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    1.1 迴歸分析
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    1.1 迴歸分析
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目錄">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目錄
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      第一步:尋找一個模型
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      第二步:判斷函數的好壞
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      第三步:根據定義的損失函數找到一組好的參數
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      梯度下降法的原理
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="梯度下降法的原理">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      兩個待優化參數
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      多個待優化參數
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#regularization" class="md-nav__link">
+    <span class="md-ellipsis">
+      避免過度擬合(Regularization)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reference
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1.2%E6%8E%A2%E7%B4%A2%E8%AA%A4%E5%B7%AE%E7%9A%84%E4%BE%86%E6%BA%90/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1.2 探索誤差的來源
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1.3%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E7%9A%84%E5%8E%9F%E7%90%86/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1.3 梯度下降的原理
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1.4%E5%88%86%E9%A1%9E%E5%95%8F%E9%A1%8C/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1.4 分類問題
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1.5%E9%82%8F%E8%BC%AF%E8%BF%B4%E6%AD%B8/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1.5 邏輯迴歸
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    2.深度神經網路
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            2.深度神經網路
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../2.%E6%B7%B1%E5%BA%A6%E7%A5%9E%E7%B6%93%E7%B6%B2%E8%B7%AF/2.1%E6%B7%B1%E5%BA%A6%E5%AD%B8%E7%BF%92%E7%B0%A1%E4%BB%8B/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2.1 深度學習簡介
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    3. 卷積神經網路
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            3. 卷積神經網路
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../3.%E5%8D%B7%E7%A9%8D%E7%A5%9E%E7%B6%93%E7%B6%B2%E8%B7%AF/3.1CNN/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3.1CNN
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../3.%E5%8D%B7%E7%A9%8D%E7%A5%9E%E7%B6%93%E7%B6%B2%E8%B7%AF/3.2ResNet/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3.2 ResNet 殘差神經網路
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    5.Transformer架構
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            5.Transformer架構
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../5.Transformer%E6%9E%B6%E6%A7%8B/5.1Attention%20Is%20All%20You%20Need/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5.1 Transformer — Attention Is All You Need
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../5.Transformer%E6%9E%B6%E6%A7%8B/5.2Transformer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5.2 Transformer 機制解說 (上)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../5.Transformer%E6%9E%B6%E6%A7%8B/5.3Transformer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5.3 Transformer 機制解說 (下)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    TensorFlow 101 從零開始
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            TensorFlow 101 從零開始
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../TensorFlow%20101%20%E5%BE%9E%E9%9B%B6%E9%96%8B%E5%A7%8B/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    系列介紹
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../TensorFlow%20101%20%E5%BE%9E%E9%9B%B6%E9%96%8B%E5%A7%8B/TensorFlow%20%E5%9F%BA%E7%A4%8E%E4%BB%8B%E7%B4%B9/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    TensorFlow 基礎介紹
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../TensorFlow%20101%20%E5%BE%9E%E9%9B%B6%E9%96%8B%E5%A7%8B/DNN%20Regression/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DNN Regression
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../TensorFlow%20101%20%E5%BE%9E%E9%9B%B6%E9%96%8B%E5%A7%8B/DNN%20Classification/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DNN Classification
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    PyTorch 101
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            PyTorch 101
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../PyTorch%20101/1.%20PyTorch%20%E5%9F%BA%E7%A4%8E%E4%BB%8B%E7%B4%B9/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. PyTorch 基礎介紹
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目錄">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目錄
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      第一步:尋找一個模型
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      第二步:判斷函數的好壞
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      第三步:根據定義的損失函數找到一組好的參數
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      梯度下降法的原理
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="梯度下降法的原理">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      兩個待優化參數
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      多個待優化參數
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#regularization" class="md-nav__link">
+    <span class="md-ellipsis">
+      避免過度擬合(Regularization)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reference
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+  
+<nav class="md-tags" >
+  
+    
+    
+    
+      <a href="../../tags/#" class="md-tag">基礎概念</a>
+    
+  
+    
+    
+    
+      <a href="../../tags/#" class="md-tag">李宏毅</a>
+    
+  
+</nav>
+
+
+
+<h1 id="ml-lecture-1-regression-case-study">ML Lecture 1: Regression - case study</h1>
+<p>機器學習要做的事情就是找出一個函數，而迴歸模型顧名思義就是要預測一個連續性的數值。或者說我們找到的函數，它的輸出是一個數值，這類型的任務就稱為迴歸。</p>
+<p><img alt="" src="https://i.imgur.com/6cDnDgp.png" /></p>
+<p>以下舉幾個關於回歸的例子：</p>
+<ul>
+<li>股票市場的預測：找一個函數，其輸入是過去股票市場的變動情況，輸出是明天道瓊工業指數的數值。</li>
+<li>駕駛無人車：找一個複雜函數，其輸入是無人車上的各個感受器收集的數據，輸出是方向盤角度。</li>
+<li>商品推薦：找一個函數，其輸入是用戶A、商品B的各種特性，輸出是用戶A購買商品B的可能性。</li>
+</ul>
+<h3 id="_1">第一步:尋找一個模型</h3>
+<p>我們知道迴歸問題就是要找一個 function，目標是預測的數值要與實際的值越接近越好。第一步，尋找一個模型。例如我們找一個線性模型，y=wx+b。為了要找到一個寶可夢 CP 值進化後的結果為何。</p>
+<p><img alt="" src="https://i.imgur.com/d3o5nAm.png" /></p>
+<h3 id="_2">第二步:判斷函數的好壞</h3>
+<p>有了訓練資料後我們就可以定義一個 function 的好壞。這另一個 function 我們稱 loss function。他是被用來評估我們定義的 function set 好壞，也就是衡量一組參數的好壞。那該如何定義 loss function 呢？其實這個 loss function 可以隨意自己定義一個合理的 function。我們把真實的y^減去模型預測出來的y之後再取平方，這就是一個最簡單估測的誤差。有幾筆訓練資料就將每一筆的誤差計算出來後相加，我們目標是要最小化我們的誤差。</p>
+<p><img alt="" src="https://i.imgur.com/5HsK5at.png" /></p>
+<p>這個圖上的每一個地方都代表是一個 function，顏色代表了根據我們定義的 loss function 它有多糟。其顏色越偏紅色代表數值越大，最好的 function 落在藍色的地方。</p>
+<p><img alt="" src="https://i.imgur.com/598oGW5.png" /></p>
+<h3 id="_3">第三步:根據定義的損失函數找到一組好的參數</h3>
+<p>我們已經定義好了 loss function 可以衡量一個模型裡面 function 的好壞。接下來我們要做的事情是，從這個 function set 裡面挑選一個最佳的 function。我們要做的事情是窮舉所有的 w 和 b ，看哪一組參數帶入 L(w, b)  可以讓 loss 值最小。</p>
+<p><img alt="" src="https://i.imgur.com/sQqXV2A.png" /></p>
+<h2 id="_4">梯度下降法的原理</h2>
+<p>我們可以透過 Gradient Descent 來找出一組最好的參數。它厲害的地方是，只要 loss function 是可以微分的，Gradient Descent 都可以拿來處裡這個 function 找出比較好的一組參數。這裡我們來看一下 Gradient Descent 是如何運做的。我們先假設一個簡單的任務，這個任務我們定義 loss function L(w) 僅有一個參數 w。那我們現在要解的問題是，找一個 w 讓 L(w) 最小。這件事情該怎麼做呢？其中暴力的方法就是窮舉所有 w 可能的數值，從負無限大到無限大每一個值都帶入到 loss function 裡面。試一下這個 loss function 輸出的值，我們就會知道哪一個 w 可以讓 loss 最小。但這樣做是非常沒有效率的，那該如何做比較好呢？這就是我們要提的 Gradient Descent。它的做法是首先隨機選取初始的點 w0，接下來在這個初始的 w0 位置計算參數 w 對 L(loss function) 的微分。簡單來說就是找一個 w0 的切線斜率，如果切線斜率是負的話顯然該點的左側 loss 是比較高的，右邊 loss 是比較低的。那我們要找一個 loss 較低的 function，所以我們應該增加 w0 值。反之如果今天算出來的斜率是正的，代表跟這條虛線反向也就是右邊高左邊低，那我們顯然應該要減少 w0 的值把參數往左邊移動。</p>
+<p><img alt="" src="https://i.imgur.com/vtXKozo.png" /></p>
+<p>那如果我們往右邊踏一步應該要踏多少呢？踏多少取決於兩件事情，第一件是現在的微分值有多大，如果微分值越大代表現在在一個非常陡峭的地方，那它的移動距離就越大。第二件事情是一個常數項 𝜂 稱為學習速率，它決定了我們對 w0 更新的幅度。如果學習速率設的比較大，參數更新的幅度就會比較大，反之參數更新幅度就比較小。簡而言之學習速率若設定大一點的話，相對的學習速度就比較快，但也不是越快越好如果設定太大可能會得到區域最佳解而不是全域的解。所以我們將原來的參數 w0 減去 𝜂 乘上 dL/dw ，這裡有一項減的原因是因為算出來微分的值與 loss 增加和減少是相反的所以要加上負號。簡單來就就是往切線斜率的反方向來更新我們的參數。</p>
+<p><img alt="" src="https://i.imgur.com/Vq2xZDS.png" /></p>
+<p>我們把 w0 更新之後得到 w1，接下來重複剛剛的步驟。重新計算在 w1 的地方所算出來的微分值並更新。這些步驟反覆不斷地執行下去，經過非常多次的迭代後進行很多次的參數更新，最終到了 local minimum 的地方。所謂  local minimum 的地方就是微分等於 0，因此參數就無法繼續更新了。那你可能會發現其實還有更好的地方使得 loss 可以更低，至於線性迴歸沒有這個問題因為它是沒有 local minimum 的。</p>
+<p><img alt="" src="https://i.imgur.com/ZjvY77F.png" /></p>
+<h3 id="_5">兩個待優化參數</h3>
+<p>我們剛剛是討論只有一個參數的情形，那如果有兩個參數以上其實方法也是一樣的。我們先隨機初始 w0 跟 b0，接下來計算在 w=w0 和 b=b0 的時候 w 對 loss 偏微分，以及在 w=w0 和 b=b0 的時候 b 對 loss 偏微分。接下來計算出來這兩個偏微分後，就分別去更新 w0 和 b0 這兩個參數。這個步驟就反覆地持續下去，一直更新參數最後就可以找到一個 loss 相對比較小的 w 和 b 值。所謂的 Gradient Descent 中的 Gradient 是∇ L，是對各個參數求偏微分後，所組成的向量。</p>
+<p><img alt="" src="https://i.imgur.com/xtRH4Oa.png" /></p>
+<p>上面兩個參數的迭代過程，可以透過下圖直觀地表達：縱軸為參數w的取值，橫軸為參數b取值，則圖中每一個點分別代表不同的( w , b )。圖中不同的顏色區域分別對應著損失函數的大小。越往中間（紫色部分），損失函數的值越小。其梯度的方向其實就等於等高線的法線方向。</p>
+<p><img alt="" src="https://i.imgur.com/ZXMN25e.png" /></p>
+<h3 id="_6">多個待優化參數</h3>
+<p>同樣地，可以推廣到用梯度下降法求解多個參數的情形。假設 θ 表示一個參數的集合，運用梯度下降法求解時，我們希望參數的每一次更新，都能使損失函數再降低一點：</p>
+<p><img alt="" src="https://i.imgur.com/1UI2FNC.png" /></p>
+<p>但正如前面所說，梯度下降法也有缺陷。在非線性模型中，選取不同的初始參數，最後可能抵達不同的局部最小值。而在線性回歸模型中，由於損失函數是一個凸函數，類似於碗的形狀，不存在多個最小值，因此從任何一個初始位置出發，最後都會回到唯一的最低點，所以能夠克服上述缺陷。</p>
+<p><img alt="" src="https://i.imgur.com/yJolHLR.png" /></p>
+<p>由上述觀念我們可以為一個簡單線性迴歸做一個公式的結論。經由定義損失函數，分別計算兩個偏微分。</p>
+<p><img alt="" src="https://i.imgur.com/SQYDatp.png" /></p>
+<p>我們可以設計更複雜的模型，讓預測有更好的結果，使得 error 更小。</p>
+<p><img alt="" src="https://i.imgur.com/4BunGmm.png" /></p>
+<p>從模型一到模型五，隨著模型結構越來越複雜，基於訓練集所求出來的平均誤差是逐漸降低的，而基於測試集的平均誤差則是先減小後增大，從第四個模型開始出現過擬合問題。一個複雜模型在訓練集上得到了比較好的性能，而在測試集上性能表現十分不理想，這就是過度擬合。</p>
+<p><img alt="" src="https://i.imgur.com/wc80qC9.png" /></p>
+<h2 id="regularization">避免過度擬合(Regularization)</h2>
+<p>Regularization 要做的事情是重新定義了 loss function。原來的 loss function 只考慮了預測結果減掉正確答案的平方。那 Regularization 它就是為 loss function 加上一項額外的限制式，是由 λ 和所有權重參數 w 的平方和所構成的。其中 λ  是一個常數，由我們自己手動設定的超參數。它不僅要求原有的損失函數 L 最小化，還要求正則項也最小化。使原來的損失函數 L 最小化容易理解。但最小化正則項對於模型選擇有什麼幫助呢？或者說，加入正則項的意義是什麼？我們加上 Regularization 的時候就是預期我們找到的那一組的參數要越小越好。因為參數很小接近零意味著模型裡的函數是比較平滑的。所謂的平滑的意思是，當今天的輸入有變化的時候，輸出對輸入的變化是比較不敏感的。如果今天有一個比較平滑的 function，那平滑的  function 對輸入是比較不敏感的。所以當輸入被一些雜訊所干擾的話，相對的它會受到比較少的影響而得到較好的結果。</p>
+<p><img alt="" src="https://i.imgur.com/sruN3W6.png" /></p>
+<blockquote>
+<p>在做 regularization 是不考慮 bias 這項的，因為調整 bias 這項對於 function 的平滑程度是沒有關係的</p>
+</blockquote>
+<p>𝜆 值越大代表考慮平滑的 Regularization 那一項圖的影想力越大。因此隨著 𝜆 越大，我們找到的 function 就越平滑。</p>
+<p><img alt="" src="https://i.imgur.com/6s6NQaE.png" /></p>
+<h2 id="reference">Reference</h2>
+<p><a href="http://speech.ee.ntu.edu.tw/~tlkagk/courses/ML_2017/Lecture/Regression.pdf">簡報-Regression (Case Study)</a></p>
+<p><a href="https://youtu.be/fegAeph9UaA">影片-ML Lecture 1: Regression - Case Study</a></p>
+<blockquote>
+<p>本篇文章來至於台大李宏毅教授2017 機器學習課程<a href="https://www.youtube.com/playlist?list=PLJV_el3uVTsPy9oCRY30oBPNLCo89yu49">影片</a>，記錄了課程重點與摘要。更多課程內容可以從<a href="http://speech.ee.ntu.edu.tw/~tlkagk/courses_ML17_2.html">這裡</a>取得。</p>
+</blockquote>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © 2023 - 2024 10程式中
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "\u7f3a\u5c11\u5b57\u8a5e", "select.version": "\u9078\u64c7\u7248\u672c"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+        <script src="../../javascripts/extra.js"></script>
+      
+        <script src="../../javascripts/katex.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/katex.min.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/contrib/auto-render.min.js"></script>
+      
+    
+  </body>
+</html>

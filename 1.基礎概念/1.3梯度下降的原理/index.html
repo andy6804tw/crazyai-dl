@@ -1,0 +1,1147 @@
+
+<!doctype html>
+<html lang="zh-TW" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="ML Lecture 3-1: Gradient Descent">
+      
+      
+        <meta name="author" content="10程式中">
+      
+      
+        <link rel="canonical" href="https://andy6804tw.github.io/crazyai-dl/1.%E5%9F%BA%E7%A4%8E%E6%A6%82%E5%BF%B5/1.3%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E7%9A%84%E5%8E%9F%E7%90%86/">
+      
+      
+        <link rel="prev" href="../1.2%E6%8E%A2%E7%B4%A2%E8%AA%A4%E5%B7%AE%E7%9A%84%E4%BE%86%E6%BA%90/">
+      
+      
+        <link rel="next" href="../1.4%E5%88%86%E9%A1%9E%E5%95%8F%E9%A1%8C/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.42">
+    
+    
+      
+        <title>1.3 梯度下降的原理 - 全民瘋AI系列 [深度學習與神經網路]</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.0253249f.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+      <link rel="stylesheet" href="https://unpkg.com/katex@0/dist/katex.min.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="red" data-md-color-accent="red">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#ml-lecture-3-1-gradient-descent" class="md-skip">
+          跳轉到
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="頁首">
+    <a href="../.." title="全民瘋AI系列 [深度學習與神經網路]" class="md-header__button md-logo" aria-label="全民瘋AI系列 [深度學習與神經網路]" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            全民瘋AI系列 [深度學習與神經網路]
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              1.3 梯度下降的原理
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜尋" placeholder="搜尋" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="搜尋">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清除" aria-label="清除" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜尋引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/andy6804tw/crazyai-dl" title="前往倉庫" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="導覽列" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="全民瘋AI系列 [深度學習與神經網路]" class="md-nav__button md-logo" aria-label="全民瘋AI系列 [深度學習與神經網路]" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    全民瘋AI系列 [深度學習與神經網路]
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/andy6804tw/crazyai-dl" title="前往倉庫" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    1.基礎概念
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            1.基礎概念
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1.1%E8%BF%B4%E6%AD%B8%E5%88%86%E6%9E%90/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1.1 迴歸分析
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1.2%E6%8E%A2%E7%B4%A2%E8%AA%A4%E5%B7%AE%E7%9A%84%E4%BE%86%E6%BA%90/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1.2 探索誤差的來源
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    1.3 梯度下降的原理
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    1.3 梯度下降的原理
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目錄">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目錄
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#gradient-descent" class="md-nav__link">
+    <span class="md-ellipsis">
+      回顧 Gradient Descent
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tip-1-tuning-your-learning-rates" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tip 1: Tuning your learning rates
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Tip 1: Tuning your learning rates">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#adagrad" class="md-nav__link">
+    <span class="md-ellipsis">
+      Adagrad
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tip-2-stochastic-gradient-descent" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tip 2: Stochastic Gradient Descent
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tip-3-feature-scaling" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tip 3: Feature Scaling
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reference
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1.4%E5%88%86%E9%A1%9E%E5%95%8F%E9%A1%8C/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1.4 分類問題
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1.5%E9%82%8F%E8%BC%AF%E8%BF%B4%E6%AD%B8/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1.5 邏輯迴歸
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    2.深度神經網路
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            2.深度神經網路
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../2.%E6%B7%B1%E5%BA%A6%E7%A5%9E%E7%B6%93%E7%B6%B2%E8%B7%AF/2.1%E6%B7%B1%E5%BA%A6%E5%AD%B8%E7%BF%92%E7%B0%A1%E4%BB%8B/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2.1 深度學習簡介
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    3. 卷積神經網路
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            3. 卷積神經網路
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../3.%E5%8D%B7%E7%A9%8D%E7%A5%9E%E7%B6%93%E7%B6%B2%E8%B7%AF/3.1CNN/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3.1CNN
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../3.%E5%8D%B7%E7%A9%8D%E7%A5%9E%E7%B6%93%E7%B6%B2%E8%B7%AF/3.2ResNet/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3.2 ResNet 殘差神經網路
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    5.Transformer架構
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            5.Transformer架構
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../5.Transformer%E6%9E%B6%E6%A7%8B/5.1Attention%20Is%20All%20You%20Need/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5.1 Transformer — Attention Is All You Need
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../5.Transformer%E6%9E%B6%E6%A7%8B/5.2Transformer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5.2 Transformer 機制解說 (上)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../5.Transformer%E6%9E%B6%E6%A7%8B/5.3Transformer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5.3 Transformer 機制解說 (下)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    TensorFlow 101 從零開始
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            TensorFlow 101 從零開始
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../TensorFlow%20101%20%E5%BE%9E%E9%9B%B6%E9%96%8B%E5%A7%8B/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    系列介紹
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../TensorFlow%20101%20%E5%BE%9E%E9%9B%B6%E9%96%8B%E5%A7%8B/TensorFlow%20%E5%9F%BA%E7%A4%8E%E4%BB%8B%E7%B4%B9/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    TensorFlow 基礎介紹
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../TensorFlow%20101%20%E5%BE%9E%E9%9B%B6%E9%96%8B%E5%A7%8B/DNN%20Regression/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DNN Regression
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../TensorFlow%20101%20%E5%BE%9E%E9%9B%B6%E9%96%8B%E5%A7%8B/DNN%20Classification/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DNN Classification
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    PyTorch 101
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            PyTorch 101
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../PyTorch%20101/1.%20PyTorch%20%E5%9F%BA%E7%A4%8E%E4%BB%8B%E7%B4%B9/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. PyTorch 基礎介紹
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目錄">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目錄
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#gradient-descent" class="md-nav__link">
+    <span class="md-ellipsis">
+      回顧 Gradient Descent
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tip-1-tuning-your-learning-rates" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tip 1: Tuning your learning rates
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Tip 1: Tuning your learning rates">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#adagrad" class="md-nav__link">
+    <span class="md-ellipsis">
+      Adagrad
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tip-2-stochastic-gradient-descent" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tip 2: Stochastic Gradient Descent
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tip-3-feature-scaling" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tip 3: Feature Scaling
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reference
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+  
+<nav class="md-tags" >
+  
+    
+    
+    
+      <a href="../../tags/#" class="md-tag">基礎概念</a>
+    
+  
+    
+    
+    
+      <a href="../../tags/#" class="md-tag">李宏毅</a>
+    
+  
+</nav>
+
+
+
+<h1 id="ml-lecture-3-1-gradient-descent">ML Lecture 3-1: Gradient Descent</h1>
+<h2 id="gradient-descent">回顧 Gradient Descent</h2>
+<p>在機器學習第三個步驟，我們要找一個最好的 function，是要解一個 optimization 的問題。也就是我們在第二步我們先定義 loss function。目的是要找一組參數讓這個 loss function 越小越好。我們可以採用 Gradient Descent，假設現在 θ 是一個參數的集合。做法是隨機選一組起始的參數值，減去 learning rate 乘上 loss function 對 θ 的偏微分，就可以得到下一組 θ。</p>
+<p><img alt="" src="https://i.imgur.com/09DT8kl.png" /></p>
+<p>如果我們將 Gradient Descent 視覺化的話他會長得像這樣。假設我們現在有兩個參數 𝜃1 與 𝜃2 ，並隨機的選一個初始位置 𝜃0 。接下來計算在 𝜃0 這個點它的參數對 loss function 的偏微分。假設參數對 loss function 的斜率是同中紅色的箭頭。更新參數的方式是，將梯度乘上學習速率再加上一個負號就是圖中藍色的箭頭。再將計算出來的結果加上 𝜃0  就會得到更新的參數 𝜃1。以上步驟反覆地持續進行下去，算一梯度更新一次方向直到收斂。</p>
+<p><img alt="" src="https://i.imgur.com/wBW4AWb.png" /></p>
+<h2 id="tip-1-tuning-your-learning-rates">Tip 1: Tuning your  learning rates</h2>
+<p>第一個要點是小心調整學習速率。有時候學習速率會產生一些問題。舉例來說，假設這個是我們的 loss function 的曲線長這個樣子。如果今天學習率設定的剛剛好的話，會照紅色的路徑一路下降到最低點。如果今天學習速率調太小的話，就如藍色的路徑收斂非常慢。只要給他夠多的迭代次數，他終究還是會走到谷底。如果今天學習速率調整有一點大，就如圖中的綠色的箭頭，每次更新的步伐過大導致永遠在山谷的口上面來回震盪而無法走到特別低的地方。甚至如果學習速率調一個非常大的話，如綠色箭頭所示，更新步伐太大沒辦法有效收斂。</p>
+<p><img alt="" src="https://i.imgur.com/WVA8rGU.png" /></p>
+<p>調一個好的學習速率並不是一個簡單的事情，我們每次學習必須要將每個迭代的 loss 曲線繪製出來才能評估模型收斂情形。有些自動的方法可以幫我們調整學習速率。通常我們希望隨著更新迭代次數越多而學習速率會逐漸越小。因為當我們從一開始隨機起點的時候，最好的一組解通常離最低點是比較遠的。因此一開始的更新步伐希望踏大一點，才能更快接近最低點。但是經過好幾次參數更新後，已經離目標很接近了，所以此時應該降低學習速率使得模型能夠收斂在最低點的地方。</p>
+<p><img alt="" src="https://i.imgur.com/pHpyyZw.png" /></p>
+<h3 id="adagrad">Adagrad</h3>
+<p>Adagrad 的方式是採用每一個學習的參數都有各自獨立的學習速率。進行梯度下降的時候，每個參數的學習速率都會除上先前算出來的微分值的平方根。
+𝜎𝑡是過去所有微分的值再加上均方根，這一個值對每個參數是不一樣的，因此每個學習速率都會不同。</p>
+<p><img alt="" src="https://i.imgur.com/QYdk4L7.png" /></p>
+<p>這裡實際舉個例子來看看 Adagrad 是如何實作的。假設現在的初始值是 w0，接下來在 w0 那點進行微分(g0)，至於學習數率是 𝜂0/𝜎0。其中 𝜂 是一個依賴於時間參數，那 𝜎 會計算過去所有微分值的均方根。</p>
+<p><img alt="" src="https://i.imgur.com/PZBrTkZ.png" /></p>
+<p>由於分子分母都有根號 t+1 因此可以互相抵銷。</p>
+<p><img alt="" src="https://i.imgur.com/AwbRcV7.png" /></p>
+<p>Adagrad 參數更新整體而言是會越來越慢的，因為他有加上時間依賴。自適應調整學習速率有很多種方法，其中 Adagrad 僅是其中一種。
+Gradiant Descent 的參數更新，要看微分的值，越大更新越快。在 Adagrad 的公式裡面，分子紅色部分是微分越大，參數 update 的步伐越大。但是分母藍色部分的效果，影響當微分越大，參數  update 步伐越小，跟分子的影響衝突。</p>
+<p><img alt="" src="https://i.imgur.com/jw9nKiE.png" /></p>
+<p>因此有這麼一個說法。Adagrad 所表示的是梯度的反差。假設有個參數，他算到其中一個點算出來特別大或是算到某一次出現特別小的值 adagrad 利用過去 gradiant 的平均來看反差的效果。</p>
+<p><img alt="" src="https://i.imgur.com/6wLpfGG.png" /></p>
+<h2 id="tip-2-stochastic-gradient-descent">Tip 2: Stochastic  Gradient Descent</h2>
+<p>我們可以使用 Stochastic Gradient Descent 使我們訓練速度變快。一般的梯度下降 loss function 會考慮所有資料集，再以所有資料集的總誤差來計算梯度下降，但 Stochastic Gradient Descent(隨機梯度)只考慮一筆資料誤差，梯度也只考慮該筆資料。也就是每看完一筆資料就更新一次參數。</p>
+<p><img alt="" src="https://i.imgur.com/Xm3Fmtj.png" /></p>
+<p>隨機梯度下降與梯度下降的最大差異在於，梯度下降每次的迭代更新都會計算一次所有的資料誤差再做梯度下降，而隨機梯度下降則是每次的迭代都只計算一筆的誤差並且更新。因此可以發現隨機梯度的收斂無法像梯度下降一樣很穩定的往最佳解前進，它的求解過程中較為震盪。</p>
+<p><img alt="" src="https://i.imgur.com/ZVmrIXG.png" /></p>
+<h2 id="tip-3-feature-scaling">Tip 3: Feature Scaling</h2>
+<p>假設一個迴歸的模型有兩個特徵 x1  和  x2  若這兩個特徵的分布很不一樣，那我們要透過 scaling 讓他們兩個分布一致。從上圖我們可以知道 X2 的分佈遠比 X1 大，建議最好將 x2 進行特徵縮放讓 x2 與 x1 的分佈是一致的。</p>
+<p><img alt="" src="https://i.imgur.com/K0caqtI.png" /></p>
+<p>我們為什麼希望不同的特徵它們的 scale 是一樣的呢？以下舉個簡單例子，假設有一個迴歸的 function。若不做 feature scaling 的情況下，如果特徵間的差異過大，會呈現橢圓型。因為 w1 對於 loss 的影響比較小而 w2 對於 loss 的影響比較大 。在經過縮放之後會他們的影響關係是呈現正圓，因此收斂方向可以很明確地往圓心走讓梯度下降更有效率。</p>
+<p><img alt="" src="https://i.imgur.com/0Hna6Xy.png" /></p>
+<p>以一般的標準正規化來說，我們可以計算每個特徵在資料集中的平均值與變異數，將所有特徵縮放為均值為0，方差為1。</p>
+<p><img alt="" src="https://i.imgur.com/hFfEGkP.png" /></p>
+<h2 id="reference">Reference</h2>
+<p><a href="http://speech.ee.ntu.edu.tw/~tlkagk/courses/ML_2016/Lecture/Gradient%20Descent%20(v2).pdf">簡報-Gradient Descent</a></p>
+<p><a href="https://www.youtube.com/watch?v=yKKNr-QKz2Q&amp;list=PLJV_el3uVTsPy9oCRY30oBPNLCo89yu49&amp;index=7">影片-ML Lecture 3-1: Gradient Descent</a></p>
+<blockquote>
+<p>本篇文章來至於台大李宏毅教授2017 機器學習課程<a href="https://www.youtube.com/playlist?list=PLJV_el3uVTsPy9oCRY30oBPNLCo89yu49">影片</a>，記錄了課程重點與摘要。更多課程內容可以從<a href="http://speech.ee.ntu.edu.tw/~tlkagk/courses_ML17_2.html">這裡</a>取得。</p>
+</blockquote>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © 2023 - 2024 10程式中
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "\u7f3a\u5c11\u5b57\u8a5e", "select.version": "\u9078\u64c7\u7248\u672c"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+        <script src="../../javascripts/extra.js"></script>
+      
+        <script src="../../javascripts/katex.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/katex.min.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/contrib/auto-render.min.js"></script>
+      
+    
+  </body>
+</html>
