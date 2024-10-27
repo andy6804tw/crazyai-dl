@@ -2,6 +2,8 @@
 title: '系列介紹'
 description: ''
 keywords: 
+tags:
+    - TensorFlow 101 從零開始
 ---
 
 # TensorFlow 101 從零開始：起源與入門指南

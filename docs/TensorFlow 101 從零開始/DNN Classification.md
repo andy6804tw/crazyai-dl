@@ -2,6 +2,8 @@
 title: 'DNN Classification'
 description: ''
 keywords: 
+tags:
+    - TensorFlow 101 從零開始
 ---
 
 # 深度神經網路（DNN）分類基礎教學

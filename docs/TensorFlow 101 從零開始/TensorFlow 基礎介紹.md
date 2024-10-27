@@ -2,6 +2,8 @@
 title: 'TensorFlow 基礎介紹'
 description: ''
 keywords: 
+tags:
+    - TensorFlow 101 從零開始
 ---
 
 # TensorFlow 基礎介紹
