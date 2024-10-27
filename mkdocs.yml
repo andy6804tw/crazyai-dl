@@ -25,11 +25,11 @@ edit_uri: ""
 copyright: 'Copyright © 2023 - 2024 10程式中'
 nav:
   - '1.基礎概念':
-    - '1.1迴歸分析.md'
-    - '1.2探索誤差的來源.md'
-    - '1.3梯度下降的原理.md'
-    - '1.4分類問題.md'
-    - '1.5邏輯迴歸.md'
+    - '1.基礎概念/1.1迴歸分析.md'
+    - '1.基礎概念/1.2探索誤差的來源.md'
+    - '1.基礎概念/1.3梯度下降的原理.md'
+    - '1.基礎概念/1.4分類問題.md'
+    - '1.基礎概念/1.5邏輯迴歸.md'
 
   - '2.深度神經網路':
     - '2.1深度學習簡介.md'
@@ -61,8 +61,10 @@ markdown_extensions:
       generic: true
   - admonition
   - pymdownx.details
-# plugins:
-#   - search
+plugins:
+  - tags:
+      tags_file: tags.md
+  - search
 #   - mkpdfs:
 #       design: design/report.css
 #       author: Tsai Yi Lin
