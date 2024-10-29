@@ -1297,23 +1297,6 @@
               <article class="md-content__inner md-typeset">
                 
                   
-  
-<nav class="md-tags" >
-  
-    
-    
-    
-      <a href="../../tags/#" class="md-tag">基礎概念</a>
-    
-  
-    
-    
-    
-      <a href="../../tags/#" class="md-tag">李宏毅</a>
-    
-  
-</nav>
-
 
 
 <h1 id="ml-lecture-2-where-does-the-error-come-from">ML Lecture 2: Where does the error come from?</h1>
@@ -1471,6 +1454,8 @@ s^2 = \frac{1}{N} \sum_{n=1}^{N} (x^n - m)^2
 <p>2.<strong>簡化模型結構</strong>：考慮減少模型的複雜度，像是降低神經網絡的層數或節點數，這可以減少模型的靈活性，降低 Variance，並使模型更具泛化能力。  </p>
 <p>3.<strong>正則化（Regularization）</strong>：簡單來說就是避免模型太複雜，可以在 Loss Function 中加入正則化項，限制模型的過度擬合。正則化會讓模型變得更平滑，減少無效區域的出現，從而降低 Variance。以下是有無使用正則化的對比圖：</p>
 <p><img alt="Regularization 對比" src="../image/img1.2.13.png" /></p>
+<p>4.<strong>提前停止（Early Stopping）</strong>：當訓練過程中模型的誤差不再改善時，可以設置一個停止標準來提前終止訓練，避免模型學習到過多無用的細節。</p>
+<p>5.<strong>整體學習（Ensemble Learning）</strong>：透過訓練多個模型，並將每個模型的預測結果平均來獲取最終的預測，這有助於提升模型的泛化能力並降低過擬合的風險。</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>雖然正則化可以減少 Variance，但也可能會稍微增加 Bias，因為模型被限制後，可能無法完全擬合某些複雜模式。</p>
