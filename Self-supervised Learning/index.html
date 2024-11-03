@@ -6,34 +6,28 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="ML Lecture 6: Brief Introduction of Deep Learning">
-      
       
         <meta name="author" content="10程式中">
       
       
-        <link rel="canonical" href="https://andy6804tw.github.io/crazyai-dl/2.%E6%B7%B1%E5%BA%A6%E7%A5%9E%E7%B6%93%E7%B6%B2%E8%B7%AF/2.1%E6%B7%B1%E5%BA%A6%E5%AD%B8%E7%BF%92%E7%B0%A1%E4%BB%8B/">
+        <link rel="canonical" href="https://andy6804tw.github.io/crazyai-dl/Self-supervised%20Learning/">
       
       
-        <link rel="prev" href="../../1.%E5%9F%BA%E7%A4%8E%E6%A6%82%E5%BF%B5/1.5%E9%82%8F%E8%BC%AF%E8%BF%B4%E6%AD%B8/">
       
       
-        <link rel="next" href="../../3.%E5%8D%B7%E7%A9%8D%E7%A5%9E%E7%B6%93%E7%B6%B2%E8%B7%AF/3.1CNN/">
-      
-      
-      <link rel="icon" href="../../assets/images/favicon.png">
+      <link rel="icon" href="../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.42">
     
     
       
-        <title>2.1 深度學習簡介 - 全民瘋AI系列 [深度學習與神經網路]</title>
+        <title>ICLR 2020 yann lecun - 全民瘋AI系列 [深度學習與神經網路]</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.0253249f.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.0253249f.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -52,11 +46,11 @@
       
     
     
-      <link rel="stylesheet" href="../../stylesheets/extra.css">
+      <link rel="stylesheet" href="../stylesheets/extra.css">
     
       <link rel="stylesheet" href="https://unpkg.com/katex@0/dist/katex.min.css">
     
-    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -80,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#ml-lecture-6-brief-introduction-of-deep-learning" class="md-skip">
+        <a href="#iclr-2020-yann-lecun" class="md-skip">
           跳轉到
         </a>
       
@@ -96,7 +90,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="頁首">
-    <a href="../.." title="全民瘋AI系列 [深度學習與神經網路]" class="md-header__button md-logo" aria-label="全民瘋AI系列 [深度學習與神經網路]" data-md-component="logo">
+    <a href=".." title="全民瘋AI系列 [深度學習與神經網路]" class="md-header__button md-logo" aria-label="全民瘋AI系列 [深度學習與神經網路]" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -116,7 +110,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              2.1 深度學習簡介
+              ICLR 2020 yann lecun
             
           </span>
         </div>
@@ -203,7 +197,7 @@
 
 <nav class="md-nav md-nav--primary" aria-label="導覽列" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="全民瘋AI系列 [深度學習與神經網路]" class="md-nav__button md-logo" aria-label="全民瘋AI系列 [深度學習與神經網路]" data-md-component="logo">
+    <a href=".." title="全民瘋AI系列 [深度學習與神經網路]" class="md-nav__button md-logo" aria-label="全民瘋AI系列 [深度學習與神經網路]" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -268,7 +262,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../1.%E5%9F%BA%E7%A4%8E%E6%A6%82%E5%BF%B5/1.1%E8%BF%B4%E6%AD%B8%E5%88%86%E6%9E%90/" class="md-nav__link">
+      <a href="../1.%E5%9F%BA%E7%A4%8E%E6%A6%82%E5%BF%B5/1.1%E8%BF%B4%E6%AD%B8%E5%88%86%E6%9E%90/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -289,7 +283,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../1.%E5%9F%BA%E7%A4%8E%E6%A6%82%E5%BF%B5/1.2%E6%8E%A2%E7%B4%A2%E8%AA%A4%E5%B7%AE%E7%9A%84%E4%BE%86%E6%BA%90/" class="md-nav__link">
+      <a href="../1.%E5%9F%BA%E7%A4%8E%E6%A6%82%E5%BF%B5/1.2%E6%8E%A2%E7%B4%A2%E8%AA%A4%E5%B7%AE%E7%9A%84%E4%BE%86%E6%BA%90/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -310,7 +304,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../1.%E5%9F%BA%E7%A4%8E%E6%A6%82%E5%BF%B5/1.3%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E7%9A%84%E5%8E%9F%E7%90%86/" class="md-nav__link">
+      <a href="../1.%E5%9F%BA%E7%A4%8E%E6%A6%82%E5%BF%B5/1.3%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E7%9A%84%E5%8E%9F%E7%90%86/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -331,7 +325,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../1.%E5%9F%BA%E7%A4%8E%E6%A6%82%E5%BF%B5/1.4%E5%88%86%E9%A1%9E%E5%95%8F%E9%A1%8C/" class="md-nav__link">
+      <a href="../1.%E5%9F%BA%E7%A4%8E%E6%A6%82%E5%BF%B5/1.4%E5%88%86%E9%A1%9E%E5%95%8F%E9%A1%8C/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -352,7 +346,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../1.%E5%9F%BA%E7%A4%8E%E6%A6%82%E5%BF%B5/1.5%E9%82%8F%E8%BC%AF%E8%BF%B4%E6%AD%B8/" class="md-nav__link">
+      <a href="../1.%E5%9F%BA%E7%A4%8E%E6%A6%82%E5%BF%B5/1.5%E9%82%8F%E8%BC%AF%E8%BF%B4%E6%AD%B8/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -377,19 +371,17 @@
       
   
   
-    
   
   
-  
     
     
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
         
           
           <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
@@ -403,7 +395,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             2.深度神經網路
@@ -414,19 +406,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../2.%E6%B7%B1%E5%BA%A6%E7%A5%9E%E7%B6%93%E7%B6%B2%E8%B7%AF/2.1%E6%B7%B1%E5%BA%A6%E5%AD%B8%E7%BF%92%E7%B0%A1%E4%BB%8B/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -435,7 +418,6 @@
   
 
       </a>
-      
     </li>
   
 
@@ -490,7 +472,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../3.%E5%8D%B7%E7%A9%8D%E7%A5%9E%E7%B6%93%E7%B6%B2%E8%B7%AF/3.1CNN/" class="md-nav__link">
+      <a href="../3.%E5%8D%B7%E7%A9%8D%E7%A5%9E%E7%B6%93%E7%B6%B2%E8%B7%AF/3.1CNN/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -511,7 +493,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../3.%E5%8D%B7%E7%A9%8D%E7%A5%9E%E7%B6%93%E7%B6%B2%E8%B7%AF/3.2ResNet/" class="md-nav__link">
+      <a href="../3.%E5%8D%B7%E7%A9%8D%E7%A5%9E%E7%B6%93%E7%B6%B2%E8%B7%AF/3.2ResNet/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -574,7 +556,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../5.Transformer%E6%9E%B6%E6%A7%8B/5.1Attention%20Is%20All%20You%20Need/" class="md-nav__link">
+      <a href="../5.Transformer%E6%9E%B6%E6%A7%8B/5.1Attention%20Is%20All%20You%20Need/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -595,7 +577,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../5.Transformer%E6%9E%B6%E6%A7%8B/5.2Transformer/" class="md-nav__link">
+      <a href="../5.Transformer%E6%9E%B6%E6%A7%8B/5.2Transformer/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -616,7 +598,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../5.Transformer%E6%9E%B6%E6%A7%8B/5.3Transformer/" class="md-nav__link">
+      <a href="../5.Transformer%E6%9E%B6%E6%A7%8B/5.3Transformer/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -679,7 +661,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../TensorFlow%20101%20%E5%BE%9E%E9%9B%B6%E9%96%8B%E5%A7%8B/" class="md-nav__link">
+      <a href="../TensorFlow%20101%20%E5%BE%9E%E9%9B%B6%E9%96%8B%E5%A7%8B/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -700,7 +682,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../TensorFlow%20101%20%E5%BE%9E%E9%9B%B6%E9%96%8B%E5%A7%8B/TensorFlow%20%E5%9F%BA%E7%A4%8E%E4%BB%8B%E7%B4%B9/" class="md-nav__link">
+      <a href="../TensorFlow%20101%20%E5%BE%9E%E9%9B%B6%E9%96%8B%E5%A7%8B/TensorFlow%20%E5%9F%BA%E7%A4%8E%E4%BB%8B%E7%B4%B9/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -721,7 +703,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../TensorFlow%20101%20%E5%BE%9E%E9%9B%B6%E9%96%8B%E5%A7%8B/DNN%20Regression/" class="md-nav__link">
+      <a href="../TensorFlow%20101%20%E5%BE%9E%E9%9B%B6%E9%96%8B%E5%A7%8B/DNN%20Regression/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -742,7 +724,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../TensorFlow%20101%20%E5%BE%9E%E9%9B%B6%E9%96%8B%E5%A7%8B/DNN%20Classification/" class="md-nav__link">
+      <a href="../TensorFlow%20101%20%E5%BE%9E%E9%9B%B6%E9%96%8B%E5%A7%8B/DNN%20Classification/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -805,7 +787,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../PyTorch%20101/1.%20PyTorch%20%E5%9F%BA%E7%A4%8E%E4%BB%8B%E7%B4%B9/" class="md-nav__link">
+      <a href="../PyTorch%20101/1.%20PyTorch%20%E5%9F%BA%E7%A4%8E%E4%BB%8B%E7%B4%B9/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -846,6 +828,32 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目錄
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      深度學習三大挑戰
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#self-supervised-learning-filling-in-the-blanks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Self-Supervised Learning = Filling in the Blanks
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -859,52 +867,30 @@
                   
 
 
-<h1 id="ml-lecture-6-brief-introduction-of-deep-learning">ML Lecture 6: Brief Introduction of Deep Learning</h1>
-<p>🎥 <a href="https://www.youtube.com/watch?v=Dr-WRlEFefw&amp;list=PLJV_el3uVTsPy9oCRY30oBPNLCo89yu49&amp;index=11">觀看影片</a><br />
-📄 <a href="https://speech.ee.ntu.edu.tw/~tlkagk/courses/ML_2016/Lecture/DL%20(v2).pdf">下載簡報</a></p>
-<p>深度學習是一種機器學習的方法。它藉由模仿人類大腦神經元的結構，定義解決問題的函式。所謂深度學習是一種具有深度多層的神經網路。機器可以自行學習並且理解機器學習時用以表示資料的「特徵」，因此又稱為「特徵表達學習」，其應用包括：影像分類、機器翻譯...等。</p>
-<p><img alt="" src="https://ithelp.ithome.com.tw/upload/images/20210921/20107247LthVZkdrnv.png" /></p>
-<h1 id="deep-learning">Deep Learning</h1>
-<p>我們稍微回顧一下深度學習的歷史。他在歷史上經過好幾次的起起伏伏。首先在 1958 年 Perceptron 觀念被提出，它也是一個線性的模型。起初由 Frank Rosenblatt 在海軍的專案裡被提出來的，在當時 Perceptron 開啟了人工智慧機器自己學習的開端。後來有人指出線性的模型是有極限的，無法解決的多現實生活中許多問題。後來就有人提出多個 Perceptron 的 Multi-layer perceptron，並與現今的大家所用的 DNN 架構差不多。其中在 1986 年 Hinton 提出了 Backpropagation 的學習機制，但是當時僅限於三層的神經網路架構。然而在 1989 年又有人提出其實一層的 hidden layer 其實夠夠用了，因此那段時期大家都喜歡使用 SVM 而神經網路再度的被遺棄。直到 2006 年 Hinton 使用 Restricted Boltzmann Machine (RBM) 受限玻爾茲曼機 做神經網路的  initialization 稱作深度學習。RBM 使用比較深的理論並採用 graphical 模型並非現今大家所用的 neural nework。最後大家才發現原來其實這個方法其實也沒什麼用，如果你去讀深度學習的文獻現在已經沒有人用 RBM 做 initialization 了。不過它的出現讓大家再次對 Multi-layer perceptron 產生了興趣，因此 Google 的人還對 RBM 評論稱說這個方法就是石頭湯裡面的石頭。另外在 2009 年發現能夠用 GPU 加速運算，原本 CPU 需要花好幾週的運算透過 GPU 只需要幾小時就能完成了。另外在 2011 年神經網路開始運用在語音辨識，並發現結果非常好，因此大家瘋狂使用深度學習的技術。到了 2012 年的時候深度學習的技術贏了一個很重要的影像辨識的競賽，從此刻起影像的領域也開始使用了深度學習的技術。</p>
-<p><img alt="" src="https://i.imgur.com/rTY3Cxx.png" /></p>
-<p>下圖是google專案中應用到深度學習的趨勢圖，從2012年幾乎0到2016年逐步成長。</p>
-<p><img alt="" src="https://i.imgur.com/RqjLG7e.png" /></p>
-<p>其實深度學習的技術並沒有那麼複雜，它其實非常簡單。我們都知道訓練機器學習間單來說就是三個步驟，深度學習也如此。在深度學習中要找到的 function 其實就是一個神經網路。</p>
-<p><img alt="" src="https://i.imgur.com/w6V6ZHo.png" /></p>
-<p>我們把 Logistic Regression 前後相連再一起。將一個 Logistic Regression  稱為 Neuron。我們用不同的方法連接這些神經網路就會得到不同的架構。在這個神經網路裡面我們有一堆的 Logistic Regression ，每一個都有各自的權重與 bias。這些權重與 bias 集合起來就是神經網路的參數。</p>
-<p><img alt="" src="https://i.imgur.com/JTSQ9mK.png" /></p>
-<p>這些神經元該如何連接起來呢？最常見的做法是 Fully Connect Feedforward Network 全連接的方式將每個神經元彼此連接。所以一個神經網路你就可以把它當作是一個 function，如果一個神經網路裡面的參數 weight 和 bias 都得到的話，它就是一個 function。 </p>
-<p><img alt="" src="https://i.imgur.com/hYfESZq.png" /></p>
-<p>一個網路如果我們已經把參數設定上去的話，它就是一個 function。如果我們還不知道參數，僅是設計出網路的架構決定了這些神經元個數與隱藏層數量，其實就是定義了一個 function set。我們可以給這個網路不同的參數，雞漚會變成不同的 function。把這些可能的 function 通通集合起來，我們就得到了一個 function set。</p>
-<p><img alt="" src="https://i.imgur.com/HYZp2aT.png" /></p>
-<p>我們可以將神經網路表示成這個架構，擁有很多層的網路每一層擁有多個神經元。而途中每一顆圓形都表示一個神經元，每一層網路的神經元個數可以自行定義數量。每一層間的神經元是兩兩互相連接的，Layer 1 的輸出會直接給 Layer 2 每一個神經元。那 Layer 2 每個神經元的輸入就是 Layer 1 的輸出。因為 Layer 和 Layer 間所有的神經元兩兩相接，因此我們稱它 Fully Connected Network(全連接網路)。</p>
-<p>整個網路需要一個輸入層，這個輸入就是一個向量。對於 Layer 1 的每一個神經元來說，每一個神經元它的輸入就是輸入層的維度。那最後第 L 層的那些神經元後面沒有接其他東西了，所以它的輸出就是整個網路的輸出就是所謂的輸出層。輸入的地方我們稱作 Input Layer，輸出的地方稱作 Output Layer，其餘的中間部分稱作 Hidden Layer 隱藏層。</p>
-<p><img alt="" src="https://i.imgur.com/wf5HXPy.png" /></p>
-<p>在 Deep Learning 中其中的 Deep 就是有很多的隱藏層。在 2012 年時候參加 imageNet 比賽得到冠軍的 AlexNet 他有 8 層錯誤率是 16.4%，在當年競賽第一二名差距懸殊，其第二名的錯誤率是 30%。到了 2014 年時候 VGG 有 19 層的網路，錯誤率降到 7%。此外 GoogleNet 擁有 22 層並擁有 6.7% 的錯誤率。但是這些都還不算什麼，直到 2015 年有了 152 層的 Residual Net 他的錯誤率降到了 3.57% 是個重大突破。然而這裡的 Residual 網路並非一般的全連階層網路，他透過特別的架構才能使得有這麼深層的網路同時不會過度擬合。</p>
-<p><img alt="" src="https://i.imgur.com/irDkY5W.png" /></p>
-<p>我們可以將神經網路中間的隱藏層視為一個特徵萃取器，就好比機器學習中的特徵工程。</p>
-<p><img alt="" src="https://i.imgur.com/g6fYnbO.png" /></p>
-<p>在神經網路中如何決定一組參數的好壞呢？我們必須設計一個損失函數從真實答案與預測結果比較出來之間的差異。並透過計算誤差來更新模型預測的方向，使其預測結果更貼近真實的目標答案。神經網路中的參數更新的方式就是採用到傳遞演算法，並透過梯度下降找到最佳的一組參數。實際上在深度學習裡面用的 Gradient Descent 跟 Linear Regression 那邊沒有什麼差別，兩者是一模一樣的。也就是說我們有一堆參數 𝜃，首先為每個參數隨機找一個初始值。接下來去計算他的梯度，計算每一個參數對 total loss 的偏微分。 最後把這些偏微分全部集合起來稱作梯度，有了這些偏微分以後我們就可以更新這些參數了。把所有的參數減去一個學習速率乘上偏微分的值稱作梯度，我們就能得到一組新的參數。上述的流程反覆進行下去，有了新的參數再去計算一下它的梯度，再根據新的梯度更新一次參數又會得到另一組新的參數。不斷的迭代下去，最終會收斂得到一組好的參數。以上就是整個神經網路的訓練機制。</p>
-<p><img alt="" src="https://i.imgur.com/EyjFumX.png" /></p>
-<p>現今有許多的深度學套件能夠幫助我們計算梯度與學習，即使你不會算微分也能透過這些工具實作神經網路。Backpropagation 是一個比較有效率的計算微分的方式。</p>
-<p><img alt="" src="https://i.imgur.com/hvP9pO3.png" /></p>
-<p>你可能會問，為何要用 Deep Learning?你可能會認為網路越深效果越好。下圖是一個早期 2011 年的實驗，隨著神經網路層數加深Word Error  Rate會越來越低。其原因是模型擁有越多的參數，它覆蓋的 function set 越大使得 bias 越小。如果我們有夠多的訓練資料去控制他的 variance，一個複雜的模型他的表現會比較好是正常的。</p>
-<p><img alt="" src="https://i.imgur.com/UJiZTyY.png" /></p>
-<p>甚至有一個理論說。假設任何連續的 function 它的輸入是一個 N 為的向量，輸出是一個 M 維的向量。它都可以用一個隱藏層的神經網路來表示。只要你的這一個隱藏層的神經元夠多，它可以表示成任何的 function。</p>
-<p><img alt="" src="https://i.imgur.com/nGBUQQZ.png" /></p>
+<h1 id="iclr-2020-yann-lecun">ICLR 2020 yann lecun</h1>
+<p>在演講一開始 Facebook AI 研究院的 Yann Lecun 說到：「自督導式學習 (Self-supervised Learning) 是未來的人工智慧與機器學習」。同時並點出人類和動物是如何學習？以及為什麼能夠在非監督式的情況下會學習的如此快速？首先下面這個圖表能夠快速了解在嬰兒時期，每一位寶寶的洞察力與生產力的時間點。包括物體恆存、穩定平衡、直覺思維...等。這些都是由剛出生的嬰兒透過觀察所學習到的，並且以這種方式探索與認識世界。</p>
+<p><img alt="" src="https://i.imgur.com/9ZU3exa.png" /></p>
+<p>如果有種機器學習能夠像嬰兒這樣透過觀察能力來學習認知這個世界，想必對於監督式學習所要的標籤依賴性就大幅減少了。以 Yann Lecun 的觀點來看，人工智能的下一波革命並不是監督式和強化學習。而重點在於特徵表達學習 (Representation Learning)。</p>
+<blockquote>
+<p>Jitendra Malik: "Labels are the opium of the machine learning researcher"</p>
+</blockquote>
+<h2 id="_1">深度學習三大挑戰</h2>
+<p>首先就以大家最常見的深度學習來說，幾乎每一種任務都必須準備好資料以及相對應的答案(標籤)，機器才能夠從資料當中進行學習。然而當現實生活中資料取得不易狀況下，監督式學習將會面臨第一個困難與挑戰。第二點是現今大多數主流的深度學習框架非神經網路架構莫屬，然而在這複雜的黑盒子當中透過基於梯度的學習 (Gradient-Based Learning) 難以說明人類的推理與決策方式相提並論。因此我們希望訓練出來的模型必須要有感知認知的能力。第三個是如何學習一連串複雜的任務？通常我們會將一個複雜任務分解成很多個子任務，並將組合起來成為強大的網路架構並應用在影像、語音、文字...等。但是該如何直接地去學習這複雜的階層是架構任務還是一個很大的挑戰。而自督導式學習主要還是專注在解決第一點，如何透過截取一個好的表徵(Representation)進行主任務的預測。</p>
 <ul>
-<li><a href="http://speech.ee.ntu.edu.tw/~tlkagk/courses/ML_2016/Lecture/DL%20(v2).pdf">簡報</a></li>
-<li><a href="https://www.youtube.com/watch?v=Dr-WRlEFefw&amp;feature=youtu.be">影片</a></li>
+<li>在資料標籤少的狀況下進行模型訓練</li>
+<li>學習推理與具有認知能力</li>
+<li>如何學習複雜的任務</li>
 </ul>
+<h2 id="self-supervised-learning-filling-in-the-blanks">Self-Supervised Learning = Filling in the Blanks</h2>
+<p>Yann Lecun 解釋自督導式學習就是學習如何去填空。假裝有一部分你不知道並試著學習如何預測去填補未知的事物，例如從過去經驗去預測未來，或是從觀察到的事物預測未知的內容。</p>
+<p><img alt="" src="https://i.imgur.com/iZel3Ol.png" /></p>
+<p>一般的神經網路是鎖住訓練好的網路參數進行推論與計算，丟入 x 輸出一個 y。若當今天的任務是一個影像要預測未來多個時間點的影像動作。網路架構就會變得複雜，該如何去解決這類問題。</p>
 
 
 
 
 
 
-
-  
-  
 
 
 
@@ -949,16 +935,16 @@
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "\u7f3a\u5c11\u5b57\u8a5e", "select.version": "\u9078\u64c7\u7248\u672c"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "\u7f3a\u5c11\u5b57\u8a5e", "select.version": "\u9078\u64c7\u7248\u672c"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.83f73b43.min.js"></script>
+      <script src="../assets/javascripts/bundle.83f73b43.min.js"></script>
       
-        <script src="../../javascripts/extra.js"></script>
+        <script src="../javascripts/extra.js"></script>
       
-        <script src="../../javascripts/analytics.js"></script>
+        <script src="../javascripts/analytics.js"></script>
       
-        <script src="../../javascripts/katex.js"></script>
+        <script src="../javascripts/katex.js"></script>
       
         <script src="https://unpkg.com/katex@0/dist/katex.min.js"></script>
       

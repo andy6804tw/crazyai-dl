@@ -6,17 +6,13 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="ML Lecture 1: Regression - case study">
-      
       
         <meta name="author" content="10程式中">
       
       
-        <link rel="canonical" href="https://andy6804tw.github.io/crazyai-dl/1.%E5%9F%BA%E7%A4%8E%E6%A6%82%E5%BF%B5/1.1%E8%BF%B4%E6%AD%B8%E5%88%86%E6%9E%90/">
+        <link rel="canonical" href="https://andy6804tw.github.io/crazyai-dl/3.%E5%8D%B7%E7%A9%8D%E7%A5%9E%E7%B6%93%E7%B6%B2%E8%B7%AF/Seg-net/">
       
       
-      
-        <link rel="next" href="../1.2%E6%8E%A2%E7%B4%A2%E8%AA%A4%E5%B7%AE%E7%9A%84%E4%BE%86%E6%BA%90/">
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
@@ -24,7 +20,7 @@
     
     
       
-        <title>1.1 迴歸分析 - 全民瘋AI系列 [深度學習與神經網路]</title>
+        <title>影像分割必讀論文 Fully Convolutional Networks - 全民瘋AI系列 [深度學習與神經網路]</title>
       
     
     
@@ -78,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#ml-lecture-1-regression-case-study" class="md-skip">
+        <a href="#fully-convolutional-networks" class="md-skip">
           跳轉到
         </a>
       
@@ -114,7 +110,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              1.1 迴歸分析
+              影像分割必讀論文 Fully Convolutional Networks
             
           </span>
         </div>
@@ -228,19 +224,17 @@
       
   
   
-    
   
   
-  
     
     
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
         
           
           <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
@@ -254,7 +248,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_1">
             <span class="md-nav__icon md-icon"></span>
             1.基礎概念
@@ -265,30 +259,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    1.1 迴歸分析
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../1.%E5%9F%BA%E7%A4%8E%E6%A6%82%E5%BF%B5/1.1%E8%BF%B4%E6%AD%B8%E5%88%86%E6%9E%90/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -297,104 +271,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="目錄">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      目錄
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      第一步:尋找一個模型
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      第二步:判斷函數的好壞
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      第三步:根據定義的損失函數找到一組好的參數
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
-    <span class="md-ellipsis">
-      梯度下降法的原理
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="梯度下降法的原理">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      兩個待優化參數
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_6" class="md-nav__link">
-    <span class="md-ellipsis">
-      多個待優化參數
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#regularization" class="md-nav__link">
-    <span class="md-ellipsis">
-      避免過度擬合(Regularization)
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#reference" class="md-nav__link">
-    <span class="md-ellipsis">
-      Reference
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -407,7 +283,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../1.2%E6%8E%A2%E7%B4%A2%E8%AA%A4%E5%B7%AE%E7%9A%84%E4%BE%86%E6%BA%90/" class="md-nav__link">
+      <a href="../../1.%E5%9F%BA%E7%A4%8E%E6%A6%82%E5%BF%B5/1.2%E6%8E%A2%E7%B4%A2%E8%AA%A4%E5%B7%AE%E7%9A%84%E4%BE%86%E6%BA%90/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -428,7 +304,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../1.3%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E7%9A%84%E5%8E%9F%E7%90%86/" class="md-nav__link">
+      <a href="../../1.%E5%9F%BA%E7%A4%8E%E6%A6%82%E5%BF%B5/1.3%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E7%9A%84%E5%8E%9F%E7%90%86/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -449,7 +325,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../1.4%E5%88%86%E9%A1%9E%E5%95%8F%E9%A1%8C/" class="md-nav__link">
+      <a href="../../1.%E5%9F%BA%E7%A4%8E%E6%A6%82%E5%BF%B5/1.4%E5%88%86%E9%A1%9E%E5%95%8F%E9%A1%8C/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -470,7 +346,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../1.5%E9%82%8F%E8%BC%AF%E8%BF%B4%E6%AD%B8/" class="md-nav__link">
+      <a href="../../1.%E5%9F%BA%E7%A4%8E%E6%A6%82%E5%BF%B5/1.5%E9%82%8F%E8%BC%AF%E8%BF%B4%E6%AD%B8/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -596,7 +472,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../3.%E5%8D%B7%E7%A9%8D%E7%A5%9E%E7%B6%93%E7%B6%B2%E8%B7%AF/3.1CNN/" class="md-nav__link">
+      <a href="../3.1CNN/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -617,7 +493,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../3.%E5%8D%B7%E7%A9%8D%E7%A5%9E%E7%B6%93%E7%B6%B2%E8%B7%AF/3.2ResNet/" class="md-nav__link">
+      <a href="../3.2ResNet/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -961,67 +837,25 @@
         <li class="md-nav__item">
   <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
-      第一步:尋找一個模型
+      前言
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
+  <a href="#fcn" class="md-nav__link">
     <span class="md-ellipsis">
-      第二步:判斷函數的好壞
+      FCN 主要解決什麼問題？
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
+  <a href="#fully-convolutional-networks-fcn" class="md-nav__link">
     <span class="md-ellipsis">
-      第三步:根據定義的損失函數找到一組好的參數
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
-    <span class="md-ellipsis">
-      梯度下降法的原理
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="梯度下降法的原理">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      兩個待優化參數
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_6" class="md-nav__link">
-    <span class="md-ellipsis">
-      多個待優化參數
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#regularization" class="md-nav__link">
-    <span class="md-ellipsis">
-      避免過度擬合(Regularization)
+      Fully Convolutional Networks (FCN)
     </span>
   </a>
   
@@ -1051,74 +885,50 @@
                   
 
 
-<h1 id="ml-lecture-1-regression-case-study">ML Lecture 1: Regression - case study</h1>
-<p>🎥 <a href="https://www.youtube.com/watch?v=fegAeph9UaA&amp;list=PLJV_el3uVTsPy9oCRY30oBPNLCo89yu49&amp;index=3">觀看影片</a><br />
-📄 <a href="https://speech.ee.ntu.edu.tw/~tlkagk/courses/ML_2017/Lecture/Regression.pdf">下載簡報</a></p>
-<p>機器學習要做的事情就是找出一個函數，而迴歸模型顧名思義就是要預測一個連續性的數值。或者說我們找到的函數，它的輸出是一個數值，這類型的任務就稱為迴歸。</p>
-<p><img alt="" src="https://i.imgur.com/6cDnDgp.png" /></p>
-<p>以下舉幾個關於回歸的例子：</p>
+<h1 id="fully-convolutional-networks">影像分割必讀論文 Fully Convolutional Networks</h1>
+<blockquote>
+<p>全卷積神經網路</p>
+</blockquote>
+<h2 id="_1">前言</h2>
+<p>根據統計近年來影象分割技術基於深度學習都是基於一個共同的先驅，就是本篇要提的 FCN（Fully Convolutional Network，全卷積神經網路）。電腦視覺中最重要的三個任務分別有影像識別、物件偵測以及本文要討論的影像分割。Semantic segmentation 的目標是，輸入一張彩色的影像並且以像素為單位去識別影像中的每個 pixel 是屬於事先定義好的類別中的哪一類或是背景。為何這個議題非常重要呢？其原因是人類的視覺系統中可以辦到以像素為單位去辨識影像中的物體。現實生活中影像分割的例子有：自駕車、醫學影像…等技術都是建立在 Semantic segmentation 之上。</p>
+<p><img alt="" src="https://i.imgur.com/0DFFTKs.png" /></p>
 <ul>
-<li>股票市場的預測：找一個函數，其輸入是過去股票市場的變動情況，輸出是明天道瓊工業指數的數值。</li>
-<li>駕駛無人車：找一個複雜函數，其輸入是無人車上的各個感受器收集的數據，輸出是方向盤角度。</li>
-<li>商品推薦：找一個函數，其輸入是用戶A、商品B的各種特性，輸出是用戶A購買商品B的可能性。</li>
+<li>Semantic Segmentation: 是指將圖像中的所有像素點進行分類。</li>
+<li>Instance Segmentation: 是物件偵測和語義分割的結合。</li>
 </ul>
-<h3 id="_1">第一步:尋找一個模型</h3>
-<p>我們知道迴歸問題就是要找一個 function，目標是預測的數值要與實際的值越接近越好。第一步，尋找一個模型。例如我們找一個線性模型，y=wx+b。為了要找到一個寶可夢 CP 值進化後的結果為何。</p>
-<p><img alt="" src="https://i.imgur.com/d3o5nAm.png" /></p>
-<h3 id="_2">第二步:判斷函數的好壞</h3>
-<p>有了訓練資料後我們就可以定義一個 function 的好壞。這另一個 function 我們稱 loss function。他是被用來評估我們定義的 function set 好壞，也就是衡量一組參數的好壞。那該如何定義 loss function 呢？其實這個 loss function 可以隨意自己定義一個合理的 function。我們把真實的y^減去模型預測出來的y之後再取平方，這就是一個最簡單估測的誤差。有幾筆訓練資料就將每一筆的誤差計算出來後相加，我們目標是要最小化我們的誤差。</p>
-<p><img alt="" src="https://i.imgur.com/5HsK5at.png" /></p>
-<p>這個圖上的每一個地方都代表是一個 function，顏色代表了根據我們定義的 loss function 它有多糟。其顏色越偏紅色代表數值越大，最好的 function 落在藍色的地方。</p>
-<p><img alt="" src="https://i.imgur.com/598oGW5.png" /></p>
-<h3 id="_3">第三步:根據定義的損失函數找到一組好的參數</h3>
-<p>我們已經定義好了 loss function 可以衡量一個模型裡面 function 的好壞。接下來我們要做的事情是，從這個 function set 裡面挑選一個最佳的 function。我們要做的事情是窮舉所有的 w 和 b ，看哪一組參數帶入 L(w, b)  可以讓 loss 值最小。</p>
-<p><img alt="" src="https://i.imgur.com/sQqXV2A.png" /></p>
-<h2 id="_4">梯度下降法的原理</h2>
-<p>我們可以透過 Gradient Descent 來找出一組最好的參數。它厲害的地方是，只要 loss function 是可以微分的，Gradient Descent 都可以拿來處裡這個 function 找出比較好的一組參數。這裡我們來看一下 Gradient Descent 是如何運做的。我們先假設一個簡單的任務，這個任務我們定義 loss function L(w) 僅有一個參數 w。那我們現在要解的問題是，找一個 w 讓 L(w) 最小。這件事情該怎麼做呢？其中暴力的方法就是窮舉所有 w 可能的數值，從負無限大到無限大每一個值都帶入到 loss function 裡面。試一下這個 loss function 輸出的值，我們就會知道哪一個 w 可以讓 loss 最小。但這樣做是非常沒有效率的，那該如何做比較好呢？這就是我們要提的 Gradient Descent。它的做法是首先隨機選取初始的點 w0，接下來在這個初始的 w0 位置計算參數 w 對 L(loss function) 的微分。簡單來說就是找一個 w0 的切線斜率，如果切線斜率是負的話顯然該點的左側 loss 是比較高的，右邊 loss 是比較低的。那我們要找一個 loss 較低的 function，所以我們應該增加 w0 值。反之如果今天算出來的斜率是正的，代表跟這條虛線反向也就是右邊高左邊低，那我們顯然應該要減少 w0 的值把參數往左邊移動。</p>
-<p><img alt="" src="https://i.imgur.com/vtXKozo.png" /></p>
-<p>那如果我們往右邊踏一步應該要踏多少呢？踏多少取決於兩件事情，第一件是現在的微分值有多大，如果微分值越大代表現在在一個非常陡峭的地方，那它的移動距離就越大。第二件事情是一個常數項 𝜂 稱為學習速率，它決定了我們對 w0 更新的幅度。如果學習速率設的比較大，參數更新的幅度就會比較大，反之參數更新幅度就比較小。簡而言之學習速率若設定大一點的話，相對的學習速度就比較快，但也不是越快越好如果設定太大可能會得到區域最佳解而不是全域的解。所以我們將原來的參數 w0 減去 𝜂 乘上 dL/dw ，這裡有一項減的原因是因為算出來微分的值與 loss 增加和減少是相反的所以要加上負號。簡單來就就是往切線斜率的反方向來更新我們的參數。</p>
-<p><img alt="" src="https://i.imgur.com/Vq2xZDS.png" /></p>
-<p>我們把 w0 更新之後得到 w1，接下來重複剛剛的步驟。重新計算在 w1 的地方所算出來的微分值並更新。這些步驟反覆不斷地執行下去，經過非常多次的迭代後進行很多次的參數更新，最終到了 local minimum 的地方。所謂  local minimum 的地方就是微分等於 0，因此參數就無法繼續更新了。那你可能會發現其實還有更好的地方使得 loss 可以更低，至於線性迴歸沒有這個問題因為它是沒有 local minimum 的。</p>
-<p><img alt="" src="https://i.imgur.com/ZjvY77F.png" /></p>
-<h3 id="_5">兩個待優化參數</h3>
-<p>我們剛剛是討論只有一個參數的情形，那如果有兩個參數以上其實方法也是一樣的。我們先隨機初始 w0 跟 b0，接下來計算在 w=w0 和 b=b0 的時候 w 對 loss 偏微分，以及在 w=w0 和 b=b0 的時候 b 對 loss 偏微分。接下來計算出來這兩個偏微分後，就分別去更新 w0 和 b0 這兩個參數。這個步驟就反覆地持續下去，一直更新參數最後就可以找到一個 loss 相對比較小的 w 和 b 值。所謂的 Gradient Descent 中的 Gradient 是∇ L，是對各個參數求偏微分後，所組成的向量。</p>
-<p><img alt="" src="https://i.imgur.com/xtRH4Oa.png" /></p>
-<p>上面兩個參數的迭代過程，可以透過下圖直觀地表達：縱軸為參數w的取值，橫軸為參數b取值，則圖中每一個點分別代表不同的( w , b )。圖中不同的顏色區域分別對應著損失函數的大小。越往中間（紫色部分），損失函數的值越小。其梯度的方向其實就等於等高線的法線方向。</p>
-<p><img alt="" src="https://i.imgur.com/ZXMN25e.png" /></p>
-<h3 id="_6">多個待優化參數</h3>
-<p>同樣地，可以推廣到用梯度下降法求解多個參數的情形。假設 θ 表示一個參數的集合，運用梯度下降法求解時，我們希望參數的每一次更新，都能使損失函數再降低一點：</p>
-<p><img alt="" src="https://i.imgur.com/1UI2FNC.png" /></p>
-<p>但正如前面所說，梯度下降法也有缺陷。在非線性模型中，選取不同的初始參數，最後可能抵達不同的局部最小值。而在線性回歸模型中，由於損失函數是一個凸函數，類似於碗的形狀，不存在多個最小值，因此從任何一個初始位置出發，最後都會回到唯一的最低點，所以能夠克服上述缺陷。</p>
-<p><img alt="" src="https://i.imgur.com/yJolHLR.png" /></p>
-<p>由上述觀念我們可以為一個簡單線性迴歸做一個公式的結論。經由定義損失函數，分別計算兩個偏微分。</p>
-<p><img alt="" src="https://i.imgur.com/SQYDatp.png" /></p>
-<p>我們可以設計更複雜的模型，讓預測有更好的結果，使得 error 更小。</p>
-<p><img alt="" src="https://i.imgur.com/4BunGmm.png" /></p>
-<p>從模型一到模型五，隨著模型結構越來越複雜，基於訓練集所求出來的平均誤差是逐漸降低的，而基於測試集的平均誤差則是先減小後增大，從第四個模型開始出現過擬合問題。一個複雜模型在訓練集上得到了比較好的性能，而在測試集上性能表現十分不理想，這就是過度擬合。</p>
-<p><img alt="" src="https://i.imgur.com/wc80qC9.png" /></p>
-<h2 id="regularization">避免過度擬合(Regularization)</h2>
-<p>Regularization 要做的事情是重新定義了 loss function。原來的 loss function 只考慮了預測結果減掉正確答案的平方。那 Regularization 它就是為 loss function 加上一項額外的限制式，是由 λ 和所有權重參數 w 的平方和所構成的。其中 λ  是一個常數，由我們自己手動設定的超參數。它不僅要求原有的損失函數 L 最小化，還要求正則項也最小化。使原來的損失函數 L 最小化容易理解。但最小化正則項對於模型選擇有什麼幫助呢？或者說，加入正則項的意義是什麼？我們加上 Regularization 的時候就是預期我們找到的那一組的參數要越小越好。因為參數很小接近零意味著模型裡的函數是比較平滑的。所謂的平滑的意思是，當今天的輸入有變化的時候，輸出對輸入的變化是比較不敏感的。如果今天有一個比較平滑的 function，那平滑的  function 對輸入是比較不敏感的。所以當輸入被一些雜訊所干擾的話，相對的它會受到比較少的影響而得到較好的結果。</p>
-<p><img alt="" src="https://i.imgur.com/sruN3W6.png" /></p>
-<blockquote>
-<p>在做 regularization 是不考慮 bias 這項的，因為調整 bias 這項對於 function 的平滑程度是沒有關係的</p>
-</blockquote>
-<p>𝜆 值越大代表考慮平滑的 Regularization 那一項圖的影想力越大。因此隨著 𝜆 越大，我們找到的 function 就越平滑。</p>
-<p><img alt="" src="https://i.imgur.com/6s6NQaE.png" /></p>
+<p>本篇要討論的論文全名為 Fully Convolutional Networks for Semantic Segmentation，發表在2015的CVPR上。</p>
+<ul>
+<li>論文：https://arxiv.org/abs/1411.4038</li>
+</ul>
+<h2 id="fcn">FCN 主要解決什麼問題？</h2>
+<p>我們都知道在深度學習中卷積神經網路的出現，使得我們在影像識別的應用上達到非常強大的效果。若以 Semantic segmentation 來看的確也是一個分類的問題，但是它是以一張圖中每個像素為單位進行分類。若我們將每一個 pixel 都依序丟入一個訓練好的 CNN 分類器雖然也能達到想要的效果，但是此做法非常沒效率。</p>
+<p><img alt="" src="https://i.imgur.com/blbHHcW.png" /></p>
+<p>因此我們要來探討目前在語意分割技術上最常見的做法就是 Fully convolutional，完全使用卷積來完成語意分割的任務。因為語意分割是一個 pixels in, pixels out 的應用，假設我輸入是一個 <code>H*W*3</code> 大小的圖，輸出的結果也應該是以像素為單位 <code>H*W</code> 的圖。我們可以透過 padding 來確保每一層卷積的輸出大小一致，所以最終的輸出也能得到和原始大小一樣的圖。這裡值得一提的是，假設我們有 C 類的物件要辨識，所以我們在最後一層卷積輸出的時後我們希望他有 C 張特徵圖，而每一張的特徵圖(<code>H*W</code>)就是對應每個 pixel 在某類別上的機率是多少。但是如果圖片都是高解析度且是一個非常深層的網路的時候還是一個非常耗時的模型，因為每一層網路都是一樣的 <code>H*W</code> 大小的圖片計算量非常大。</p>
+<p><img alt="" src="https://i.imgur.com/DRR1NQ5.png" /></p>
+<p>所以接下來演變成如圖中的作法，雖然保留了先前作法但我們可以發現它很像是一個 AutoEncoder 編碼器的架構。前面的網路是做 downsampling 解析度越來越低降為的動作，後面的網路是 upsampling 從低解析度升回去原來的解析度。我們可以從這個架構看到中間的網路層圖片的解析度是適度的壓縮。實驗證明這樣子的架構不僅效率變好，甚至效果也比較好。首先在 Downsampling 方法中我們可以透過 Pooling 或 strided 將一張特徵圖(feature map) 的解析度越變越低。</p>
+<p><img alt="" src="https://i.imgur.com/lYXrnw8.png" /></p>
+<h2 id="fully-convolutional-networks-fcn">Fully Convolutional Networks (FCN)</h2>
+<p>因為模型網路中每一層都是卷積層，故稱為全卷積神經網路(FCN)。FCN 在最後幾層網路用卷積層代替傳統的全連接層，使得輸出也可以變成二維形式，這一做法使得輸出中保留了空間訊息，對於語義分割這種任務來說還是非常有效的，同時還透過反卷積解決了輸入圖片尺寸的問題。全卷積神經網路主要使用了下面兩個技巧：</p>
+<ol>
+<li>Downsampling (Pooling 與 strided convolution)</li>
+<li>Upsampling (Unpooling 與 Transposed convolution)</li>
+</ol>
+<p>在早期 2015 年前的研究是將經典 CNN 模型放在前面，將一張影像進行特徵萃取最後一層透過 1*1 卷積輸出成 classes+1(圖中的21=20類+背景) 的 channel 維度。如何將低解析度的特徵圖還原到高解析度是這個問題的最大挑戰，同時這也是 FCN 的最大貢獻。簡單來說作者透過 Upsampling 來實現從低解析度到高解析度的輸出，真正的背後技術就是 Transposed convolution。但是此方法發現進行 deconvolution 效果是有限的，因此在 2015 年 FCN 提出一個機制來達到 Upsampling 的整個優化過程。</p>
+<p><img alt="" src="https://i.imgur.com/Q9cFPxZ.png" /></p>
+<p>以下是作者提出的 FCN 架構，首先輸入一張影像並透過 pooling 或是 stride convolution 將解析度逐漸變低。假設在第五個 block 輸出的解析度只有原先影像的 1/32。先前有提到 deconvolution 可以提高解析度。因此第一版 FCN-32s 做法是直接將 block5 的輸出做 deconvolution 得到原來大小，但效果有限預測出來的邊界模糊。那個該如何解決這個問題就是 FCN 這篇論文的貢獻。如果我們將 block5 的 1/32 影像先 upsampled 變成兩倍，此時的解析度跟 block4 一樣了。當一樣的解析度隨然可能會有不同的意義，但是它指的位置都是類似的。因此這裡做一個假設將兩個解析度一樣的圖作加總，之後再做 16 倍的 upsampled 透過 deconvolution 得到的結果為 FCN-16s。依此類推我們可以用同樣方法得到更精確的 FCN-8s 也是最終論文 FCN 的版本，用了兩次 skip connection 藉由 pool3 和 pool4 的特徵圖再經過八倍的 deconvolution 得到一個較好的高解析度輸出。</p>
+<p><img alt="" src="https://i.imgur.com/4ETid3Z.png" /></p>
+<p>個人認為 FCN 這篇論文的主要貢獻是使用反卷積並從前幾層的池化和卷積資訊結合，結合歷史資訊填補我們缺失的資料。</p>
+<p><img alt="" src="https://i.imgur.com/buZPxuZ.png" /></p>
 <h2 id="reference">Reference</h2>
-<p><a href="http://speech.ee.ntu.edu.tw/~tlkagk/courses/ML_2017/Lecture/Regression.pdf">簡報-Regression (Case Study)</a></p>
-<p><a href="https://youtu.be/fegAeph9UaA">影片-ML Lecture 1: Regression - Case Study</a></p>
-<blockquote>
-<p>本篇文章來至於台大李宏毅教授2017 機器學習課程<a href="https://www.youtube.com/playlist?list=PLJV_el3uVTsPy9oCRY30oBPNLCo89yu49">影片</a>，記錄了課程重點與摘要。更多課程內容可以從<a href="http://speech.ee.ntu.edu.tw/~tlkagk/courses_ML17_2.html">這裡</a>取得。</p>
-</blockquote>
+<ul>
+<li><a href="https://www.gushiciku.cn/dc_tw/109328837">語意分割演進</a></li>
+</ul>
 
 
 
 
 
 
-
-  
-  
 
 
 
