@@ -48,6 +48,15 @@ nav:
     - 'TensorFlow 101 從零開始/TensorFlow 基礎介紹.md'
     - 'TensorFlow 101 從零開始/DNN Regression.md'
     - 'TensorFlow 101 從零開始/DNN Classification.md'
+  - '神經網路導論與實作':
+    - '神經網路導論與實作/README.md'
+    - '神經網路導論與實作/1. 圖片資料與手寫數字辨識.md'
+    - '神經網路導論與實作/2. 傳統機器學習 Baseline：SVM 手寫數字分類.md'
+    - '神經網路導論與實作/3. 真實世界資料集：SVHN 街景門牌數字.md'
+    - '神經網路導論與實作/4. 第一個 TensorFlow Dense DNN.md'
+    - '神經網路導論與實作/5. DNN 優化技巧與過擬合.md'
+    - '神經網路導論與實作/6. CNN 影像辨識入門.md'
+    - '神經網路導論與實作/7. 模型比較與學習總結.md'
   - 'PyTorch 101':
     - 'PyTorch 101/1. PyTorch 基礎介紹.md'  
 
