@@ -8,3 +8,10 @@ old
 *.pb
 *.h5
 ~*.pptx
+__pycache__
+*.pyc
+artifacts/
+**/artifacts/
+*.keras
+*.tflite
+*.joblib
