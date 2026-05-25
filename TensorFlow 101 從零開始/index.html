@@ -6,6 +6,8 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
+        <meta name="description" content="任務導向 TensorFlow/Keras Cookbook，整理 DNN、CNN、RNN、NLP、Transformer、訓練優化與部署流程。">
+      
       
         <meta name="author" content="10程式中">
       
@@ -20,15 +22,15 @@
       
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.42">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.15">
     
     
       
-        <title>系列介紹 - 全民瘋AI系列 [深度學習與神經網路]</title>
+        <title>TensorFlow 101 從零開始 - 全民瘋AI系列 [深度學習與神經網路]</title>
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.0253249f.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.342714a4.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
@@ -78,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#tensorflow-101" class="md-skip">
+        <a href="#tensorflow-101-cookbook" class="md-skip">
           跳轉到
         </a>
       
@@ -114,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              系列介紹
+              TensorFlow 101 從零開始
             
           </span>
         </div>
@@ -126,11 +128,13 @@
     
     
     
-      <label class="md-header__button md-icon" for="__search">
-        
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
-      </label>
-      <div class="md-search" data-md-component="search" role="dialog">
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
   <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
     <form class="md-search__form" name="search">
@@ -162,13 +166,14 @@
     </div>
   </div>
 </div>
+      
     
     
       <div class="md-header__source">
         <a href="https://github.com/andy6804tw/crazyai-dl" title="前往倉庫" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
   </div>
   <div class="md-source__repository">
     GitHub
@@ -214,7 +219,7 @@
       <a href="https://github.com/andy6804tw/crazyai-dl" title="前往倉庫" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
   </div>
   <div class="md-source__repository">
     GitHub
@@ -234,6 +239,7 @@
     
     
     
+    
     <li class="md-nav__item md-nav__item--nested">
       
         
@@ -244,8 +250,10 @@
           <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
             
   
+  
   <span class="md-ellipsis">
     1.基礎概念
+    
   </span>
   
 
@@ -269,8 +277,10 @@
       <a href="../1.%E5%9F%BA%E7%A4%8E%E6%A6%82%E5%BF%B5/1.1%E8%BF%B4%E6%AD%B8%E5%88%86%E6%9E%90/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
     1.1 迴歸分析
+    
   </span>
   
 
@@ -290,8 +300,10 @@
       <a href="../1.%E5%9F%BA%E7%A4%8E%E6%A6%82%E5%BF%B5/1.2%E6%8E%A2%E7%B4%A2%E8%AA%A4%E5%B7%AE%E7%9A%84%E4%BE%86%E6%BA%90/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
     1.2 探索誤差的來源
+    
   </span>
   
 
@@ -311,8 +323,10 @@
       <a href="../1.%E5%9F%BA%E7%A4%8E%E6%A6%82%E5%BF%B5/1.3%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E7%9A%84%E5%8E%9F%E7%90%86/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
     1.3 梯度下降的原理
+    
   </span>
   
 
@@ -332,8 +346,10 @@
       <a href="../1.%E5%9F%BA%E7%A4%8E%E6%A6%82%E5%BF%B5/1.4%E5%88%86%E9%A1%9E%E5%95%8F%E9%A1%8C/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
     1.4 分類問題
+    
   </span>
   
 
@@ -353,8 +369,10 @@
       <a href="../1.%E5%9F%BA%E7%A4%8E%E6%A6%82%E5%BF%B5/1.5%E9%82%8F%E8%BC%AF%E8%BF%B4%E6%AD%B8/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
     1.5 邏輯迴歸
+    
   </span>
   
 
@@ -381,6 +399,7 @@
     
     
     
+    
     <li class="md-nav__item md-nav__item--nested">
       
         
@@ -391,8 +410,10 @@
           <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
             
   
+  
   <span class="md-ellipsis">
     2.深度神經網路
+    
   </span>
   
 
@@ -416,8 +437,10 @@
       <a href="../2.%E6%B7%B1%E5%BA%A6%E7%A5%9E%E7%B6%93%E7%B6%B2%E8%B7%AF/2.1%E6%B7%B1%E5%BA%A6%E5%AD%B8%E7%BF%92%E7%B0%A1%E4%BB%8B/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
     2.1 深度學習簡介
+    
   </span>
   
 
@@ -444,6 +467,7 @@
     
     
     
+    
     <li class="md-nav__item md-nav__item--nested">
       
         
@@ -454,8 +478,10 @@
           <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
             
   
+  
   <span class="md-ellipsis">
     3. 卷積神經網路
+    
   </span>
   
 
@@ -479,8 +505,10 @@
       <a href="../3.%E5%8D%B7%E7%A9%8D%E7%A5%9E%E7%B6%93%E7%B6%B2%E8%B7%AF/3.1CNN/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
     3.1CNN
+    
   </span>
   
 
@@ -500,8 +528,10 @@
       <a href="../3.%E5%8D%B7%E7%A9%8D%E7%A5%9E%E7%B6%93%E7%B6%B2%E8%B7%AF/3.2ResNet/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
     3.2 ResNet 殘差神經網路
+    
   </span>
   
 
@@ -528,6 +558,7 @@
     
     
     
+    
     <li class="md-nav__item md-nav__item--nested">
       
         
@@ -538,8 +569,10 @@
           <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
             
   
+  
   <span class="md-ellipsis">
     5.Transformer架構
+    
   </span>
   
 
@@ -563,8 +596,10 @@
       <a href="../5.Transformer%E6%9E%B6%E6%A7%8B/5.1Attention%20Is%20All%20You%20Need/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
     5.1 Transformer — Attention Is All You Need
+    
   </span>
   
 
@@ -584,8 +619,10 @@
       <a href="../5.Transformer%E6%9E%B6%E6%A7%8B/5.2Transformer/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
     5.2 Transformer 機制解說 (上)
+    
   </span>
   
 
@@ -605,8 +642,10 @@
       <a href="../5.Transformer%E6%9E%B6%E6%A7%8B/5.3Transformer/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
     5.3 Transformer 機制解說 (下)
+    
   </span>
   
 
@@ -635,6 +674,7 @@
     
     
     
+    
     <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
@@ -645,8 +685,10 @@
           <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
             
   
+  
   <span class="md-ellipsis">
     TensorFlow 101 從零開始
+    
   </span>
   
 
@@ -679,8 +721,10 @@
         <label class="md-nav__link md-nav__link--active" for="__toc">
           
   
+  
   <span class="md-ellipsis">
-    系列介紹
+    TensorFlow 101 從零開始
+    
   </span>
   
 
@@ -690,8 +734,10 @@
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
+  
   <span class="md-ellipsis">
-    系列介紹
+    TensorFlow 101 從零開始
+    
   </span>
   
 
@@ -713,60 +759,36 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#101" class="md-nav__link">
+  <a href="#1" class="md-nav__link">
     <span class="md-ellipsis">
-      系列的起源與「101」的含義
+      1. 這個系列怎麼使用？
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#tensorflow" class="md-nav__link">
+  <a href="#2" class="md-nav__link">
     <span class="md-ellipsis">
-      為什麼選擇 TensorFlow？
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="為什麼選擇 TensorFlow？">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#tensorflow_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      TensorFlow 的主要優勢
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      機器學習簡介
+      2. 系列入口
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
+  <a href="#3-cookbook" class="md-nav__link">
     <span class="md-ellipsis">
-      解決機器學習問題的步驟
+      3. Cookbook 文章公版
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#tensorflow_2" class="md-nav__link">
+  <a href="#4" class="md-nav__link">
     <span class="md-ellipsis">
-      使用 TensorFlow 訓練類神經網路
+      4. 完整章節
     </span>
   </a>
   
@@ -787,12 +809,121 @@
   
   
   
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_2" id="__nav_5_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    既有文章
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_2">
+            <span class="md-nav__icon md-icon"></span>
+            既有文章
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
     <li class="md-nav__item">
       <a href="TensorFlow%20%E5%9F%BA%E7%A4%8E%E4%BB%8B%E7%B4%B9/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
     TensorFlow 基礎介紹
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_3" id="__nav_5_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    0. 系列介紹與學習地圖
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_3">
+            <span class="md-nav__icon md-icon"></span>
+            0. 系列介紹與學習地圖
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="0.%20%E7%B3%BB%E5%88%97%E4%BB%8B%E7%B4%B9%E8%88%87%E5%AD%B8%E7%BF%92%E5%9C%B0%E5%9C%96/0.1%20TensorFlow%20101%20Cookbook%20%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    0.1 TensorFlow 101 Cookbook 使用指南
+    
   </span>
   
 
@@ -809,11 +940,13 @@
   
   
     <li class="md-nav__item">
-      <a href="DNN%20Regression/" class="md-nav__link">
+      <a href="0.%20%E7%B3%BB%E5%88%97%E4%BB%8B%E7%B4%B9%E8%88%87%E5%AD%B8%E7%BF%92%E5%9C%B0%E5%9C%96/0.2%20Colab%E3%80%81GPU%20%E8%88%87%E8%B3%87%E6%96%99%E8%B7%AF%E5%BE%91%E8%A8%AD%E5%AE%9A/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
-    DNN Regression
+    0.2 Colab、GPU 與資料路徑設定
+    
   </span>
   
 
@@ -830,11 +963,1837 @@
   
   
     <li class="md-nav__item">
-      <a href="DNN%20Classification/" class="md-nav__link">
+      <a href="0.%20%E7%B3%BB%E5%88%97%E4%BB%8B%E7%B4%B9%E8%88%87%E5%AD%B8%E7%BF%92%E5%9C%B0%E5%9C%96/0.3%20TensorFlow%20%E5%B0%88%E6%A1%88%E6%A8%99%E6%BA%96%E6%B5%81%E7%A8%8B/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
-    DNN Classification
+    0.3 TensorFlow 專案標準流程
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_4" id="__nav_5_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    1. TensorFlow Keras 基礎
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_4">
+            <span class="md-nav__icon md-icon"></span>
+            1. TensorFlow Keras 基礎
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="1.%20TensorFlow%20Keras%20%E5%9F%BA%E7%A4%8E/1.1%20TensorFlow%20%E8%88%87%20Keras%20%E5%9F%BA%E7%A4%8E%E4%BB%8B%E7%B4%B9/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    1.1 TensorFlow 與 Keras 基礎介紹
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="1.%20TensorFlow%20Keras%20%E5%9F%BA%E7%A4%8E/1.2%20Sequential%20API/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    1.2 Sequential API
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="1.%20TensorFlow%20Keras%20%E5%9F%BA%E7%A4%8E/1.3%20Functional%20API/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    1.3 Functional API
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="1.%20TensorFlow%20Keras%20%E5%9F%BA%E7%A4%8E/1.4%20Dense%20Layer%20%E8%88%87%20Activation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    1.4 Dense Layer 與 Activation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="1.%20TensorFlow%20Keras%20%E5%9F%BA%E7%A4%8E/1.5%20Compile%E3%80%81Fit%E3%80%81Evaluate%E3%80%81Predict/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    1.5 Compile、Fit、Evaluate、Predict
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="1.%20TensorFlow%20Keras%20%E5%9F%BA%E7%A4%8E/1.6%20Callback%20%E5%9F%BA%E7%A4%8E/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    1.6 Callback 基礎
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_5" id="__nav_5_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    2. 資料前處理與 tf.data
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_5">
+            <span class="md-nav__icon md-icon"></span>
+            2. 資料前處理與 tf.data
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="2.%20%E8%B3%87%E6%96%99%E5%89%8D%E8%99%95%E7%90%86%E8%88%87%20tf.data/2.1%20Train%20Validation%20Test%20%E5%88%87%E5%88%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    2.1 Train Validation Test 切分
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="2.%20%E8%B3%87%E6%96%99%E5%89%8D%E8%99%95%E7%90%86%E8%88%87%20tf.data/2.2%20%E6%95%B8%E5%80%BC%E8%B3%87%E6%96%99%E6%AD%A3%E8%A6%8F%E5%8C%96%E8%88%87%E6%A8%99%E6%BA%96%E5%8C%96/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    2.2 數值資料正規化與標準化
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="2.%20%E8%B3%87%E6%96%99%E5%89%8D%E8%99%95%E7%90%86%E8%88%87%20tf.data/2.3%20%E9%A1%9E%E5%88%A5%E8%B3%87%E6%96%99%E7%B7%A8%E7%A2%BC/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    2.3 類別資料編碼
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="2.%20%E8%B3%87%E6%96%99%E5%89%8D%E8%99%95%E7%90%86%E8%88%87%20tf.data/2.4%20%E5%9C%96%E7%89%87%E8%B3%87%E6%96%99%E5%A4%BE%E8%BC%89%E5%85%A5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    2.4 圖片資料夾載入
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="2.%20%E8%B3%87%E6%96%99%E5%89%8D%E8%99%95%E7%90%86%E8%88%87%20tf.data/2.5%20%E6%96%87%E5%AD%97%E8%B3%87%E6%96%99%E5%90%91%E9%87%8F%E5%8C%96/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    2.5 文字資料向量化
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="2.%20%E8%B3%87%E6%96%99%E5%89%8D%E8%99%95%E7%90%86%E8%88%87%20tf.data/2.6%20tf.data%20%E5%9F%BA%E7%A4%8E/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    2.6 tf.data 基礎
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="2.%20%E8%B3%87%E6%96%99%E5%89%8D%E8%99%95%E7%90%86%E8%88%87%20tf.data/2.7%20tf.data%20%E6%95%88%E8%83%BD%E5%84%AA%E5%8C%96/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    2.7 tf.data 效能優化
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_6" id="__nav_5_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    3. DNN 表格資料 Cookbook
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_6">
+            <span class="md-nav__icon md-icon"></span>
+            3. DNN 表格資料 Cookbook
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="3.%20DNN%20%E8%A1%A8%E6%A0%BC%E8%B3%87%E6%96%99%20Cookbook/3.1%20DNN%20Regression/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    3.1 DNN Regression
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="3.%20DNN%20%E8%A1%A8%E6%A0%BC%E8%B3%87%E6%96%99%20Cookbook/3.2%20Binary%20Classification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    3.2 Binary Classification
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="3.%20DNN%20%E8%A1%A8%E6%A0%BC%E8%B3%87%E6%96%99%20Cookbook/3.3%20Multi-class%20Classification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    3.3 Multi-class Classification
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="3.%20DNN%20%E8%A1%A8%E6%A0%BC%E8%B3%87%E6%96%99%20Cookbook/3.4%20Multi-label%20Classification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    3.4 Multi-label Classification
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="3.%20DNN%20%E8%A1%A8%E6%A0%BC%E8%B3%87%E6%96%99%20Cookbook/3.5%20Imbalanced%20Classification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    3.5 Imbalanced Classification
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="3.%20DNN%20%E8%A1%A8%E6%A0%BC%E8%B3%87%E6%96%99%20Cookbook/3.6%20Mixed%20Feature%20DNN/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    3.6 Mixed Feature DNN
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="3.%20DNN%20%E8%A1%A8%E6%A0%BC%E8%B3%87%E6%96%99%20Cookbook/3.7%20Autoencoder%20Anomaly%20Detection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    3.7 Autoencoder Anomaly Detection
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_7" id="__nav_5_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    4. CNN 影像 Cookbook
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_7">
+            <span class="md-nav__icon md-icon"></span>
+            4. CNN 影像 Cookbook
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="4.%20CNN%20%E5%BD%B1%E5%83%8F%20Cookbook/4.1%20CNN%20Image%20Classification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    4.1 CNN Image Classification
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="4.%20CNN%20%E5%BD%B1%E5%83%8F%20Cookbook/4.2%20%E8%87%AA%E5%B7%B1%E7%9A%84%E5%9C%96%E7%89%87%E8%B3%87%E6%96%99%E9%9B%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    4.2 自己的圖片資料集
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="4.%20CNN%20%E5%BD%B1%E5%83%8F%20Cookbook/4.3%20Data%20Augmentation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    4.3 Data Augmentation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="4.%20CNN%20%E5%BD%B1%E5%83%8F%20Cookbook/4.4%20Transfer%20Learning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    4.4 Transfer Learning
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="4.%20CNN%20%E5%BD%B1%E5%83%8F%20Cookbook/4.5%20Fine-tuning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    4.5 Fine-tuning
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="4.%20CNN%20%E5%BD%B1%E5%83%8F%20Cookbook/4.6%20CNN%20%E9%81%8E%E6%93%AC%E5%90%88%E8%99%95%E7%90%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    4.6 CNN 過擬合處理
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="4.%20CNN%20%E5%BD%B1%E5%83%8F%20Cookbook/4.7%20Grad-CAM%20%E6%A8%A1%E5%9E%8B%E8%A6%96%E8%A6%BA%E5%8C%96/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    4.7 Grad-CAM 模型視覺化
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_8" id="__nav_5_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    5. 時間序列 Cookbook
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_8">
+            <span class="md-nav__icon md-icon"></span>
+            5. 時間序列 Cookbook
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="5.%20%E6%99%82%E9%96%93%E5%BA%8F%E5%88%97%20Cookbook/5.1%20LSTM%20Forecasting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    5.1 LSTM Forecasting
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="5.%20%E6%99%82%E9%96%93%E5%BA%8F%E5%88%97%20Cookbook/5.2%20GRU%20Classification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    5.2 GRU Classification
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="5.%20%E6%99%82%E9%96%93%E5%BA%8F%E5%88%97%20Cookbook/5.3%201D%20CNN%20Time%20Series/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    5.3 1D CNN Time Series
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="5.%20%E6%99%82%E9%96%93%E5%BA%8F%E5%88%97%20Cookbook/5.4%20Time%20Series%20Anomaly%20Detection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    5.4 Time Series Anomaly Detection
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="5.%20%E6%99%82%E9%96%93%E5%BA%8F%E5%88%97%20Cookbook/5.5%20LSTM%E3%80%81GRU%E3%80%811D%20CNN%20%E6%AF%94%E8%BC%83/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    5.5 LSTM、GRU、1D CNN 比較
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_9" id="__nav_5_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    6. NLP Cookbook
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_9">
+            <span class="md-nav__icon md-icon"></span>
+            6. NLP Cookbook
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="6.%20NLP%20Cookbook/6.1%20TextVectorization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    6.1 TextVectorization
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="6.%20NLP%20Cookbook/6.2%20Sentiment%20Classification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    6.2 Sentiment Classification
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="6.%20NLP%20Cookbook/6.3%20LSTM%20Text%20Classification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    6.3 LSTM Text Classification
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="6.%20NLP%20Cookbook/6.4%20CNN%20Text%20Classification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    6.4 CNN Text Classification
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="6.%20NLP%20Cookbook/6.5%20Transformer%20Text%20Classification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    6.5 Transformer Text Classification
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_10" id="__nav_5_10_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    7. Transformer 入門
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_10">
+            <span class="md-nav__icon md-icon"></span>
+            7. Transformer 入門
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="7.%20Transformer%20%E5%85%A5%E9%96%80/7.1%20Attention%20%E6%A6%82%E5%BF%B5%E5%85%A5%E9%96%80/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    7.1 Attention 概念入門
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="7.%20Transformer%20%E5%85%A5%E9%96%80/7.2%20Self-Attention%20from%20Scratch/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    7.2 Self-Attention from Scratch
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="7.%20Transformer%20%E5%85%A5%E9%96%80/7.3%20Transformer%20Encoder/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    7.3 Transformer Encoder
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="7.%20Transformer%20%E5%85%A5%E9%96%80/7.4%20Vision%20Transformer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    7.4 Vision Transformer
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_11" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_11" id="__nav_5_11_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    8. 訓練優化技巧
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_11">
+            <span class="md-nav__icon md-icon"></span>
+            8. 訓練優化技巧
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="8.%20%E8%A8%93%E7%B7%B4%E5%84%AA%E5%8C%96%E6%8A%80%E5%B7%A7/8.1%20Callback/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    8.1 Callback
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="8.%20%E8%A8%93%E7%B7%B4%E5%84%AA%E5%8C%96%E6%8A%80%E5%B7%A7/8.2%20Learning%20Rate/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    8.2 Learning Rate
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="8.%20%E8%A8%93%E7%B7%B4%E5%84%AA%E5%8C%96%E6%8A%80%E5%B7%A7/8.3%20Overfitting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    8.3 Overfitting
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="8.%20%E8%A8%93%E7%B7%B4%E5%84%AA%E5%8C%96%E6%8A%80%E5%B7%A7/8.4%20Loss%20%E8%88%87%20Metrics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    8.4 Loss 與 Metrics
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="8.%20%E8%A8%93%E7%B7%B4%E5%84%AA%E5%8C%96%E6%8A%80%E5%B7%A7/8.5%20Hyperparameter%20Tuning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    8.5 Hyperparameter Tuning
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_12" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_12" id="__nav_5_12_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    9. 模型儲存與部署
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_12_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_12">
+            <span class="md-nav__icon md-icon"></span>
+            9. 模型儲存與部署
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="9.%20%E6%A8%A1%E5%9E%8B%E5%84%B2%E5%AD%98%E8%88%87%E9%83%A8%E7%BD%B2/9.1%20Save%20Load%20Model/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    9.1 Save Load Model
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="9.%20%E6%A8%A1%E5%9E%8B%E5%84%B2%E5%AD%98%E8%88%87%E9%83%A8%E7%BD%B2/9.2%20TensorFlow%20Lite/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    9.2 TensorFlow Lite
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="9.%20%E6%A8%A1%E5%9E%8B%E5%84%B2%E5%AD%98%E8%88%87%E9%83%A8%E7%BD%B2/9.3%20TensorFlow.js/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    9.3 TensorFlow.js
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="9.%20%E6%A8%A1%E5%9E%8B%E5%84%B2%E5%AD%98%E8%88%87%E9%83%A8%E7%BD%B2/9.4%20FastAPI%20Deployment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    9.4 FastAPI Deployment
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="9.%20%E6%A8%A1%E5%9E%8B%E5%84%B2%E5%AD%98%E8%88%87%E9%83%A8%E7%BD%B2/9.5%20Batch%20Prediction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    9.5 Batch Prediction
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    神經網路導論與實作
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            神經網路導論與實作
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E7%A5%9E%E7%B6%93%E7%B6%B2%E8%B7%AF%E5%B0%8E%E8%AB%96%E8%88%87%E5%AF%A6%E4%BD%9C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    神經網路導論與實作
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E7%A5%9E%E7%B6%93%E7%B6%B2%E8%B7%AF%E5%B0%8E%E8%AB%96%E8%88%87%E5%AF%A6%E4%BD%9C/1.%20%E5%9C%96%E7%89%87%E8%B3%87%E6%96%99%E8%88%87%E6%89%8B%E5%AF%AB%E6%95%B8%E5%AD%97%E8%BE%A8%E8%AD%98/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    圖片資料與手寫數字辨識
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E7%A5%9E%E7%B6%93%E7%B6%B2%E8%B7%AF%E5%B0%8E%E8%AB%96%E8%88%87%E5%AF%A6%E4%BD%9C/2.%20%E5%82%B3%E7%B5%B1%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92%20Baseline%EF%BC%9ASVM%20%E6%89%8B%E5%AF%AB%E6%95%B8%E5%AD%97%E5%88%86%E9%A1%9E/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    傳統機器學習 Baseline：SVM 手寫數字分類
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E7%A5%9E%E7%B6%93%E7%B6%B2%E8%B7%AF%E5%B0%8E%E8%AB%96%E8%88%87%E5%AF%A6%E4%BD%9C/3.%20%E7%9C%9F%E5%AF%A6%E4%B8%96%E7%95%8C%E8%B3%87%E6%96%99%E9%9B%86%EF%BC%9ASVHN%20%E8%A1%97%E6%99%AF%E9%96%80%E7%89%8C%E6%95%B8%E5%AD%97/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    真實世界資料集：SVHN 街景門牌數字
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E7%A5%9E%E7%B6%93%E7%B6%B2%E8%B7%AF%E5%B0%8E%E8%AB%96%E8%88%87%E5%AF%A6%E4%BD%9C/4.%20%E7%AC%AC%E4%B8%80%E5%80%8B%20TensorFlow%20Dense%20DNN/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    第一個 TensorFlow Dense DNN
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E7%A5%9E%E7%B6%93%E7%B6%B2%E8%B7%AF%E5%B0%8E%E8%AB%96%E8%88%87%E5%AF%A6%E4%BD%9C/5.%20DNN%20%E5%84%AA%E5%8C%96%E6%8A%80%E5%B7%A7%E8%88%87%E9%81%8E%E6%93%AC%E5%90%88/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    DNN 優化技巧與過擬合
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E7%A5%9E%E7%B6%93%E7%B6%B2%E8%B7%AF%E5%B0%8E%E8%AB%96%E8%88%87%E5%AF%A6%E4%BD%9C/6.%20CNN%20%E5%BD%B1%E5%83%8F%E8%BE%A8%E8%AD%98%E5%85%A5%E9%96%80/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    CNN 影像辨識入門
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E7%A5%9E%E7%B6%93%E7%B6%B2%E8%B7%AF%E5%B0%8E%E8%AB%96%E8%88%87%E5%AF%A6%E4%BD%9C/7.%20%E6%A8%A1%E5%9E%8B%E6%AF%94%E8%BC%83%E8%88%87%E5%AD%B8%E7%BF%92%E7%B8%BD%E7%B5%90/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    模型比較與學習總結
+    
   </span>
   
 
@@ -861,26 +2820,29 @@
     
     
     
+    
     <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
         
           
-          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
             
+  
   
   <span class="md-ellipsis">
     PyTorch 101
+    
   </span>
   
 
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_6">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
             <span class="md-nav__icon md-icon"></span>
             PyTorch 101
           </label>
@@ -896,8 +2858,10 @@
       <a href="../PyTorch%20101/1.%20PyTorch%20%E5%9F%BA%E7%A4%8E%E4%BB%8B%E7%B4%B9/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
     1. PyTorch 基礎介紹
+    
   </span>
   
 
@@ -941,60 +2905,36 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#101" class="md-nav__link">
+  <a href="#1" class="md-nav__link">
     <span class="md-ellipsis">
-      系列的起源與「101」的含義
+      1. 這個系列怎麼使用？
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#tensorflow" class="md-nav__link">
+  <a href="#2" class="md-nav__link">
     <span class="md-ellipsis">
-      為什麼選擇 TensorFlow？
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="為什麼選擇 TensorFlow？">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#tensorflow_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      TensorFlow 的主要優勢
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      機器學習簡介
+      2. 系列入口
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
+  <a href="#3-cookbook" class="md-nav__link">
     <span class="md-ellipsis">
-      解決機器學習問題的步驟
+      3. Cookbook 文章公版
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#tensorflow_2" class="md-nav__link">
+  <a href="#4" class="md-nav__link">
     <span class="md-ellipsis">
-      使用 TensorFlow 訓練類神經網路
+      4. 完整章節
     </span>
   </a>
   
@@ -1015,74 +2955,62 @@
                   
 
 
-<h1 id="tensorflow-101">TensorFlow 101 從零開始：起源與入門指南</h1>
-<h2 id="101">系列的起源與「101」的含義</h2>
-<p>「TensorFlow 101 從零開始」這個教學系列的初衷是幫助那些對機器學習（Machine Learning）充滿好奇、想要了解其原理與實際應用的人，特別是那些完全沒有相關背景的初學者。我們希望透過這個系列，以簡單易懂的方式帶領你走進深度學習的世界，理解 TensorFlow 的強大之處，並在實踐中感受到人工智慧的魅力。</p>
-<p><img alt="" src="image/img-tf-intro-1.jpg" /></p>
-<p>「101」這個代號經常出現在大學基礎課程的名稱中，象徵著從最基礎、最簡單的部分開始。因此，「TensorFlow 101 從零開始」意指我們將帶你從入門開始，逐步掌握 TensorFlow 和機器學習的基礎知識，進而建立完整的概念架構。</p>
-<h2 id="tensorflow">為什麼選擇 TensorFlow？</h2>
-<p>TensorFlow 是由 Google 釋出的開源機器學習框架，是目前世界上最流行的深度學習工具之一。它的優勢在於強大的社群支持、豐富的開發工具，以及靈活的擴展能力，不論你是想要建立簡單的模型還是進行複雜的研究，TensorFlow 都能滿足你的需求。TensorFlow 不僅可以幫助研究者探索新技術，也能幫助開發者將 AI 技術整合到實際應用中。</p>
-<h3 id="tensorflow_1">TensorFlow 的主要優勢</h3>
+
+<h1 id="tensorflow-101-cookbook">TensorFlow 101 從零開始：Cookbook 學習地圖</h1>
+<p>「TensorFlow 101 從零開始」定位為任務導向的 TensorFlow/Keras Cookbook。每篇文章對應一種常見神經網路任務，搭配一份可在 Google Colab 執行的 notebook，目標是讓讀者可以理解流程，也能替換成自己的資料使用。</p>
+<h2 id="1">1. 這個系列怎麼使用？</h2>
+<p>如果你是第一次接觸 TensorFlow，建議從 <code>0. 系列介紹與學習地圖</code>、<code>1. TensorFlow Keras 基礎</code> 開始。如果你已經知道自己的任務類型，可以直接跳到對應 cookbook：</p>
+<ul>
+<li>表格資料：看 <code>3. DNN 表格資料 Cookbook</code></li>
+<li>圖片分類：看 <code>4. CNN 影像 Cookbook</code></li>
+<li>時間序列：看 <code>5. 時間序列 Cookbook</code></li>
+<li>文字資料：看 <code>6. NLP Cookbook</code></li>
+<li>Transformer：看 <code>7. Transformer 入門</code></li>
+<li>模型調不好：看 <code>8. 訓練優化技巧</code></li>
+<li>模型要交付：看 <code>9. 模型儲存與部署</code></li>
+</ul>
+<h2 id="2">2. 系列入口</h2>
+<p>本系列包含完整的 Cookbook 主線，也保留一篇早期基礎介紹作為補充閱讀：</p>
+<ul>
+<li><a href="TensorFlow%20%E5%9F%BA%E7%A4%8E%E4%BB%8B%E7%B4%B9/">TensorFlow 基礎介紹</a></li>
+</ul>
+<p>如果你想直接從實作任務開始，可以優先閱讀：</p>
+<ul>
+<li><a href="3.%20DNN%20%E8%A1%A8%E6%A0%BC%E8%B3%87%E6%96%99%20Cookbook/3.1%20DNN%20Regression/">3.1 DNN Regression</a></li>
+<li><a href="3.%20DNN%20%E8%A1%A8%E6%A0%BC%E8%B3%87%E6%96%99%20Cookbook/3.2%20Binary%20Classification/">3.2 Binary Classification</a></li>
+<li><a href="3.%20DNN%20%E8%A1%A8%E6%A0%BC%E8%B3%87%E6%96%99%20Cookbook/3.3%20Multi-class%20Classification/">3.3 Multi-class Classification</a></li>
+</ul>
+<h2 id="3-cookbook">3. Cookbook 文章公版</h2>
+<p>每篇文章都會盡量維持相同結構：</p>
 <ol>
-<li>
-<p><strong>強大的社群支持與資源</strong>：TensorFlow 是一個由 Google 釋出的開源專案，擁有龐大的社群支持。這意味著你可以很容易找到教學資源、問答論壇，甚至是解決問題的現有程式碼範例。</p>
-</li>
-<li>
-<p><strong>多平台支持</strong>：TensorFlow 支持多種平台，包括雲端、桌面、行動裝置等。這讓你可以在不同的硬體上進行機器學習模型的訓練與部署，從而提升應用的靈活性。</p>
-</li>
-<li>
-<p><strong>豐富的工具與 API</strong>：TensorFlow 提供了易於使用的高層 API，例如 Keras，這使得新手也可以輕鬆上手，同時也提供底層的控制接口，讓進階使用者能夠調整細節，達到最佳效果。</p>
-</li>
+<li>這篇要解決什麼問題？</li>
+<li>資料格式長什麼樣子？</li>
+<li>載入套件</li>
+<li>載入與前處理資料</li>
+<li>建立模型</li>
+<li>編譯模型</li>
+<li>訓練模型</li>
+<li>評估模型</li>
+<li>預測新資料</li>
+<li>如何套用自己的資料？</li>
+<li>常見調整方向</li>
+<li>小結</li>
 </ol>
-<h2 id="_1">機器學習簡介</h2>
-<p>機器學習是人工智慧的一個子領域，它主要關注於如何讓計算機從數據中學習，而不需要明確地編寫規則。簡單來說，機器學習的目標就是利用數據來訓練模型，使其能夠對新的、未見過的數據做出準確的預測或判斷。這種能力讓我們可以解決許多傳統程式設計難以處理的問題，例如圖像分類、語音識別等。</p>
-<p><img alt="" src="image/img-tf-intro-2.png" /></p>
-<p><strong>常見的機器學習問題類型</strong></p>
+<h2 id="4">4. 完整章節</h2>
+<p>目前 TensorFlow 101 Cookbook 已整理為 0.x 到 9.x：</p>
 <ol>
-<li><strong>迴歸問題</strong>：預測一個連續的數值，例如房價預測。</li>
-<li><strong>分類問題</strong>：將資料分成不同的類別，例如垃圾郵件過濾。</li>
-<li><strong>群集問題</strong>：將相似的資料點分組，例如客戶分群。</li>
+<li><code>0. 系列介紹與學習地圖</code>：環境、路徑與專案流程。</li>
+<li><code>1. TensorFlow Keras 基礎</code>：TensorFlow、Keras API、Dense layer、compile/fit/evaluate/predict。</li>
+<li><code>2. 資料前處理與 tf.data</code>：資料切分、標準化、類別編碼、圖片/文字載入與資料管線。</li>
+<li><code>3. DNN 表格資料 Cookbook</code>：回歸、二元分類、多類別分類、多標籤、不平衡資料、混合特徵與 autoencoder。</li>
+<li><code>4. CNN 影像 Cookbook</code>：圖片分類、自有圖片資料集、data augmentation、transfer learning、fine-tuning、過擬合與 Grad-CAM。</li>
+<li><code>5. 時間序列 Cookbook</code>：LSTM、GRU、1D CNN、異常偵測與模型比較。</li>
+<li><code>6. NLP Cookbook</code>：文字向量化、情緒分類、LSTM、CNN 與 Transformer 文字分類。</li>
+<li><code>7. Transformer 入門</code>：attention、self-attention、Transformer encoder 與 Vision Transformer。</li>
+<li><code>8. 訓練優化技巧</code>：callback、learning rate、overfitting、loss/metrics 與 hyperparameter tuning。</li>
+<li><code>9. 模型儲存與部署</code>：save/load、TensorFlow Lite、TensorFlow.js、FastAPI 與 batch prediction。</li>
 </ol>
-<h2 id="_2">解決機器學習問題的步驟</h2>
-<p>在機器學習中，解決一個問題通常包含以下幾個步驟：</p>
-<ol>
-<li>
-<p><strong>定義問題</strong>：首先，我們需要了解要解決的問題，明確目標，例如預測房價或分類圖片。</p>
-</li>
-<li>
-<p><strong>收集並準備數據</strong>：收集足夠的數據來訓練模型，並進行必要的清洗和預處理，例如標準化或正規化數據。</p>
-</li>
-<li>
-<p><strong>選擇模型</strong>：根據問題類型選擇適當的模型，例如線性迴歸、神經網路等。</p>
-</li>
-<li>
-<p><strong>訓練模型</strong>：利用訓練數據對模型進行訓練，讓模型學習如何對新數據做出正確預測。</p>
-</li>
-<li>
-<p><strong>評估模型</strong>：在測試數據集上評估模型的性能，檢驗它的準確性和泛化能力。</p>
-</li>
-<li>
-<p><strong>優化與部署</strong>：如果模型表現不佳，可以通過調整參數進行優化，最後將模型部署到實際的應用中。</p>
-</li>
-</ol>
-<h2 id="tensorflow_2">使用 TensorFlow 訓練類神經網路</h2>
-<p>TensorFlow 提供了一個強大的框架來構建和訓練神經網路，從簡單的全連接層到複雜的深度神經網路，TensorFlow 都能應付自如。下面簡單介紹如何使用 TensorFlow 訓練類神經網路的基本流程。</p>
-<p><img alt="" src="image/img-tf-intro-3.gif" /></p>
-<ol>
-<li>
-<p><strong>建立模型</strong>：在 TensorFlow 中，我們通常使用 <code>tf.keras.Sequential</code> 來構建模型。這種方式可以讓我們依序添加每一層，構建出神經網路。當然也提供更進階用法讓專業人士進行演算法開發。</p>
-</li>
-<li>
-<p><strong>編譯模型</strong>：在模型構建好之後，需要指定損失函數和優化器。損失函數用於衡量模型的預測結果與真實值之間的差距，而優化器則用於指導模型如何最小化損失。</p>
-</li>
-<li>
-<p><strong>訓練模型</strong>：利用訓練數據對模型進行多次迭代訓練，模型會不斷調整自身的參數，讓預測結果更接近真實值。</p>
-</li>
-<li>
-<p><strong>評估模型</strong>：在訓練完畢後，可以在測試數據上對模型進行評估，以衡量其在未見數據上的表現。</p>
-</li>
-</ol>
-<p>這系列將逐步帶領你從最基礎的概念開始，理解並掌握 TensorFlow 的基礎，最終幫助你自行構建自己的神經網路模型，解決各種有趣的問題。</p>
+<p>你可以依照任務直接跳到對應章節，也可以從 0.x 開始依序建立完整 TensorFlow/Keras 工作流程。</p>
 
 
 
@@ -1136,10 +3064,12 @@
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "\u7f3a\u5c11\u5b57\u8a5e", "select.version": "\u9078\u64c7\u7248\u672c"}}</script>
+    
+      
+      <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "\u7f3a\u5c11\u5b57\u8a5e", "select.version": "\u9078\u64c7\u7248\u672c"}, "version": null}</script>
     
     
-      <script src="../assets/javascripts/bundle.83f73b43.min.js"></script>
+      <script src="../assets/javascripts/bundle.56ea9cef.min.js"></script>
       
         <script src="../javascripts/extra.js"></script>
       
